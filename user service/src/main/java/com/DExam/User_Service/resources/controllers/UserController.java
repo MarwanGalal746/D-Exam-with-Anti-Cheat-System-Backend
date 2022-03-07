@@ -1,6 +1,6 @@
-package com.DExam.User_Service.controllers;
+package com.DExam.User_Service.resources.controllers;
 
-import com.DExam.User_Service.modules.User;
+import com.DExam.User_Service.resources.modules.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

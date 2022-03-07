@@ -1,4 +1,6 @@
-package com.DExam.User_Service.modules;
+package com.DExam.User_Service.resources.modules;
+
+import com.DExam.User_Service.resources.modules.Role;
 
 public class User {
     private int id;
