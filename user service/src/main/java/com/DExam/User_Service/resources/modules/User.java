@@ -2,8 +2,15 @@ package com.DExam.User_Service.resources.modules;
 
 import com.DExam.User_Service.resources.modules.Role;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User {
-    private int id;
+    private  @Id @GeneratedValue int id;
     private String name;
     private String email;
     private String nationalID;
@@ -11,11 +18,9 @@ public class User {
     private String img;
     private Role role;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(int id, String name, String email, String nationalID, String password, String img, Role role) {
-        this.id = id;
+    public User(String name, String email, String nationalID, String password, String img, Role role) {
         this.name = name;
         this.email = email;
         this.nationalID = nationalID;
@@ -26,10 +31,6 @@ public class User {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
