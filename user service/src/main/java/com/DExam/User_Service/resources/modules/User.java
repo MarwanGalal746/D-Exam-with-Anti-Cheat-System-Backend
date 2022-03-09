@@ -1,83 +1,40 @@
 package com.DExam.User_Service.resources.modules;
 
 import com.DExam.User_Service.resources.modules.Role;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "users")
+@Getter @Setter @NoArgsConstructor
 public class User {
-    private  @Id @GeneratedValue int id;
+    private  @Id @GeneratedValue long id;
     private String name;
     private String email;
     private String nationalID;
     private String password;
     private String img;
+    @OneToOne
+    @JoinColumn(name = "role_id")
     private Role role;
+    @Transient
+    private LocalTime createdAt;
 
-    public User() {}
-
-    public User(String name, String email, String nationalID, String password, String img, Role role) {
+    public User(long id, String name, String email, String nationalID, String password, String img, Role role) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.nationalID = nationalID;
         this.password = password;
         this.img = img;
         this.role = role;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNationalID() {
-        return nationalID;
-    }
-
-    public void setNationalID(String nationalID) {
-        this.nationalID = nationalID;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+        createdAt = LocalTime.now();
     }
 }
