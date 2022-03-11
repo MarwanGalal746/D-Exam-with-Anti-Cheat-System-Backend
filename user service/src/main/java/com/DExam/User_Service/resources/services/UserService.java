@@ -3,12 +3,16 @@ package com.DExam.User_Service.resources.services;
 import com.DExam.User_Service.resources.database.UserRepository;
 import com.DExam.User_Service.resources.modules.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    @Autowired
+
     private final UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -18,7 +22,9 @@ public class UserService {
     public User get(long id) {
         return userRepository.findById(id).orElse(null);
     }
+
     public long add(User newUser) {
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         return newUser.getId();
     }
