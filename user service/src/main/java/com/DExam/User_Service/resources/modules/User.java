@@ -1,24 +1,24 @@
 package com.DExam.User_Service.resources.modules;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.;
 
-import javax.persistence.*;
+import javax.persistence.;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
 @Getter @Setter @NoArgsConstructor
 public class User {
-    private  @Id @GeneratedValue long id;
+    private  @Id @GeneratedValue @Setter(AccessLevel.PROTECTED) long id;
     private String name;
     private String email;
     private String nationalID;
     private String password;
     private String img;
     private Role role;
-    private LocalTime createdAt;
+    private @Setter(AccessLevel.PROTECTED) String createdAt;
 
     public User(String name, String email, String nationalID, String password, String img, Role role) {
         this.name = name;
@@ -27,6 +27,9 @@ public class User {
         this.password = password;
         this.img = img;
         this.role = role;
-        createdAt = LocalTime.now();
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(formatter.format(date));
+        createdAt = formatter.format(date);
     }
 }

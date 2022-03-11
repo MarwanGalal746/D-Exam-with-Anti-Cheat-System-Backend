@@ -1,0 +1,28 @@
+###
+POST http://localhost:8080/api/users/create
+Content-Type: application/json
+
+{
+  "name": "Eyad Youssef",
+  "email": "eyad@gmail.com",
+  "nationalID": "231165497",
+  "password": "asklnqwrbn23pu4b",
+  "img": "123124jwoqewq",
+  "role": "Student"
+}
+
+###
+POST http://localhost:8080/api/users/create
+Content-Type: application/json
+
+{
+  "name": "ahmed hamada",
+  "email": "sdsadasdas@gmail.com",
+  "nationalID": "dasdqweqwe",
+  "password": "asklnq214312312312wrbn23pu4b",
+  "img": "123123123123124jwoqewq",
+  "role": "Teacher"
+}
+
+###
+GET http://localhost:8080/api/users/get?id=15
