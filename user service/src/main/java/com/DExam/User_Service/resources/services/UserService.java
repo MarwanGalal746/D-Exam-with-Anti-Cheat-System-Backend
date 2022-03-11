@@ -18,7 +18,12 @@ public class UserService {
     public User get(long id) {
         return userRepository.findById(id).orElse(null);
     }
+
     public long add(User newUser) {
+        if (userRepository.isEmailExists(newUser.getEmail()) > 0)
+            return -1;
+        else if (userRepository.isNationalIdExists(newUser.getNationalID()) > 0)
+            return -2;
         userRepository.save(newUser);
         return newUser.getId();
     }
@@ -27,4 +32,6 @@ public class UserService {
         userRepository.deleteById(id);
         return true;
     }
+
+
 }
