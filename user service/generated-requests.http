@@ -17,12 +17,12 @@ Content-Type: application/json
 
 {
   "name": "ahmed hamada",
-  "email": "sdsadasdas@gmail.com",
-  "nationalID": "dasdqweqwe",
+  "email": "sdsadasdaaas@gmail.com",
+  "nationalID": "dasdqwasdasdeqwe",
   "password": "asklnq214312312312wrbn23pu4b",
   "img": "123123123123124jwoqewq",
   "role": "Teacher"
 }
 
 ###
-GET http://localhost:8080/api/users/get?id=15
+GET http://localhost:8080/api/users/get?id=1

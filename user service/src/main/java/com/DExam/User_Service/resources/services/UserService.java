@@ -24,6 +24,10 @@ public class UserService {
     }
 
     public long add(User newUser) {
+        if (userRepository.findByEmail(newUser.getEmail()) != null)
+            return -1;
+        else if (userRepository.findByNationalID(newUser.getNationalID()) != null)
+            return -2;
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         return newUser.getId();
@@ -33,4 +37,6 @@ public class UserService {
         userRepository.deleteById(id);
         return true;
     }
+
+
 }
