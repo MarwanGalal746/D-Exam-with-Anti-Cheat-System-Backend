@@ -20,9 +20,9 @@ public class UserService {
     }
 
     public long add(User newUser) {
-        if (userRepository.isEmailExists(newUser.getEmail()) > 0)
+        if (userRepository.findByEmail(newUser.getEmail()) != null)
             return -1;
-        else if (userRepository.isNationalIdExists(newUser.getNationalID()) > 0)
+        else if (userRepository.findByNationalID(newUser.getNationalID()) != null)
             return -2;
         userRepository.save(newUser);
         return newUser.getId();
