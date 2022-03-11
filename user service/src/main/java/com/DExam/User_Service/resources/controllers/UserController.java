@@ -1,10 +1,14 @@
 package com.DExam.User_Service.resources.controllers;
 
-import com.DExam.User_Service.resources.modules.Role;
+import com.DExam.User_Service.resources.modules.Errors;
 import com.DExam.User_Service.resources.modules.User;
 import com.DExam.User_Service.resources.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/users")
@@ -22,8 +26,13 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public long post(@RequestBody User userInfo){
-        return userService.add(userInfo);
+    public ResponseEntity<?> post(@RequestBody User userInfo){
+        long userId = userService.add(userInfo);
+        if (userId == -1)
+            return new ResponseEntity<>(customResponse("Error", Errors.EMAIL_USED), HttpStatus.BAD_REQUEST);
+        else if (userId == -2)
+            return new ResponseEntity<>(customResponse("Error", Errors.NATIONAL_ID_USED), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(customResponse("Id", userId), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
@@ -37,4 +46,9 @@ public class UserController {
         return userService.add(userInfo);
     }
 
+    private HashMap<String, Object> customResponse(String key, Object value) {
+        HashMap<String, Object> response = new HashMap();
+        response.put(key, value);
+        return response;
+    }
 }
