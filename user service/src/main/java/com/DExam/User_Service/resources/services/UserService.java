@@ -2,22 +2,23 @@ package com.DExam.User_Service.resources.services;
 
 import com.DExam.User_Service.resources.database.UserRepository;
 import com.DExam.User_Service.resources.modules.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Service
-public class UserService {
+@RequiredArgsConstructor
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User get(long id) {
         return userRepository.findById(id).orElse(null);
@@ -28,7 +29,8 @@ public class UserService {
             return -1;
         else if (userRepository.findByNationalID(newUser.getNationalID()) != null)
             return -2;
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+
+        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         return newUser.getId();
     }
@@ -38,5 +40,17 @@ public class UserService {
         return true;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
 
+        if(user == null)
+            throw new UsernameNotFoundException("User does not exist");
+
+        /**
+            Need to pass roles here when it's done to the array
+         */
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorities);
+    }
 }

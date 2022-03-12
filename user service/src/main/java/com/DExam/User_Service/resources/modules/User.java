@@ -26,6 +26,7 @@ public class User {
     private void onCreation(){
         createdAt = new Date();
     }
+
     public User(String name, String email, String nationalID, String password, String img) {
         this.name = name;
         this.email = email;
