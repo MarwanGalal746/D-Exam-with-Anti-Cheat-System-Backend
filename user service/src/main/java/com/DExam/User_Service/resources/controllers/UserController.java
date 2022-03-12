@@ -3,6 +3,7 @@ package com.DExam.User_Service.resources.controllers;
 import com.DExam.User_Service.resources.modules.Errors;
 import com.DExam.User_Service.resources.modules.User;
 import com.DExam.User_Service.resources.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +13,18 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping("/get")
+    @GetMapping("/getbyid")
     public User get(@RequestParam long id){
         return userService.get(id);
+    }
+
+    @GetMapping("/getbyemail")
+    public User get(@RequestParam String email){
+        return userService.get(email);
     }
 
     @PostMapping("/create")
