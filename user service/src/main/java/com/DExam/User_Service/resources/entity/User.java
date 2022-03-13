@@ -1,4 +1,4 @@
-package com.DExam.User_Service.resources.modules;
+package com.DExam.User_Service.resources.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;

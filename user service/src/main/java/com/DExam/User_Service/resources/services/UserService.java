@@ -1,7 +1,7 @@
 package com.DExam.User_Service.resources.services;
 
 import com.DExam.User_Service.resources.database.UserRepository;
-import com.DExam.User_Service.resources.modules.User;
+import com.DExam.User_Service.resources.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,9 +31,9 @@ public class UserService implements UserDetailsService {
     }
 
     public long add(User newUser) {
-        if (userRepository.findByEmail(newUser.getEmail()) != null)
+        if (userRepository.findByEmail(newUser.getEmail()).orElse(null) != null)
             return -1;
-        else if (userRepository.findByNationalID(newUser.getNationalID()) != null)
+        else if (userRepository.findByNationalID(newUser.getNationalID()).orElse(null) != null)
             return -2;
 
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
@@ -51,9 +51,6 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(()->new UsernameNotFoundException("USER DOES NOT EXIST"));
 
-        /**
-            Need to pass roles here when it's done to the array
-         */
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorities);
     }
