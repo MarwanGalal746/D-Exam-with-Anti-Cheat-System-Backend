@@ -1,9 +1,10 @@
 package com.DExam.User_Service.resources.controllers;
 
+import com.DExam.User_Service.resources.services.EmailService;
 import com.DExam.User_Service.resources.entity.AuthenticationRequest;
-import com.DExam.User_Service.resources.utility.Errors;
 import com.DExam.User_Service.resources.entity.User;
 import com.DExam.User_Service.resources.services.UserService;
+import com.DExam.User_Service.resources.utility.Errors;
 import com.DExam.User_Service.resources.utility.JwtManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,17 @@ public class UserController {
     private final UserService userService;
     private final JwtManager jwtManager;
     private final AuthenticationManager authenticationManager;
+    private final EmailService emailSender;
 
     @GetMapping("/get")
     public User get(@RequestParam long id){
         return userService.get(id);
+    }
+
+    @GetMapping("/email")
+    public ResponseEntity<?> email(){
+//        emailSender.send("marawangalal84@gmail.com");
+        return new ResponseEntity<>(customResponse("Error", Errors.EMAIL_USED), HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/register")
