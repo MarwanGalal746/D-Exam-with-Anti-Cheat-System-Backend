@@ -11,8 +11,6 @@ public final class CodeGenerator {
         return code;
     }
 
-
-
     private static String generateCodeUtil(int leftLimit, int rightLimit, int targetStringLength ) {
         Random random = new Random();
         return random.ints(leftLimit, rightLimit + 1)
