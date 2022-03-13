@@ -1,4 +1,4 @@
-package com.DExam.User_Service.resources.modules;
+package com.DExam.User_Service.resources.utility;
 
 public final class Errors {
     public static final String EMAIL_USED = "This email is already used";

@@ -1,34 +1,42 @@
 package com.DExam.User_Service.resources.services;
 
 import com.DExam.User_Service.resources.database.UserRepository;
-import com.DExam.User_Service.resources.modules.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.DExam.User_Service.resources.entity.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Service
-public class UserService {
+@RequiredArgsConstructor
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User get(long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(()->new UsernameNotFoundException("USER DOES NOT EXIST"));
+    }
+
+    public User get(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(()->new UsernameNotFoundException("USER DOES NOT EXIST"));
     }
 
     public long add(User newUser) {
-        if (userRepository.findByEmail(newUser.getEmail()) != null)
+        if (userRepository.findByEmail(newUser.getEmail()).orElse(null) != null)
             return -1;
-        else if (userRepository.findByNationalID(newUser.getNationalID()) != null)
+        else if (userRepository.findByNationalID(newUser.getNationalID()).orElse(null) != null)
             return -2;
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+
+        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         return newUser.getId();
     }
@@ -38,5 +46,12 @@ public class UserService {
         return true;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()->new UsernameNotFoundException("USER DOES NOT EXIST"));
 
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorities);
+    }
 }
