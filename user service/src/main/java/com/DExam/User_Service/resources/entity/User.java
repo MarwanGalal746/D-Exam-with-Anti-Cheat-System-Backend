@@ -1,4 +1,4 @@
-package com.DExam.User_Service.resources.modules;
+package com.DExam.User_Service.resources.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,6 +26,7 @@ public class User {
     private void onCreation(){
         createdAt = new Date();
     }
+
     public User(String name, String email, String nationalID, String password, String img) {
         this.name = name;
         this.email = email;
