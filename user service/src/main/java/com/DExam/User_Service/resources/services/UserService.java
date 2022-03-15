@@ -31,14 +31,18 @@ public class UserService implements UserDetailsService {
     }
 
     public long add(User newUser) {
+        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
+        userRepository.save(newUser);
+        return newUser.getId();
+    }
+
+    public int exists(User newUser){
         if (userRepository.findByEmail(newUser.getEmail()).orElse(null) != null)
             return -1;
         else if (userRepository.findByNationalID(newUser.getNationalID()).orElse(null) != null)
             return -2;
-
-        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-        userRepository.save(newUser);
-        return newUser.getId();
+        else
+            return 0;
     }
 
     public boolean delete(long id) {

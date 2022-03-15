@@ -16,7 +16,7 @@ public class JwtManager {
     /**
      * will be encrypted
      */
-    private String secret = "secret";
+    private String secret = System.getenv("TOKEN_KEY");
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
