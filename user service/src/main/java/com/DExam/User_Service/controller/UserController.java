@@ -7,7 +7,6 @@ import com.DExam.User_Service.model.User;
 import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
-import com.DExam.User_Service.utility.ResponseMessages;
 import com.DExam.User_Service.utility.JwtManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,7 +37,7 @@ public class UserController {
     public ResponseEntity<?> verify(@RequestBody User user){
         userService.exists(user);
         String verificationCode = CodeGenerator.generateCode();
-        emailSender.send(user.getEmail(),"EMAIL VERIFICATION", ResponseMessages.EMAIL_VERIFICATION + verificationCode);
+        emailSender.send(user.getEmail(),"EMAIL VERIFICATION", CustomResponse.EMAIL_VERIFICATION + verificationCode);
         return new ResponseEntity<>(new CustomResponse().setMessage(verificationCode).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 

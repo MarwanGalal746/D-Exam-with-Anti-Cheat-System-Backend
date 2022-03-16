@@ -6,15 +6,12 @@ import com.DExam.User_Service.exception.NationalIDException;
 import com.DExam.User_Service.exception.UserNotFoundException;
 import com.DExam.User_Service.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
