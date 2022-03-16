@@ -1,4 +1,4 @@
-package com.DExam.User_Service.utility;
+package com.DExam.User_Service.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

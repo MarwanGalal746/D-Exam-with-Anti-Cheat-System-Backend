@@ -7,7 +7,7 @@ import com.DExam.User_Service.model.User;
 import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
-import com.DExam.User_Service.utility.JwtManager;
+import com.DExam.User_Service.config.JwtManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
