@@ -1,4 +1,4 @@
-package com.DExam.User_Service.resources.utility;
+package com.DExam.User_Service.utility;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,10 +13,7 @@ import java.util.function.Function;
 @Service
 public class JwtManager {
 
-    /**
-     * will be encrypted
-     */
-    private String secret = System.getenv("TOKEN_KEY");
+    private String secret = "secret";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

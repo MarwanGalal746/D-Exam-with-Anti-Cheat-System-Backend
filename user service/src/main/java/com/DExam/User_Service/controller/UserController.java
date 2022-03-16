@@ -1,12 +1,14 @@
-package com.DExam.User_Service.resources.controllers;
+package com.DExam.User_Service.controller;
 
-import com.DExam.User_Service.resources.services.EmailService;
-import com.DExam.User_Service.resources.entity.AuthenticationRequest;
-import com.DExam.User_Service.resources.entity.User;
-import com.DExam.User_Service.resources.services.UserService;
-import com.DExam.User_Service.resources.utility.CodeGenerator;
-import com.DExam.User_Service.resources.utility.ResponseTemplates;
-import com.DExam.User_Service.resources.utility.JwtManager;
+import com.DExam.User_Service.exception.InvalidEmailPasswordException;
+import com.DExam.User_Service.service.EmailService;
+import com.DExam.User_Service.model.AuthenticationRequest;
+import com.DExam.User_Service.model.User;
+import com.DExam.User_Service.service.UserService;
+import com.DExam.User_Service.utility.CodeGenerator;
+import com.DExam.User_Service.utility.CustomResponse;
+import com.DExam.User_Service.utility.ResponseMessages;
+import com.DExam.User_Service.utility.JwtManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,23 +36,16 @@ public class UserController {
 
     @PostMapping("/verify")
     public ResponseEntity<?> verify(@RequestBody User user){
-        int status = userService.exists(user);
-        if (status == -1)
-            return new ResponseEntity<>(customResponse("Error", ResponseTemplates.EMAIL_USED), HttpStatus.BAD_REQUEST);
-        else if (status == -2)
-            return new ResponseEntity<>(customResponse("Error", ResponseTemplates.NATIONAL_ID_USED), HttpStatus.BAD_REQUEST);
-        else
-        {
-            String verificationCode = CodeGenerator.generateCode();
-            emailSender.send(user.getEmail(),"EMAIL VERIFICATION", ResponseTemplates.EMAIL_VERIFICATION + verificationCode);
-            return new ResponseEntity<>(customResponse("Code", verificationCode), HttpStatus.OK);
-        }
+        userService.exists(user);
+        String verificationCode = CodeGenerator.generateCode();
+        emailSender.send(user.getEmail(),"EMAIL VERIFICATION", ResponseMessages.EMAIL_VERIFICATION + verificationCode);
+        return new ResponseEntity<>(new CustomResponse().setMessage(verificationCode).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user){
         long userID = userService.add(user);
-        return new ResponseEntity<>(customResponse("Id", userID), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomResponse().setMessage(String.valueOf(userID)).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 
     @PutMapping("/update")
@@ -60,24 +55,21 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Object login(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public Object login(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authenticationRequest.getEmail(),authenticationRequest.getPassword()));
         } catch (Exception exception){
-                throw new Exception("Invalid email or password");
+                throw new InvalidEmailPasswordException();
         }
+
         String accessToken = jwtManager.generateToken(authenticationRequest.getEmail());
+
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("user",userService.get(authenticationRequest.getEmail()));
         userInfo.put("access_token",accessToken);
-        return userInfo;
-    }
 
-    private HashMap<String, Object> customResponse(String key, Object value) {
-        HashMap<String, Object> response = new HashMap();
-        response.put(key, value);
-        return response;
+        return userInfo;
     }
 }

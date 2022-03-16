@@ -1,4 +1,4 @@
-package com.DExam.User_Service.resources.services;
+package com.DExam.User_Service.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

@@ -1,4 +1,4 @@
-package com.DExam.User_Service.resources.entity;
+package com.DExam.User_Service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

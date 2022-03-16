@@ -1,4 +1,4 @@
-package com.DExam.User_Service.resources.utility;
+package com.DExam.User_Service.utility;
 
 import java.util.Random;
 
