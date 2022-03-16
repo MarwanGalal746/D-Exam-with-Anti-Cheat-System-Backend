@@ -1,6 +1,6 @@
-package com.DExam.User_Service.resources.database;
+package com.DExam.User_Service.database;
 
-import com.DExam.User_Service.resources.entity.User;
+import com.DExam.User_Service.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

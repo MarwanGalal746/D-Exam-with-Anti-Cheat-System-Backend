@@ -1,17 +1,17 @@
-package com.DExam.User_Service.resources.services;
+package com.DExam.User_Service.service;
 
-import com.DExam.User_Service.resources.database.UserRepository;
-import com.DExam.User_Service.resources.entity.User;
+import com.DExam.User_Service.database.UserRepository;
+import com.DExam.User_Service.exception.EmailExistException;
+import com.DExam.User_Service.exception.NationalIDException;
+import com.DExam.User_Service.exception.UserNotFoundException;
+import com.DExam.User_Service.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +22,12 @@ public class UserService implements UserDetailsService {
 
     public User get(long id) {
         return userRepository.findById(id)
-                .orElseThrow(()->new UsernameNotFoundException("USER DOES NOT EXIST"));
+                .orElseThrow(()->new UserNotFoundException());
     }
 
     public User get(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(()->new UsernameNotFoundException("USER DOES NOT EXIST"));
+                .orElseThrow(()->new UserNotFoundException());
     }
 
     public long add(User newUser) {
@@ -36,13 +36,11 @@ public class UserService implements UserDetailsService {
         return newUser.getId();
     }
 
-    public int exists(User newUser){
+    public void exists(User newUser){
         if (userRepository.findByEmail(newUser.getEmail()).orElse(null) != null)
-            return -1;
+            throw new EmailExistException();
         else if (userRepository.findByNationalID(newUser.getNationalID()).orElse(null) != null)
-            return -2;
-        else
-            return 0;
+            throw new NationalIDException();
     }
 
     public boolean delete(long id) {
@@ -53,9 +51,8 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(()->new UsernameNotFoundException("USER DOES NOT EXIST"));
+                .orElseThrow(()->new UserNotFoundException());
 
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorities);
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),new ArrayList<>());
     }
 }

@@ -1,6 +1,6 @@
-package com.DExam.User_Service.resources.configuration;
+package com.DExam.User_Service.config;
 
-import com.DExam.User_Service.resources.services.UserService;
+import com.DExam.User_Service.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
