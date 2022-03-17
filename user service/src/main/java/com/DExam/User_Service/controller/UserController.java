@@ -48,9 +48,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public long update(@RequestBody User userInfo){
-        userService.delete(userInfo.getId());
-        return userService.add(userInfo);
+    public boolean update(@RequestBody User user){
+        userService.add(user);
+        return true;
     }
 
     @PostMapping("/login")
