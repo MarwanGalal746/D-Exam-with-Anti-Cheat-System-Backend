@@ -43,11 +43,6 @@ public class UserService implements UserDetailsService {
             throw new NationalIDException();
     }
 
-    public boolean delete(long id) {
-        userRepository.deleteById(id);
-        return true;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)

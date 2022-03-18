@@ -44,7 +44,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user){
         long userID = userService.add(user);
-        return new ResponseEntity<>(new CustomResponse().setMessage(String.valueOf(userID)).setStatus(HttpStatus.OK),HttpStatus.OK);
+        return new ResponseEntity<>(new CustomResponse().setMessage(String.valueOf(userID)).setStatus(HttpStatus.CREATED),HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
