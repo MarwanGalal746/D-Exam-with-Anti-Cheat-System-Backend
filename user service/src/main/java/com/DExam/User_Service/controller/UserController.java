@@ -1,6 +1,7 @@
 package com.DExam.User_Service.controller;
 
 import com.DExam.User_Service.exception.InvalidEmailPasswordException;
+import com.DExam.User_Service.model.MailForm;
 import com.DExam.User_Service.service.EmailService;
 import com.DExam.User_Service.model.AuthenticationRequest;
 import com.DExam.User_Service.model.User;
@@ -26,7 +27,7 @@ public class UserController {
     private final UserService userService;
     private final JwtManager jwtManager;
     private final AuthenticationManager authenticationManager;
-    private final EmailService emailSender;
+    private EmailController emailController;
 
     @GetMapping("/get")
     public User get(@RequestParam long id){
@@ -37,7 +38,8 @@ public class UserController {
     public ResponseEntity<?> verify(@RequestBody User user){
         userService.exists(user);
         String verificationCode = CodeGenerator.generateCode();
-        emailSender.send(user.getEmail(),"EMAIL VERIFICATION", CustomResponse.EMAIL_VERIFICATION + verificationCode);
+        MailForm mailForm = new MailForm(user.getEmail(),"EMAIL VERIFICATION",CustomResponse.EMAIL_VERIFICATION + verificationCode);
+        emailController.send(mailForm);
         return new ResponseEntity<>(new CustomResponse().setMessage(verificationCode).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 
