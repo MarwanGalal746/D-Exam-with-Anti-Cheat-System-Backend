@@ -1,14 +1,13 @@
 package com.DExam.User_Service.controller;
 
+import com.DExam.User_Service.config.JwtManager;
 import com.DExam.User_Service.exception.InvalidEmailPasswordException;
-import com.DExam.User_Service.model.MailForm;
-import com.DExam.User_Service.service.EmailService;
 import com.DExam.User_Service.model.AuthenticationRequest;
+import com.DExam.User_Service.model.MailForm;
 import com.DExam.User_Service.model.User;
 import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
-import com.DExam.User_Service.config.JwtManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +49,10 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public boolean update(@RequestBody User user){
+    public boolean update(@RequestBody User user, @RequestHeader (name="Authorization") String token){
+        token = token.split(" ")[1];
+        boolean isValid  = jwtManager.validateToken(token, user);
+        System.out.println(isValid);
         userService.add(user);
         return true;
     }
