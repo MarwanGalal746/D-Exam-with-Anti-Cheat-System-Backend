@@ -22,12 +22,12 @@ public class UserService implements UserDetailsService {
 
     public User get(long id) {
         return userRepository.findById(id)
-                .orElseThrow(()->new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public User get(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(()->new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public long add(User newUser) {
@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(()->new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),new ArrayList<>());
     }
