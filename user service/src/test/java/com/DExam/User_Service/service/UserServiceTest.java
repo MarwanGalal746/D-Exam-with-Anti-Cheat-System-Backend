@@ -57,9 +57,45 @@ class UserServiceTest {
 
     @Test
     void exists() {
-    }
+        //testing emails
+        String[] emails = new String[]{"eyad@gmail.com", "marwan@gmail.com",
+                "ammar@gmail.com", "bodda@gmail.com"};
+        for (int i = 0; i < emails.length; i++) {
+            User user = new User();
+            user.setEmail(emails[i]);
+            if (i == emails.length - 1)
+                when(userRepository.findByEmail(emails[i])).thenReturn(Optional.empty());
+            else
+                when(userRepository.findByEmail(emails[i])).thenReturn(Optional.of(user));
+            Optional<User> exist = Optional.empty();
+            try {
+                exist = Optional.ofNullable(underTest.get(emails[i]));
+                assertThat(exist).isNotEqualTo(Optional.empty());
+                System.out.println("found");
+            } catch (Exception exception) {
+                assertThat(exist).isEqualTo(Optional.empty());
+                System.out.println("not found");
+            }
+        }
 
-    @Test
-    void loadUserByUsername() {
+        String[] ids = new String[]{"0132156", "9784654",
+                "9876541", "16531320231"};
+        for (int i = 0; i < ids.length; i++) {
+            User user = new User();
+            user.setNationalID(ids[i]);
+            if (i == ids.length - 1)
+                when(userRepository.findByEmail(ids[i])).thenReturn(Optional.empty());
+            else
+                when(userRepository.findByEmail(ids[i])).thenReturn(Optional.of(user));
+            Optional<User> exist = Optional.empty();
+            try {
+                exist = Optional.ofNullable(underTest.get(ids[i]));
+                assertThat(exist).isNotEqualTo(Optional.empty());
+                System.out.println("found");
+            } catch (Exception exception) {
+                assertThat(exist).isEqualTo(Optional.empty());
+                System.out.println("not found");
+            }
+        }
     }
 }
