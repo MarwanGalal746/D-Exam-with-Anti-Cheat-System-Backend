@@ -36,7 +36,8 @@ public class UserController {
 
     @PostMapping("/verify")
     public ResponseEntity<?> verify(@RequestBody User user){
-        userService.exists(user);
+        userService.userExistByEmail(user.getEmail());
+        userService.userExistByNationalID(user.getNationalID());
         String verificationCode = CodeGenerator.generateCode();
         MailForm mailForm = new MailForm(user.getEmail(),"EMAIL VERIFICATION",CustomResponse.EMAIL_VERIFICATION + verificationCode);
         emailController.send(mailForm);
@@ -57,6 +58,7 @@ public class UserController {
         if(!isValid)
             return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.INVALID_TOKEN).setStatus(HttpStatus.NOT_ACCEPTABLE),HttpStatus.NOT_ACCEPTABLE);
 
+        userService.userExistByEmail(request.getNewUser().getEmail());
         userService.add(request.getNewUser());
         String newToken = jwtManager.generateToken(request.getNewUser().getEmail());
         return new ResponseEntity<>(new CustomResponse().setMessage(newToken).setStatus(HttpStatus.OK),HttpStatus.OK);
