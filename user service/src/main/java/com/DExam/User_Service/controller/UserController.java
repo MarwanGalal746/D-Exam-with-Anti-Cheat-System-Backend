@@ -4,6 +4,7 @@ import com.DExam.User_Service.config.JwtManager;
 import com.DExam.User_Service.exception.InvalidEmailPasswordException;
 import com.DExam.User_Service.model.AuthenticationRequest;
 import com.DExam.User_Service.model.MailForm;
+import com.DExam.User_Service.model.UpdateUserRequest;
 import com.DExam.User_Service.model.User;
 import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
@@ -49,12 +50,16 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public boolean update(@RequestBody User user, @RequestHeader (name="Authorization") String token){
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest request, @RequestHeader (name="Authorization") String token){
         token = token.split(" ")[1];
-        boolean isValid  = jwtManager.validateToken(token, user);
-        System.out.println(isValid);
-        userService.add(user);
-        return true;
+        boolean isValid  = jwtManager.validateToken(token, request.getOldUser());
+
+        if(!isValid)
+            return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.INVALID_TOKEN).setStatus(HttpStatus.NOT_ACCEPTABLE),HttpStatus.NOT_ACCEPTABLE);
+
+        userService.add(request.getNewUser());
+        String newToken = jwtManager.generateToken(request.getNewUser().getEmail());
+        return new ResponseEntity<>(new CustomResponse().setMessage(newToken).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 
     @PostMapping("/login")
