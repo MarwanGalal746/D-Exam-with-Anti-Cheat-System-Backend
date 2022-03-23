@@ -9,5 +9,7 @@ public interface ResponseMessages {
     String USER_UPDATED = "User has been updated";
     String INVALID_TOKEN = "Token is invalid or has expired";
 
+    String PASS_UPDATED = "Password has been updated";
+
 
 }

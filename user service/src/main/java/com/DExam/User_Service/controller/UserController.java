@@ -2,10 +2,7 @@ package com.DExam.User_Service.controller;
 
 import com.DExam.User_Service.config.JwtManager;
 import com.DExam.User_Service.exception.InvalidEmailPasswordException;
-import com.DExam.User_Service.model.AuthenticationRequest;
-import com.DExam.User_Service.model.MailForm;
-import com.DExam.User_Service.model.UpdateUserRequest;
-import com.DExam.User_Service.model.User;
+import com.DExam.User_Service.model.*;
 import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
@@ -81,5 +78,19 @@ public class UserController {
         userInfo.put("access_token",accessToken);
 
         return userInfo;
+    }
+
+    @PutMapping("/reset")
+    public ResponseEntity<?> reset(@RequestBody ResetPassRequest resetPassRequest){
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            resetPassRequest.getEmail(),resetPassRequest.getCurrentPassword()));
+        } catch (Exception exception){
+            throw new InvalidEmailPasswordException();
+        }
+        userService.resetPassword(resetPassRequest.getEmail(),resetPassRequest.getCurrentPassword());
+        return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.PASS_UPDATED).setStatus(HttpStatus.OK),HttpStatus.OK);
+
     }
 }
