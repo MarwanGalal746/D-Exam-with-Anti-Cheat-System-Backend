@@ -36,10 +36,13 @@ public class UserService implements UserDetailsService {
         return newUser.getId();
     }
 
-    public void exists(User newUser){
-        if (userRepository.findByEmail(newUser.getEmail()).orElse(null) != null)
+    public void userExistByEmail(String email){
+        if (userRepository.findByEmail(email).orElse(null) != null)
             throw new EmailExistException();
-        else if (userRepository.findByNationalID(newUser.getNationalID()).orElse(null) != null)
+    }
+
+    public void userExistByNationalID(String nationalID){
+         if (userRepository.findByNationalID(nationalID).orElse(null) != null)
             throw new NationalIDException();
     }
 
