@@ -21,10 +21,6 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public User get(long id) {
-        return userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
-    }
 
     public User get(String email) {
         return userRepository.findByEmail(email)
