@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 
 @Service
@@ -20,14 +21,10 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public User get(long id) {
-        return userRepository.findById(id)
-                .orElseThrow(()->new UserNotFoundException());
-    }
 
     public User get(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(()->new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public long add(User newUser) {
@@ -36,18 +33,26 @@ public class UserService implements UserDetailsService {
         return newUser.getId();
     }
 
-    public void exists(User newUser){
-        if (userRepository.findByEmail(newUser.getEmail()).orElse(null) != null)
+    public void userExistByEmail(String email){
+        if (userRepository.findByEmail(email).orElse(null) != null)
             throw new EmailExistException();
-        else if (userRepository.findByNationalID(newUser.getNationalID()).orElse(null) != null)
+    }
+
+    public void userExistByNationalID(String nationalID){
+         if (userRepository.findByNationalID(nationalID).orElse(null) != null)
             throw new NationalIDException();
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(()->new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),new ArrayList<>());
+    }
+
+    public void resetPassword(String email, String newPassword) {
+        newPassword = bCryptPasswordEncoder.encode(newPassword);
+        userRepository.updatePassword(email, newPassword);
     }
 }

@@ -1,12 +1,14 @@
 package com.DExam.User_Service.model;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
+@DynamicUpdate
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class User {
     private  @Id @GeneratedValue @Setter(AccessLevel.PROTECTED) long id;
@@ -17,6 +19,7 @@ public class User {
     private String nationalID;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(nullable = false)
     private String password;
     private String img;
     @Temporal(TemporalType.TIMESTAMP) @Column(nullable = false)
