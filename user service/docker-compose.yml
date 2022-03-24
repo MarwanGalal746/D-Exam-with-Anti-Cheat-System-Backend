@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  spring_dev:
+    build:
+      context: .
+    image: maven/builder:0.0.1
+    container_name: spring_container_api
+    ports:
+      - "8080:8080"
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=docker
+    volumes:
+      - "./src:/build/src"
+      - "./target:/build/target:cached"
+    command: "mvn spring-boot:run"
+    depends_on:
+      - spring_dev_db
+  spring_dev_db:
+    container_name: spring_dev_db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=docker
+    volumes:
+      - spring_dev_data:/var/lib/postgresql/data
+volumes:
+  spring_dev_data: {}
