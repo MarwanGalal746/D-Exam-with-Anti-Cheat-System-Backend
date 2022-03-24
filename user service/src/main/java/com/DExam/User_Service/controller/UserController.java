@@ -62,34 +62,27 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Object login(@RequestBody AuthenticationRequest authenticationRequest) {
+    public Object login(@RequestBody UserCredentials userCredentials) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            authenticationRequest.getEmail(),authenticationRequest.getPassword()));
+                            userCredentials.getEmail(), userCredentials.getPassword()));
         } catch (Exception exception){
                 throw new InvalidEmailPasswordException();
         }
 
-        String accessToken = jwtManager.generateToken(authenticationRequest.getEmail());
+        String accessToken = jwtManager.generateToken(userCredentials.getEmail());
 
         Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("user",userService.get(authenticationRequest.getEmail()));
+        userInfo.put("user",userService.get(userCredentials.getEmail()));
         userInfo.put("access_token",accessToken);
 
         return userInfo;
     }
 
     @PutMapping("/reset")
-    public ResponseEntity<?> reset(@RequestBody ResetPassRequest resetPassRequest){
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            resetPassRequest.getEmail(),resetPassRequest.getCurrentPassword()));
-        } catch (Exception exception){
-            throw new InvalidEmailPasswordException();
-        }
-        userService.resetPassword(resetPassRequest.getEmail(),resetPassRequest.getCurrentPassword());
+    public ResponseEntity<?> reset(@RequestBody UserCredentials userCredentials){
+        userService.resetPassword(userCredentials.getEmail(), userCredentials.getPassword());
         return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.PASS_UPDATED).setStatus(HttpStatus.OK),HttpStatus.OK);
 
     }

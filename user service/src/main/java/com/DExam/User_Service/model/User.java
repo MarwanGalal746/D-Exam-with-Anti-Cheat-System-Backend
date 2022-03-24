@@ -19,6 +19,7 @@ public class User {
     private String nationalID;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(nullable = false)
     private String password;
     private String img;
     @Temporal(TemporalType.TIMESTAMP) @Column(nullable = false)
