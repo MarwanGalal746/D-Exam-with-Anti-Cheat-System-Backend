@@ -1,32 +1,39 @@
 version: "3.7"
 services:
-  spring_dev:
-    build:
-      context: .
-    image: maven/builder:0.0.1
-    container_name: spring_container_api
-    ports:
-      - "8080:8080"
+  postgres:
+    container_name: postgres
+    image: postgres
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=docker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 147258369
+      PGDATA: /data/postgres
     volumes:
-      - "./src:/build/src"
-      - "./target:/build/target:cached"
-    command: "mvn spring-boot:run"
-    depends_on:
-      - spring_dev_db
-  spring_dev_db:
-    container_name: spring_dev_db
-    image: "postgres:12"
+      - postgres:/data/postgres
     ports:
       - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=docker
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN CONFIG SERVER_MODE: 'False'
     volumes:
-      - spring_dev_data:/var/lib/postgresql/data
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
 volumes:
-  spring_dev_data: {}
+  postgres:
+  pgadmin:
