@@ -91,10 +91,7 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.12.4</version>
 		</dependency>
-
-
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -102,6 +99,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>user-service</finalName>
 	</build>
-
 </project>
