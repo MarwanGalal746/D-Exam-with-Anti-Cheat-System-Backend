@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: userservice-service
+  name: pgadmin-service
 spec:
   selector:
-    app: user-service
-  type: LoadBalancer
+    app: pgadmin
+  type: NodePort
   ports:
-    - port: 8080
+    - port: 5050
       protocol: TCP
-      targetPort: 8080
-      nodePort: 30001
+      targetPort: 80
+      nodePort: 30000
