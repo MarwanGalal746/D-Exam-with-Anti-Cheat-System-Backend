@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     app: pgadmin
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 5050
       protocol: TCP

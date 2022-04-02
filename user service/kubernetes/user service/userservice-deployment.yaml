@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: user-service
+          image: eyadzz/dexam_user_service
           ports:
             - containerPort: 8080
           env:
