@@ -1,4 +1,4 @@
-package services
+package service
 
 import "exam_service/pkg/domain/exam"
 
