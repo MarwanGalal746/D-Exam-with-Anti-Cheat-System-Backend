@@ -7,7 +7,7 @@ type Exam struct {
 
 type ExamRepository interface {
 	Create(question Exam) error
-	Read() error
+	Read() ([]Exam, error)
 	//Update(Exam, string) error
 	//Delete(string) error
 }

@@ -4,7 +4,7 @@ import "exam_service/pkg/domain/exam"
 
 type ExamService interface {
 	Create(exam.Exam) error
-	Read() error
+	Read() ([]exam.Exam, error)
 }
 
 type DefaultExamService struct {
@@ -15,7 +15,7 @@ func (e DefaultExamService) Create(newExam exam.Exam) error {
 	return e.repo.Create(newExam)
 }
 
-func (e DefaultExamService) Read() error {
+func (e DefaultExamService) Read() ([]exam.Exam, error) {
 	return e.repo.Read()
 }
 

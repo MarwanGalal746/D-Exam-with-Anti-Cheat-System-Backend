@@ -2,7 +2,6 @@ package exam
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/go-redis/redis"
 )
 
@@ -20,19 +19,25 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 	return e.db.Set(newExam.Name, examJson, 0).Err()
 }
 
-func (e ExamRepositoryDb) Read() error {
-	for {
-		exams, cursor, err := e.db.Scan(cursor, "prefix:*", 0).Result()
+func (e ExamRepositoryDb) Read() ([]Exam, error) {
+	key := e.db.Scan(cursor, "*", 0).Iterator()
+	allExams := make([]Exam, 0)
+	for key.Next() {
+		value := e.db.Get(key.Val())
+		if err := value.Err(); err != nil {
+			return nil, err
+		}
+		var exam Exam
+		err := json.Unmarshal([]byte(value.Val()), &exam)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		for _, key := range exams {
-			fmt.Println("key", key)
-		}
-		if cursor == 0 { // no more keys
-			return nil
-		}
+		allExams = append(allExams, exam)
 	}
+	if err := key.Err(); err != nil {
+		return nil, err
+	}
+	return allExams, nil
 }
 
 func NewExamRepositoryDb(db *redis.Client) ExamRepositoryDb {
