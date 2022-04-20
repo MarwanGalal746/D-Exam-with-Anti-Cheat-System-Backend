@@ -3,7 +3,7 @@ package service
 import "exam_service/pkg/domain/exam"
 
 type ExamService interface {
-	Create(exam.Exam) (int, error)
+	Create(exam.Exam) error
 	Read() error
 }
 

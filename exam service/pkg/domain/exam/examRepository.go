@@ -17,7 +17,7 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 	if err != nil {
 		return err
 	}
-	return e.db.Set(newExam.name, examJson, 0).Err()
+	return e.db.Set(newExam.Name, examJson, 0).Err()
 }
 
 func (e ExamRepositoryDb) Read() error {
@@ -33,4 +33,8 @@ func (e ExamRepositoryDb) Read() error {
 			return nil
 		}
 	}
+}
+
+func NewExamRepositoryDb(db *redis.Client) ExamRepositoryDb {
+	return ExamRepositoryDb{db}
 }
