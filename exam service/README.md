@@ -37,7 +37,7 @@ Follow the instructions to complete the installation.
 - In your cloned directory.
 - open your terminal and run:
 
-```
+```bash
 go run main.go
 ```
 
