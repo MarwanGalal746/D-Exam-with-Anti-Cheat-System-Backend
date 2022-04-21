@@ -22,17 +22,17 @@ This service allows teachers to create, get, update and delete exams and questio
 Clone the repository.<br />
 Follow the instructions to complete the installation.
 
-### Prerequisites
+## Prerequisites
 
 - [Golang](https://golang.org/dl/)
 - [Redis](https://redis.io/download/)
 
-### Environment variables file
+## Environment variables file
 
 - Rename app.env.example file to .env
 - Modify app.env file according to your needs.
 
-### Running
+## Running
 
 - In your cloned directory.
 - open your terminal and run:
@@ -45,6 +45,6 @@ The server will start at:
 
 - Local: http://localhost:[SERVER_PORT]
 
-### Postman collection
+## Postman collection
 
-you will find it [here](postman%20collection/egirna.postman_collection.json).
+you will find it [here](postman%20collection/exam service.postman_collection.json).

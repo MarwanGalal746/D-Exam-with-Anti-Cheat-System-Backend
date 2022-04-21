@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "a0bc14d1-12a3-4080-a878-903dff127ad9",
+		"name": "exam service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create exam",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : \"1\",\n    \"name\" : \"marwaaaaaaaaan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/api/exam/create-exam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"exam",
+						"create-exam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all exams",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/exam/get-all-exams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"exam",
+						"get-all-exams"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
