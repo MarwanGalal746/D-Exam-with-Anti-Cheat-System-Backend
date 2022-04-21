@@ -42,7 +42,7 @@ func (examHandler ExamHandlers) Create(c *gin.Context) {
 
 func (examHandler ExamHandlers) Read(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	allExams, err := examHandler.service.Read()
+	allExams, err := examHandler.service.GetAll()
 	if err != nil && err.Error() == errs.ErrDb.Error() {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusInternalServerError))

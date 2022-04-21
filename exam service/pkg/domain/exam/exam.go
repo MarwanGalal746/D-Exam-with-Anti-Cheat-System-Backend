@@ -6,5 +6,5 @@ type Exam struct {
 
 type ExamRepository interface {
 	Create(question Exam) error
-	Read() ([]Exam, error)
+	GetAll() ([]Exam, error)
 }

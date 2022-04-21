@@ -36,7 +36,7 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 	return nil
 }
 
-func (e ExamRepositoryDb) Read() ([]Exam, error) {
+func (e ExamRepositoryDb) GetAll() ([]Exam, error) {
 	key := e.db.Scan(cursor, "*", 0).Iterator()
 	allExams := make([]Exam, 0)
 
