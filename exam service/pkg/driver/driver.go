@@ -1,8 +1,8 @@
 package driver
 
 import (
-	"fmt"
 	"github.com/go-redis/redis"
+	"log"
 )
 
 func GetDbConnection() *redis.Client {
@@ -11,7 +11,11 @@ func GetDbConnection() *redis.Client {
 		Password: "",
 		DB:       0,
 	})
-	pong, err := client.Ping().Result()
-	fmt.Println(pong, err)
+	_, err := client.Ping().Result()
+	if err != nil {
+		log.Println("Can't connect with the database", "Errors:", err)
+	} else {
+		log.Println("Db is connected", "Errors:", err)
+	}
 	return client
 }
