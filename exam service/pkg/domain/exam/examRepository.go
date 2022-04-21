@@ -3,7 +3,10 @@ package exam
 import (
 	"encoding/json"
 	"exam_service/pkg/errs"
+	"fmt"
 	"github.com/go-redis/redis"
+	"log"
+	"strings"
 )
 
 type ExamRepositoryDb struct {
@@ -22,15 +25,18 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 	key := e.db.Scan(cursor, "*", 0).Iterator()
 	for key.Next() {
 		if key.Val() == newExam.Name {
+			log.Println(err)
 			return errs.ErrDuplicateExam
 		}
 	}
 	if err := key.Err(); err != nil {
+		log.Println(err)
 		return errs.ErrDb
 	}
 
 	err = e.db.Set(newExam.Name, examJson, 0).Err()
 	if err != nil {
+		log.Println(err)
 		return errs.ErrDb
 	}
 	return nil
@@ -48,15 +54,35 @@ func (e ExamRepositoryDb) GetAll() ([]Exam, error) {
 		var exam Exam
 		err := json.Unmarshal([]byte(value.Val()), &exam)
 		if err != nil {
+			log.Println(err)
 			return nil, errs.ErrUnmarshallingJson
 		}
 		allExams = append(allExams, exam)
 	}
 	if err := key.Err(); err != nil {
+		log.Println(err)
 		return nil, errs.ErrDb
 	}
 
 	return allExams, nil
+}
+
+func (e ExamRepositoryDb) GetExam(name string) (*Exam, error) {
+	jsonExam := e.db.Get(name)
+	fmt.Println(jsonExam.String())
+	if strings.Contains(jsonExam.String(), "connect: connection refused") {
+		return nil, errs.ErrDb
+	} else if strings.Contains(jsonExam.String(), "redis: nil") {
+		return nil, errs.ErrExamDoesNotExist
+	}
+	var exam *Exam
+	err := json.Unmarshal([]byte(jsonExam.Val()), &exam)
+	if err != nil {
+		log.Println(err)
+		return nil, errs.ErrUnmarshallingJson
+	}
+
+	return exam, nil
 }
 
 func NewExamRepositoryDb(db *redis.Client) ExamRepositoryDb {

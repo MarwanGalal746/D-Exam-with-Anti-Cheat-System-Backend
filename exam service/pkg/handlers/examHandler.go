@@ -63,3 +63,27 @@ func (examHandler ExamHandlers) GetAll(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusOK)
 	json.NewEncoder(c.Writer).Encode(allExams)
 }
+
+func (examHandler ExamHandlers) GetExam(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	exam, err := examHandler.service.GetExam(c.Param("name"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrUnmarshallingJson.Error() {
+		log.Println(errs.ErrUnmarshallingJson.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrUnmarshallingJson.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusInternalServerError))
+		return
+	}
+	//sending the response
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(exam)
+}

@@ -16,6 +16,7 @@ func Start() {
 
 	router.POST("/api/exam/create-exam", examHandler.Create)
 	router.GET("/api/exam/get-all-exams", examHandler.GetAll)
+	router.GET("/api/exam/get-exam/:name", examHandler.GetExam)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 

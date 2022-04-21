@@ -7,6 +7,7 @@ var (
 	ErrUnmarshallingJson   = errors.New("can't unmarshal the JSON to instance")
 	ErrMarshallingInstance = errors.New("can't marshal the instance to JSON")
 	ErrDuplicateExam       = errors.New("an exam with this name exists")
+	ErrExamDoesNotExist    = errors.New("this esam doesn't exist")
 )
 
 type Response struct {
