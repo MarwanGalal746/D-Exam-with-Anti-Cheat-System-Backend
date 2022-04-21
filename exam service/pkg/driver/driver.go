@@ -2,11 +2,12 @@ package driver
 
 import (
 	"github.com/go-redis/redis"
+	"github.com/nitishm/go-rejson"
 	"github.com/spf13/viper"
 	"log"
 )
 
-func GetDbConnection() *redis.Client {
+func GetDbConnection() *rejson.Handler {
 	client := redis.NewClient(&redis.Options{
 		Addr:     viper.GetString("DB_HOST") + viper.GetString("DB_PORT"),
 		Password: viper.GetString("DB_PASSWORD"),
@@ -18,5 +19,8 @@ func GetDbConnection() *redis.Client {
 	} else {
 		log.Println("Db is connected", "Errors:", err)
 	}
-	return client
+	rh := rejson.NewReJSONHandler()
+	rh.SetGoRedisClient(client)
+
+	return rh
 }
