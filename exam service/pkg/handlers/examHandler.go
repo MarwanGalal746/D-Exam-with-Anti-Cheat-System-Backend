@@ -40,7 +40,7 @@ func (examHandler ExamHandlers) Create(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(newExam)
 }
 
-func (examHandler ExamHandlers) Read(c *gin.Context) {
+func (examHandler ExamHandlers) GetAll(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
 	allExams, err := examHandler.service.GetAll()
 	if err != nil && err.Error() == errs.ErrDb.Error() {

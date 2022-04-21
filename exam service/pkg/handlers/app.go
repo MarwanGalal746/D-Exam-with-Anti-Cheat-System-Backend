@@ -14,7 +14,7 @@ func Start() {
 	examHandler := ExamHandlers{service.NewExamService(exam.NewExamRepositoryDb(dbConnection))}
 
 	router.POST("/api/exam/create-exam", examHandler.Create)
-	router.GET("/api/exam/read-exams", examHandler.Read)
+	router.GET("/api/exam/get-all-exams", examHandler.GetAll)
 
 	router.Run(":8888")
 
