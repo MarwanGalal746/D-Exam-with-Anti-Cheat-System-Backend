@@ -5,6 +5,7 @@ import (
 	"exam_service/pkg/driver"
 	"exam_service/pkg/service"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
 func Start() {
@@ -16,6 +17,6 @@ func Start() {
 	router.POST("/api/exam/create-exam", examHandler.Create)
 	router.GET("/api/exam/get-all-exams", examHandler.GetAll)
 
-	router.Run(":8888")
+	router.Run(viper.GetString("SERVER_PORT"))
 
 }

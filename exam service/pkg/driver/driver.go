@@ -2,14 +2,15 @@ package driver
 
 import (
 	"github.com/go-redis/redis"
+	"github.com/spf13/viper"
 	"log"
 )
 
 func GetDbConnection() *redis.Client {
 	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "",
-		DB:       0,
+		Addr:     viper.GetString("DB_HOST") + viper.GetString("DB_PORT"),
+		Password: viper.GetString("DB_PASSWORD"),
+		DB:       viper.GetInt("DB_NAME"),
 	})
 	_, err := client.Ping().Result()
 	if err != nil {
