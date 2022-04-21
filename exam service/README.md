@@ -47,4 +47,4 @@ The server will start at:
 
 ## Postman collection
 
-you will find it [here](postman%20collection/exam service.postman_collection.json).
+you will find it [here](postman%20collection/exam%20service.postman_collection.json).
