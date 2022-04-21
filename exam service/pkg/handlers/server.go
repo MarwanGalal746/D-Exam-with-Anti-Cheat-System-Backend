@@ -10,9 +10,9 @@ import (
 
 func Start() {
 	router := gin.Default()
-	dbConnection := driver.GetDbConnection()
+	redisDb, redisJsonDb := driver.GetDbConnection()
 
-	examHandler := ExamHandlers{service.NewExamService(exam.NewExamRepositoryDb(dbConnection))}
+	examHandler := ExamHandlers{service.NewExamService(exam.NewExamRepositoryDb(redisDb, redisJsonDb))}
 
 	router.POST("/api/exam/create-exam", examHandler.Create)
 	//router.GET("/api/exam/get-all-exams", examHandler.GetAll)

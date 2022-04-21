@@ -2,23 +2,25 @@ package exam
 
 import (
 	"exam_service/pkg/errs"
+	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
 )
 
 type ExamRepositoryDb struct {
-	db *rejson.Handler
+	redisDb     *redis.Client
+	redisJsonDb *rejson.Handler
 }
 
 var cursor uint64
 
 func (e ExamRepositoryDb) Create(newExam Exam) error {
 	// checking if there is an exam with the same name
-	_, err := e.db.JSONGet(newExam.Name, ".")
+	_, err := e.redisJsonDb.JSONGet(newExam.Name, ".")
 	if err == nil {
 		return errs.ErrDuplicateExam
 	}
 
-	_, err = e.db.JSONSet(newExam.Name, ".", newExam)
+	_, err = e.redisJsonDb.JSONSet(newExam.Name, ".", newExam)
 	if err != nil {
 		return errs.ErrDb
 	}
@@ -49,6 +51,7 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 //
 //	return allExams, nil
 //}
+
 //
 //func (e ExamRepositoryDb) GetExam(name string) (*Exam, error) {
 //	jsonExam := e.db.Get(name)
@@ -67,10 +70,6 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 //	return exam, nil
 //}
 
-func NewExamRepositoryDb(db *rejson.Handler) ExamRepositoryDb {
-	return ExamRepositoryDb{db}
+func NewExamRepositoryDb(redisDb *redis.Client, redisJsonDb *rejson.Handler) ExamRepositoryDb {
+	return ExamRepositoryDb{redisDb: redisDb, redisJsonDb: redisJsonDb}
 }
-
-//you
-//go redis
-//db

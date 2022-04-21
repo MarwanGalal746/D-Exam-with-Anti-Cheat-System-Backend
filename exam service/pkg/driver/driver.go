@@ -7,20 +7,20 @@ import (
 	"log"
 )
 
-func GetDbConnection() *rejson.Handler {
-	client := redis.NewClient(&redis.Options{
+func GetDbConnection() (*redis.Client, *rejson.Handler) {
+	redisDb := redis.NewClient(&redis.Options{
 		Addr:     viper.GetString("DB_HOST") + viper.GetString("DB_PORT"),
 		Password: viper.GetString("DB_PASSWORD"),
 		DB:       viper.GetInt("DB_NAME"),
 	})
-	_, err := client.Ping().Result()
+	_, err := redisDb.Ping().Result()
 	if err != nil {
 		log.Println("Can't connect with the database", "Errors:", err)
 	} else {
 		log.Println("Db is connected", "Errors:", err)
 	}
-	rh := rejson.NewReJSONHandler()
-	rh.SetGoRedisClient(client)
+	redisJsonDb := rejson.NewReJSONHandler()
+	redisJsonDb.SetGoRedisClient(redisDb)
 
-	return rh
+	return redisDb, redisJsonDb
 }
