@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\" : \"1\",\n    \"name\" : \"marwaaaaaaaaan\"\n}",
+					"raw": "{\n    \"examId\" : \"mid-en\",\n    \"name\" : \"midterm\",\n    \"courseId\" : \"en\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -51,6 +51,28 @@
 						"api",
 						"exam",
 						"get-all-exams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get exam",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/exam/get-exam/marwan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"exam",
+						"get-exam",
+						"marwan"
 					]
 				}
 			},

@@ -11,16 +11,36 @@ type ExamRepositoryDb struct {
 	redisJsonDb *rejson.Handler
 }
 
+type courseDb struct {
+	CourseId string   `json:"courseId"`
+	Exams    []string `json:"exams"`
+}
+
 var cursor uint64
 
 func (e ExamRepositoryDb) Create(newExam Exam) error {
 	// checking if there is an exam with the same name
-	_, err := e.redisJsonDb.JSONGet(newExam.Name, ".")
+	_, err := e.redisJsonDb.JSONGet(newExam.ExamId, ".")
 	if err == nil {
 		return errs.ErrDuplicateExam
 	}
 
-	_, err = e.redisJsonDb.JSONSet(newExam.Name, ".", newExam)
+	//check if this exam is not the first exam in the course
+	ok, err := e.redisJsonDb.JSONGet(newExam.CourseId, ".")
+	course := &courseDb{newExam.CourseId, []string{newExam.ExamId}}
+	if ok == nil {
+		ok, err = e.redisJsonDb.JSONSet(newExam.CourseId, ".", course)
+		if err != nil {
+			return errs.ErrDb
+		}
+	} else {
+		_, err := e.redisJsonDb.JSONArrAppend(newExam.CourseId, "exams", newExam.ExamId)
+		if err != nil {
+			return errs.ErrDb
+		}
+	}
+
+	_, err = e.redisJsonDb.JSONSet(newExam.ExamId, ".", newExam)
 	if err != nil {
 		return errs.ErrDb
 	}

@@ -1,11 +1,9 @@
 package exam
 
-import "exam_service/pkg/domain/question"
-
 type Exam struct {
-	Name      string              `json:"name"`
-	CourseId  int                 `json:"courseId"`
-	Questions []question.Question `json:"questions"`
+	ExamId   string `json:"examId"`
+	Name     string `json:"name"`
+	CourseId string `json:"courseId"`
 }
 
 type ExamRepository interface {

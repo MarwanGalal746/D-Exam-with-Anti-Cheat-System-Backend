@@ -3,6 +3,7 @@ package errs
 import "errors"
 
 var (
+	ErrRedisNil            = errors.New("redis: nil")
 	ErrDb                  = errors.New("unexpected database error")
 	ErrUnmarshallingJson   = errors.New("can't unmarshal the JSON to instance")
 	ErrMarshallingInstance = errors.New("can't marshal the instance to JSON")
