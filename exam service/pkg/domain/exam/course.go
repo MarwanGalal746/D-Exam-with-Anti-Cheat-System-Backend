@@ -1,11 +1,11 @@
 package exam
 
-type Course struct {
+type CourseInfo struct {
 	CourseId string   `json:"courseId"`
-	Exams    []string `json:"exams"`
+	ExamsIds []string `json:"examsIds"`
 }
 
-type CourseDb struct {
-	CourseId string `json:"courseId"`
-	Exams    []Exam `json:"exams"`
+type Course struct {
+	CourseDate CourseInfo `json:"courseDate"`
+	Exams      []string   `json:"exams"`
 }
