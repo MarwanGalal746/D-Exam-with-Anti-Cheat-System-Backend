@@ -1,6 +1,8 @@
 package exam
 
-import "time"
+import (
+	"time"
+)
 
 type Exam struct {
 	ExamId    string    `json:"examId"`
@@ -13,6 +15,16 @@ type Exam struct {
 
 type ExamRepository interface {
 	Create(Exam) error
-	GetCourseExams(string) (*Course, error)
+	GetCourseExams(string) (*CourseDb, error)
 	//GetExam(string) (*Exam, error)
+}
+
+type Course struct {
+	CourseId string   `json:"courseId"`
+	Exams    []string `json:"exams"`
+}
+
+type CourseDb struct {
+	CourseId string `json:"courseId"`
+	Exams    []Exam `json:"exams"`
 }

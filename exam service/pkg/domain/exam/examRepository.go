@@ -13,11 +13,6 @@ type ExamRepositoryDb struct {
 	redisJsonDb *rejson.Handler
 }
 
-type Course struct {
-	CourseId string   `json:"courseId"`
-	Exams    []string `json:"exams"`
-}
-
 var cursor uint64
 
 func (e ExamRepositoryDb) Create(newExam Exam) error {
@@ -30,7 +25,7 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 
 	//check if this exam is not the first exam in the course
 	ok, err := e.redisJsonDb.JSONGet(newExam.CourseId, ".")
-	course := &Course{newExam.CourseId, []string{newExam.ExamId}}
+	course := &Course{CourseId: newExam.CourseId, Exams: []string{newExam.ExamId}}
 	if ok == nil {
 		ok, err = e.redisJsonDb.JSONSet(newExam.CourseId, ".", course)
 		if err != nil {
@@ -53,18 +48,31 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 	return nil
 }
 
-func (e ExamRepositoryDb) GetCourseExams(courseId string) (*Course, error) {
-	key := e.redisDb.Get(courseId)
-	if err := key.Err(); err != nil {
+func (e ExamRepositoryDb) GetCourseExams(courseId string) (*CourseDb, error) {
+	var courseDb CourseDb
+	key, err := e.redisJsonDb.JSONGet(courseId, ".")
+	if err != nil {
+		log.Println(err)
 		return nil, errs.ErrDb
 	}
 	var course Course
-	err := json.Unmarshal([]byte(key.Val()), &course)
+	err = json.Unmarshal(key.([]byte), &course)
 	if err != nil {
 		log.Println(err)
 		return nil, errs.ErrUnmarshallingJson
 	}
-	return &course, nil
+	courseDb.CourseId = course.CourseId
+	for _, examName := range course.Exams {
+		key, err = e.redisJsonDb.JSONGet(examName, ".")
+		if err != nil {
+			log.Println(err)
+			return nil, errs.ErrDb
+		}
+		var exam Exam
+		err = json.Unmarshal(key.([]byte), &exam)
+		courseDb.Exams = append(courseDb.Exams, exam)
+	}
+	return &courseDb, nil
 }
 
 //

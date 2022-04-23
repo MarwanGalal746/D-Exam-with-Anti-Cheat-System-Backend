@@ -1,10 +1,12 @@
 package service
 
-import "exam_service/pkg/domain/exam"
+import (
+	"exam_service/pkg/domain/exam"
+)
 
 type ExamService interface {
 	Create(exam.Exam) error
-	GetCourseExams(string) (*exam.Course, error)
+	GetCourseExams(string) (*exam.CourseDb, error)
 	//GetExam(string) (*exam.Exam, error)
 }
 
@@ -16,7 +18,7 @@ func (e DefaultExamService) Create(newExam exam.Exam) error {
 	return e.repo.Create(newExam)
 }
 
-func (e DefaultExamService) GetCourseExams(courseId string) (*exam.Course, error) {
+func (e DefaultExamService) GetCourseExams(courseId string) (*exam.CourseDb, error) {
 	return e.repo.GetCourseExams(courseId)
 }
 
