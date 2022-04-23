@@ -3,12 +3,12 @@ package exam
 import "time"
 
 type Exam struct {
-	ExamId    string        `json:"examId"`
-	Name      string        `json:"name"`
-	CourseId  string        `json:"courseId"`
-	Date      time.Time     `json:"date"`
-	Duration  time.Duration `json:"duration"`
-	TotalMark int           `json:"totalMark"`
+	ExamId    string    `json:"examId"`
+	Name      string    `json:"name"`
+	CourseId  string    `json:"courseId"`
+	Duration  int       `json:"duration"`
+	TotalMark int       `json:"totalMark"`
+	Date      time.Time `json:"date"`
 }
 
 type ExamRepository interface {

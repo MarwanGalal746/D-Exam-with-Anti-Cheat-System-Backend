@@ -7,7 +7,7 @@ var (
 	ErrDb                  = errors.New("unexpected database error")
 	ErrUnmarshallingJson   = errors.New("can't unmarshal the JSON to instance")
 	ErrMarshallingInstance = errors.New("can't marshal the instance to JSON")
-	ErrDuplicateExam       = errors.New("an exam with this name exists")
+	ErrDuplicateExam       = errors.New("an exam with this ID exists")
 	ErrExamDoesNotExist    = errors.New("this esam doesn't exist")
 )
 
