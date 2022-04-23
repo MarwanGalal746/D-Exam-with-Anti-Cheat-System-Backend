@@ -15,7 +15,6 @@ type ExamHandlers struct {
 }
 
 func (examHandler ExamHandlers) Create(c *gin.Context) {
-	log.Println("Method: POST   Route: /api/exam/create-exam Function: Method: exam_service/pkg/handlers.ExamHandlers.Create")
 	c.Writer.Header().Add("Content-Type", "application/json")
 	var newExam exam.Exam
 	_ = json.NewDecoder(c.Request.Body).Decode(&newExam)
