@@ -21,6 +21,6 @@ type Exam struct {
 
 type ExamRepository interface {
 	Create(Exam) error
-	//GetCourseExams(string) (*CourseDb, error)
+	GetCourseExams(string) (*Course, error)
 	//GetExam(string) (*Exam, error)
 }

@@ -6,6 +6,6 @@ type CourseInfo struct {
 }
 
 type Course struct {
-	CourseDate CourseInfo `json:"courseDate"`
-	Exams      []string   `json:"exams"`
+	CourseData CourseInfo `json:"courseData"`
+	ExamsData  []ExamInfo `json:"exams"`
 }

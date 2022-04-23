@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"examId\" : \"mid-en\",\n    \"name\" : \"midterm\",\n    \"courseId\" : \"en\"\n}",
+					"raw": "{\n    \"examData\" : {\n        \"examId\" : \"en-mid\",\n        \"name\" : \"midterm\",\n        \"courseId\" : \"en\",\n        \"duration\" : 120,\n        \"totalMark\" : 60,\n        \"date\" : \"2012-04-23T18:25:43.511Z\"\n    },\n    \"questions\" : [\n        {\n            \"id\" : 1,\n            \"question\" : \"abcd\",\n            \"rightChoice\" : \"a\",\n            \"choices\" : [\"a\"]\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,7 +41,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8888/api/exam/get-all-exams",
+					"raw": "http://localhost:8888/api/exam/get-all-exams/en",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -50,7 +50,8 @@
 					"path": [
 						"api",
 						"exam",
-						"get-all-exams"
+						"get-all-exams",
+						"en"
 					]
 				}
 			},

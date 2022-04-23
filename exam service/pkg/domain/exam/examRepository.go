@@ -1,6 +1,7 @@
 package exam
 
 import (
+	"encoding/json"
 	"exam_service/pkg/errs"
 	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
@@ -60,33 +61,46 @@ func (e ExamRepositoryDb) Create(newExam Exam) error {
 	return nil
 }
 
-//func (e ExamRepositoryDb) GetCourseExams(courseId string) (*CourseDb, error) {
-//	var courseDb CourseDb
-//	key, err := e.redisJsonDb.JSONGet(courseId, ".")
-//	if err != nil {
-//		log.Println(err)
-//		return nil, errs.ErrDb
-//	}
-//	var course Course
-//	err = json.Unmarshal(key.([]byte), &course)
-//	if err != nil {
-//		log.Println(err)
-//		return nil, errs.ErrUnmarshallingJson
-//	}
-//	courseDb.CourseId = course.CourseId
-//	fmt.Println(len(courseDb.Exams))
-//	//for _, examName := range course.Exams {
-//	//	key, err = e.redisJsonDb.JSONGet(examName, ".")
-//	//	if err != nil {
-//	//		log.Println(err)
-//	//		return nil, errs.ErrDb
-//	//	}
-//	//	var exam Exam
-//	//	err = json.Unmarshal(key.([]byte), &exam)
-//	//	courseDb.Exams = append(courseDb.Exams, exam)
-//	//}
-//	return &courseDb, nil
-//}
+func (e ExamRepositoryDb) GetCourseExams(courseId string) (*Course, error) {
+	var course Course
+	key, err := e.redisJsonDb.JSONGet(courseId, ".")
+	if err != nil {
+		log.Println(err)
+		return nil, errs.ErrDb
+	}
+	err = json.Unmarshal(key.([]byte), &course.CourseData)
+	if err != nil {
+		log.Println(err)
+		return nil, errs.ErrUnmarshallingJson
+	}
+	for _, examId := range course.CourseData.ExamsIds {
+		key, err := e.redisJsonDb.JSONGet(examId, ".")
+		if err != nil {
+			log.Println(err)
+			return nil, errs.ErrDb
+		}
+		var exam ExamInfo
+		err = json.Unmarshal(key.([]byte), &exam)
+		if err != nil {
+			log.Println(err)
+			return nil, errs.ErrUnmarshallingJson
+		}
+		course.ExamsData = append(course.ExamsData, exam)
+	}
+	//courseDb.CourseId = course.CourseId
+	//fmt.Println(len(courseDb.Exams))
+	////for _, examName := range course.Exams {
+	////	key, err = e.redisJsonDb.JSONGet(examName, ".")
+	////	if err != nil {
+	////		log.Println(err)
+	////		return nil, errs.ErrDb
+	////	}
+	////	var exam Exam
+	////	err = json.Unmarshal(key.([]byte), &exam)
+	////	courseDb.Exams = append(courseDb.Exams, exam)
+	////}
+	return &course, nil
+}
 
 //
 //func (e ExamRepositoryDb) GetExam(name string) (*Exam, error) {
