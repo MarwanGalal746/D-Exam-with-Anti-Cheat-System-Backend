@@ -45,3 +45,27 @@ func (questionHandler QuestionHandlers) Add(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusOK)
 	json.NewEncoder(c.Writer).Encode(questionAdded)
 }
+
+func (questionHandler QuestionHandlers) Delete(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	err := questionHandler.service.Delete(c.Param("examId"), c.Param("questionId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrQuestionDoesNotExist.Error() {
+		log.Println(errs.ErrQuestionDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrQuestionDoesNotExist.Error(), http.StatusBadRequest))
+		return
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(errs.NewResponse("Question has been deleted successfully", http.StatusOK))
+}

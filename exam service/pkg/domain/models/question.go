@@ -9,6 +9,6 @@ type Question struct {
 
 type QuestionRepository interface {
 	Add(string, Question) (*Question, error)
+	Delete(string, string) error
 	//Update(int, Question) error
-	//Delete(string) error
 }

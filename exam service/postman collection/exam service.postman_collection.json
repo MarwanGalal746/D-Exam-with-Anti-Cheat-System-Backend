@@ -177,6 +177,29 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "delete question",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/exam/delete-question/en-mid/en-en-mid-0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"delete-question",
+								"en-mid",
+								"en-en-mid-0"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
