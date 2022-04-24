@@ -19,9 +19,15 @@ type Exam struct {
 	Questions []Question `json:"questions,omitempty"`
 }
 
+func resetExamInfo(source ExamInfo) ExamInfo {
+	return ExamInfo{ExamId: source.ExamId, Name: source.Name, CourseId: source.CourseId, Duration: source.Duration,
+		TotalMark: source.TotalMark, Date: source.Date}
+}
+
 type ExamRepository interface {
 	Create(Exam) error
 	GetCourseExams(string) (*Course, error)
 	GetExam(string) (*Exam, error)
 	DelExam(string) error
+	UpdateExamInfo(string, ExamInfo) error
 }

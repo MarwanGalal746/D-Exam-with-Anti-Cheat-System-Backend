@@ -3,13 +3,13 @@ package errs
 import "errors"
 
 var (
-	ErrRedisNil            = errors.New("redis: nil")
-	ErrDb                  = errors.New("unexpected database error")
-	ErrUnmarshallingJson   = errors.New("can't unmarshal the JSON to instance")
-	ErrMarshallingInstance = errors.New("can't marshal the instance to JSON")
-	ErrDuplicateExam       = errors.New("an exam with this ID exists")
-	ErrExamDoesNotExist    = errors.New("this exam doesn't exist")
-	ErrCourseDoesNotExist  = errors.New("this course doesn't exist")
+	ErrRedisNil           = errors.New("redis: nil")
+	ErrDb                 = errors.New("unexpected database error")
+	ErrUnmarshallingJson  = errors.New("can't unmarshal the JSON to instance")
+	ErrDuplicateExam      = errors.New("an exam with this ID exists")
+	ErrExamDoesNotExist   = errors.New("this exam doesn't exist")
+	ErrCourseDoesNotExist = errors.New("this course doesn't exist")
+	ErrExamUpdateId       = errors.New("can't update the exam information because you've changed th exam id")
 )
 
 type Response struct {

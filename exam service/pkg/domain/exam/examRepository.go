@@ -200,6 +200,38 @@ func (e ExamRepositoryDb) DelExam(examId string) error {
 	return nil
 }
 
+func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam ExamInfo) error {
+	var examData ExamInfo
+	key, err := e.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return errs.ErrExamDoesNotExist
+		}
+		return errs.ErrDb
+	}
+	err = json.Unmarshal(key.([]byte), &examData)
+	if err != nil {
+		log.Println(err)
+		return errs.ErrUnmarshallingJson
+	}
+	if newExam.ExamId != examData.ExamId {
+		return errs.ErrExamUpdateId
+	}
+	updatedExam := resetExamInfo(newExam)
+	updatedExam.QuestionIds = examData.QuestionIds
+	_, err = e.redisJsonDb.JSONSet(updatedExam.ExamId, ".", updatedExam)
+	if err != nil {
+		log.Println(err)
+		return errs.ErrDb
+	}
+	//this line to make the array of questions id empty
+	//because it's not important and secure to show questions id to the user in this endpoint
+	updatedExam.QuestionIds = []string{}
+
+	return nil
+}
+
 func NewExamRepositoryDb(redisDb *redis.Client, redisJsonDb *rejson.Handler) ExamRepositoryDb {
 	return ExamRepositoryDb{redisDb: redisDb, redisJsonDb: redisJsonDb}
 }

@@ -110,3 +110,34 @@ func (examHandler ExamHandlers) DelExam(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusOK)
 	json.NewEncoder(c.Writer).Encode(errs.NewResponse("Exam has been deleted successfully", http.StatusOK))
 }
+
+func (examHandler ExamHandlers) UpdateExamInfo(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	var newExam exam.ExamInfo
+	_ = json.NewDecoder(c.Request.Body).Decode(&newExam)
+	err := examHandler.service.UpdateExamInfo(c.Param("examId"), newExam)
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrUnmarshallingJson.Error() {
+		log.Println(errs.ErrUnmarshallingJson.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrUnmarshallingJson.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
+		return
+	} else if err != nil && err.Error() == errs.ErrExamUpdateId.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamUpdateId.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(newExam)
+}

@@ -18,6 +18,7 @@ func Start() {
 	router.GET("/api/exam/get-all-exams/:courseId", examHandler.GetCourseExams)
 	router.GET("/api/exam/get-exam/:examId", examHandler.GetExam)
 	router.DELETE("/api/exam/delete-exam/:examId", examHandler.DelExam)
+	router.PUT("/api/exam/update-exam-info/:examId", examHandler.UpdateExamInfo)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 

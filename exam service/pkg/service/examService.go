@@ -9,6 +9,7 @@ type ExamService interface {
 	GetCourseExams(string) (*exam.Course, error)
 	GetExam(string) (*exam.Exam, error)
 	DelExam(string) error
+	UpdateExamInfo(string, exam.ExamInfo) error
 }
 
 type DefaultExamService struct {
@@ -29,6 +30,10 @@ func (e DefaultExamService) GetExam(examId string) (*exam.Exam, error) {
 
 func (e DefaultExamService) DelExam(examId string) error {
 	return e.repo.DelExam(examId)
+}
+
+func (e DefaultExamService) UpdateExamInfo(examId string, newExam exam.ExamInfo) error {
+	return e.repo.UpdateExamInfo(examId, newExam)
 }
 
 func NewExamService(repository exam.ExamRepository) DefaultExamService {
