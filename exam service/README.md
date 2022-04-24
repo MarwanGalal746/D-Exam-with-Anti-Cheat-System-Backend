@@ -9,6 +9,7 @@
 - [**Summary**](#summary)
 - [**Getting started**](#getting-started)
 - [**Prerequisites**](#prerequisites)
+- [**Packages**](#packages)
 - [**Environment variables file**](environment-variables-file)
 - [**Running**](#running)
 - [**Postman collection**](#postman-collection)
