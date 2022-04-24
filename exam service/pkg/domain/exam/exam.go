@@ -16,11 +16,11 @@ type ExamInfo struct {
 
 type Exam struct {
 	ExamData  ExamInfo   `json:"examData"`
-	Questions []Question `json:"questions"`
+	Questions []Question `json:"questions,omitempty"`
 }
 
 type ExamRepository interface {
 	Create(Exam) error
 	GetCourseExams(string) (*Course, error)
-	//GetExam(string) (*Exam, error)
+	GetExam(string) (*Exam, error)
 }

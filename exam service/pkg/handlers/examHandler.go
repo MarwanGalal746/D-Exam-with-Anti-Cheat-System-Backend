@@ -52,6 +52,35 @@ func (examHandler ExamHandlers) GetCourseExams(c *gin.Context) {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrUnmarshallingJson.Error(), http.StatusInternalServerError))
 		return
+	} else if err != nil && err.Error() == errs.ErrCourseDoesNotExist.Error() {
+		log.Println(errs.ErrCourseDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrCourseDoesNotExist.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(allExams)
+}
+
+func (examHandler ExamHandlers) GetExam(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	allExams, err := examHandler.service.GetExam(c.Param("examId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrUnmarshallingJson.Error() {
+		log.Println(errs.ErrUnmarshallingJson.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrUnmarshallingJson.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
+		return
 	}
 	//sending the response
 	c.Writer.WriteHeader(http.StatusOK)

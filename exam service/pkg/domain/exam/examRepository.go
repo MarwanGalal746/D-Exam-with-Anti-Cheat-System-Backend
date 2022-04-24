@@ -7,6 +7,7 @@ import (
 	"github.com/nitishm/go-rejson"
 	"log"
 	"strconv"
+	"strings"
 )
 
 type ExamRepositoryDb struct {
@@ -66,6 +67,9 @@ func (e ExamRepositoryDb) GetCourseExams(courseId string) (*Course, error) {
 	key, err := e.redisJsonDb.JSONGet(courseId, ".")
 	if err != nil {
 		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return nil, errs.ErrCourseDoesNotExist
+		}
 		return nil, errs.ErrDb
 	}
 	err = json.Unmarshal(key.([]byte), &course.CourseData)
@@ -85,40 +89,47 @@ func (e ExamRepositoryDb) GetCourseExams(courseId string) (*Course, error) {
 			log.Println(err)
 			return nil, errs.ErrUnmarshallingJson
 		}
+		//this line to make the array of questions id empty
+		//because it's not important and secure to show questions id to the user in this endpoint
+		exam.QuestionIds = []string{}
 		course.ExamsData = append(course.ExamsData, exam)
 	}
-	//courseDb.CourseId = course.CourseId
-	//fmt.Println(len(courseDb.Exams))
-	////for _, examName := range course.Exams {
-	////	key, err = e.redisJsonDb.JSONGet(examName, ".")
-	////	if err != nil {
-	////		log.Println(err)
-	////		return nil, errs.ErrDb
-	////	}
-	////	var exam Exam
-	////	err = json.Unmarshal(key.([]byte), &exam)
-	////	courseDb.Exams = append(courseDb.Exams, exam)
-	////}
 	return &course, nil
 }
 
-//
-//func (e ExamRepositoryDb) GetExam(name string) (*Exam, error) {
-//	jsonExam := e.db.Get(name)
-//	if strings.Contains(jsonExam.String(), "connect: connection refused") {
-//		return nil, errs.ErrDb
-//	} else if strings.Contains(jsonExam.String(), "redis: nil") {
-//		return nil, errs.ErrExamDoesNotExist
-//	}
-//	var exam *Exam
-//	err := json.Unmarshal([]byte(jsonExam.Val()), &exam)
-//	if err != nil {
-//		log.Println(err)
-//		return nil, errs.ErrUnmarshallingJson
-//	}
-//
-//	return exam, nil
-//}
+func (e ExamRepositoryDb) GetExam(examId string) (*Exam, error) {
+	var examData ExamInfo
+	key, err := e.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return nil, errs.ErrExamDoesNotExist
+		}
+		return nil, errs.ErrDb
+	}
+	err = json.Unmarshal(key.([]byte), &examData)
+	if err != nil {
+		log.Println(err)
+		return nil, errs.ErrUnmarshallingJson
+	}
+	var exam Exam
+	exam.ExamData = examData
+	for _, qsId := range examData.QuestionIds {
+		key, err := e.redisJsonDb.JSONGet(qsId, ".")
+		if err != nil {
+			log.Println(err)
+			return nil, errs.ErrDb
+		}
+		var qs Question
+		err = json.Unmarshal(key.([]byte), &qs)
+		if err != nil {
+			log.Println(err)
+			return nil, errs.ErrUnmarshallingJson
+		}
+		exam.Questions = append(exam.Questions, qs)
+	}
+	return &exam, nil
+}
 
 func NewExamRepositoryDb(redisDb *redis.Client, redisJsonDb *rejson.Handler) ExamRepositoryDb {
 	return ExamRepositoryDb{redisDb: redisDb, redisJsonDb: redisJsonDb}
