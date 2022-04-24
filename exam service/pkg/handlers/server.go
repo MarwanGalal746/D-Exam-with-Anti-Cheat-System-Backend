@@ -5,10 +5,16 @@ import (
 	"exam_service/pkg/driver"
 	"exam_service/pkg/service"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"github.com/spf13/viper"
 )
 
+var validate *validator.Validate
+
 func Start() {
+
+	validate = validator.New()
+
 	router := gin.Default()
 	redisDb, redisJsonDb := driver.GetDbConnection()
 

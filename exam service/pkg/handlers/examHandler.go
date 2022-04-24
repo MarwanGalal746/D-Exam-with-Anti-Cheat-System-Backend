@@ -18,7 +18,14 @@ func (examHandler ExamHandlers) Create(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
 	var newExam exam.Exam
 	_ = json.NewDecoder(c.Request.Body).Decode(&newExam)
-	err := examHandler.service.Create(newExam)
+	err := validate.Struct(newExam)
+	if err != nil {
+		log.Println(errs.ErrRequiredFieldsAreMissed.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrRequiredFieldsAreMissed.Error(), http.StatusBadRequest))
+		return
+	}
+	err = examHandler.service.Create(newExam)
 
 	//handling errors
 	if err != nil && err.Error() == errs.ErrDb.Error() {
@@ -115,7 +122,14 @@ func (examHandler ExamHandlers) UpdateExamInfo(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
 	var newExam exam.ExamInfo
 	_ = json.NewDecoder(c.Request.Body).Decode(&newExam)
-	err := examHandler.service.UpdateExamInfo(c.Param("examId"), newExam)
+	err := validate.Struct(newExam)
+	if err != nil {
+		log.Println(errs.ErrRequiredFieldsAreMissed.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrRequiredFieldsAreMissed.Error(), http.StatusBadRequest))
+		return
+	}
+	err = examHandler.service.UpdateExamInfo(c.Param("examId"), newExam)
 	if err != nil && err.Error() == errs.ErrDb.Error() {
 		log.Println(errs.ErrDb.Error())
 		c.Writer.WriteHeader(http.StatusInternalServerError)

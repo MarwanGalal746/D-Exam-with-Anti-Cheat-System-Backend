@@ -15,8 +15,6 @@ type ExamRepositoryDb struct {
 	redisJsonDb *rejson.Handler
 }
 
-var cursor uint64
-
 func (e ExamRepositoryDb) Create(newExam Exam) error {
 	// checking if there is an exam with the same name
 	_, err := e.redisJsonDb.JSONGet(newExam.ExamData.ExamId, ".")

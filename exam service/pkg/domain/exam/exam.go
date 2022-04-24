@@ -5,17 +5,17 @@ import (
 )
 
 type ExamInfo struct {
-	ExamId      string    `json:"examId"`
-	Name        string    `json:"name"`
-	CourseId    string    `json:"courseId"`
-	Duration    int       `json:"duration"`
-	TotalMark   int       `json:"totalMark"`
-	Date        time.Time `json:"date"`
+	ExamId      string    `json:"examId" validate:"required"`
+	Name        string    `json:"name" validate:"required"`
+	CourseId    string    `json:"courseId" validate:"required"`
+	Duration    int       `json:"duration" validate:"required"`
+	TotalMark   int       `json:"totalMark" validate:"required"`
+	Date        time.Time `json:"date" validate:"required"`
 	QuestionIds []string  `json:"questionIds,omitempty"`
 }
 
 type Exam struct {
-	ExamData  ExamInfo   `json:"examData"`
+	ExamData  ExamInfo   `json:"examData" validate:"required"`
 	Questions []Question `json:"questions,omitempty"`
 }
 
