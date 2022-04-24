@@ -27,6 +27,14 @@ Follow the instructions to complete the installation.
 - [Golang](https://golang.org/dl/)
 - [Redis](https://redis.io/download/)
 
+## Packages
+
+- [Gin](https://github.com/gin-gonic/gin)
+- [Validator](https://github.com/go-playground/validator)
+- [Go-Redis](https://github.com/go-redis/redis)
+- [Go-Rejson](https://github.com/nitishm/go-rejson)
+- [Viper](https://github.com/spf13/viper)
+
 ## Environment variables file
 
 - Rename app.env.example file to .env
@@ -47,4 +55,6 @@ The server will start at:
 
 ## Postman collection
 
-you will find it [here](postman%20collection/exam%20service.postman_collection.json).
+you will find the postman collection [here](postman%20collection/exam%20service.postman_collection.json).
+
+You can get what is the right structure of JSON file to send requests and recieving responses from the postman collection after importing it in the [Postman](https://www.postman.com/).
