@@ -6,3 +6,9 @@ type Question struct {
 	RightChoice string   `json:"rightChoice" validate:"required"`
 	Choices     []string `json:"choices" validate:"required"`
 }
+
+type QuestionRepository interface {
+	Add(string, Question) (*Question, error)
+	//Update(int, Question) error
+	//Delete(string) error
+}

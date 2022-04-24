@@ -19,12 +19,17 @@ func Start() {
 	redisDb, redisJsonDb := driver.GetDbConnection()
 
 	examHandler := ExamHandlers{service.NewExamService(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))}
+	questionHandler := QuestionHandlers{service.NewQuestionService(repositories.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
 
+	//exam endpoints
 	router.POST("/api/exam/create-exam", examHandler.Create)
 	router.GET("/api/exam/get-all-exams/:courseId", examHandler.GetCourseExams)
 	router.GET("/api/exam/get-exam/:examId", examHandler.GetExam)
 	router.DELETE("/api/exam/delete-exam/:examId", examHandler.DelExam)
 	router.PUT("/api/exam/update-exam-info/:examId", examHandler.UpdateExamInfo)
+
+	//question endpoints
+	router.POST("/api/exam/add-question/:examId", questionHandler.Add)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 

@@ -8,8 +8,8 @@ type ExamInfo struct {
 	ExamId      string    `json:"examId" validate:"required"`
 	Name        string    `json:"name" validate:"required"`
 	CourseId    string    `json:"courseId" validate:"required"`
-	Duration    int       `json:"duration" validate:"required, numeric"`
-	TotalMark   int       `json:"totalMark" validate:"required, numeric"`
+	Duration    int       `json:"duration" validate:"required"`
+	TotalMark   int       `json:"totalMark" validate:"required"`
 	Date        time.Time `json:"date" validate:"required"`
 	QuestionIds []string  `json:"questionIds,omitempty"`
 }
