@@ -57,7 +57,7 @@ func (q QuestionRepositoryDb) Delete(examId string, questionId string) error {
 		return errs.ErrDb
 	}
 
-	//check if there is exam with that id
+	//check if there is question with that id
 	_, err = q.redisJsonDb.JSONGet(questionId, ".")
 	if err != nil {
 		log.Println(err)
@@ -83,6 +83,38 @@ func (q QuestionRepositoryDb) Delete(examId string, questionId string) error {
 
 	//removing the question itself
 	_, err = q.redisJsonDb.JSONDel(questionId, ".")
+	if err != nil {
+		log.Println(err)
+		return errs.ErrDb
+	}
+
+	return nil
+}
+
+func (q QuestionRepositoryDb) Update(examId, questionId string, newQuestion models.Question) error {
+	//check if there is exam with that id
+	_, err := q.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return errs.ErrExamDoesNotExist
+		}
+		return errs.ErrDb
+	}
+
+	//check if there is question with that id
+	_, err = q.redisJsonDb.JSONGet(questionId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return errs.ErrQuestionDoesNotExist
+		}
+		return errs.ErrDb
+	}
+
+	newQuestion.Id = questionId
+
+	_, err = q.redisJsonDb.JSONSet(newQuestion.Id, ".", newQuestion)
 	if err != nil {
 		log.Println(err)
 		return errs.ErrDb

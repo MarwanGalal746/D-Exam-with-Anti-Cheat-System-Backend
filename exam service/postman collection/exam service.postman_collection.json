@@ -200,6 +200,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "update question",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"question\" : \"ooooooooooooo\",\n            \"rightChoice\" : \"vv\",\n            \"choices\" : [\"vv\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/exam/update-question/en-mid/en-en-mid-0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"update-question",
+								"en-mid",
+								"en-en-mid-0"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

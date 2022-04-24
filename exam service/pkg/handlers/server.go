@@ -31,6 +31,7 @@ func Start() {
 	//question endpoints
 	router.POST("/api/exam/add-question/:examId", questionHandler.Add)
 	router.DELETE("/api/exam/delete-question/:examId/:questionId", questionHandler.Delete)
+	router.PUT("/api/exam/update-question/:examId/:questionId", questionHandler.Update)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 
