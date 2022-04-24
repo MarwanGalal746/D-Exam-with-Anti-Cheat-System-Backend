@@ -131,6 +131,75 @@ func (e ExamRepositoryDb) GetExam(examId string) (*Exam, error) {
 	return &exam, nil
 }
 
+func (e ExamRepositoryDb) DelExam(examId string) error {
+	//get the exam information
+	var examData ExamInfo
+	key, err := e.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return errs.ErrExamDoesNotExist
+		}
+		return errs.ErrDb
+	}
+	err = json.Unmarshal(key.([]byte), &examData)
+	if err != nil {
+		log.Println(err)
+		return errs.ErrUnmarshallingJson
+	}
+
+	//removing the questions of the exam first
+	for _, qsId := range examData.QuestionIds {
+		//delete the question itself
+		key, err = e.redisJsonDb.JSONDel(qsId, ".")
+		if err != nil {
+			log.Println(err)
+			return errs.ErrDb
+		}
+
+		// this block of code will be wanted in the future
+		////get the index of the qs in examInfo
+		//qsInd, err := e.redisJsonDb.JSONArrIndex(examData.ExamId, "questionIds", qsId)
+		//if err != nil {
+		//	log.Println(err)
+		//	return errs.ErrDb
+		//}
+		//if err != nil {
+		//	return err
+		//}
+		////var ind int64
+		////ind = int
+		////removing the qs id from exam info
+		//key, err = e.redisJsonDb.JSONArrPop(examData.ExamId, "questionIds", int(qsInd.(int64)))
+		//if err != nil {
+		//	log.Println(err)
+		//	return errs.ErrDb
+		//}
+	}
+
+	//removing the exam from the course information
+	//get the index of the course
+	courseId, err := e.redisJsonDb.JSONArrIndex(examData.CourseId, "examsIds", examData.ExamId)
+	if err != nil {
+		log.Println(err)
+		return errs.ErrDb
+	}
+	//removing the exam id from course info
+	key, err = e.redisJsonDb.JSONArrPop(examData.CourseId, "examsIds", int(courseId.(int64)))
+	if err != nil {
+		log.Println(err)
+		return errs.ErrDb
+	}
+
+	//removing the exam itself
+	key, err = e.redisJsonDb.JSONDel(examData.ExamId, ".")
+	if err != nil {
+		log.Println(err)
+		return errs.ErrDb
+	}
+	return nil
+}
+
 func NewExamRepositoryDb(redisDb *redis.Client, redisJsonDb *rejson.Handler) ExamRepositoryDb {
 	return ExamRepositoryDb{redisDb: redisDb, redisJsonDb: redisJsonDb}
 }
