@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"exam_service/pkg/domain/exam"
+	"exam_service/pkg/domain/models"
 	"exam_service/pkg/errs"
 	"exam_service/pkg/service"
 	"github.com/gin-gonic/gin"
@@ -16,7 +16,7 @@ type ExamHandlers struct {
 
 func (examHandler ExamHandlers) Create(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	var newExam exam.Exam
+	var newExam models.Exam
 	_ = json.NewDecoder(c.Request.Body).Decode(&newExam)
 	err := validate.Struct(newExam)
 	if err != nil {
@@ -120,7 +120,7 @@ func (examHandler ExamHandlers) DelExam(c *gin.Context) {
 
 func (examHandler ExamHandlers) UpdateExamInfo(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	var newExam exam.ExamInfo
+	var newExam models.ExamInfo
 	_ = json.NewDecoder(c.Request.Body).Decode(&newExam)
 	err := validate.Struct(newExam)
 	if err != nil {
