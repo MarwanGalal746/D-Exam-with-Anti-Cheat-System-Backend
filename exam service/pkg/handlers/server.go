@@ -16,10 +16,20 @@ func Start() {
 	validate = validator.New()
 
 	router := gin.Default()
-	redisDb, redisJsonDb := driver.GetDbConnection()
+	redisDb, redisJsonDb, sqlDb := driver.GetDbConnection()
+	//
+	//err := sqlDb.AutoMigrate(&models.StudentGrade{}, &models.Report{})
+	//if err != nil {
+	//	log.Println(err)
+	//}
+	//err = sqlDb.Set("gorm:table_options", "ENGINE=Distributed(cluster, default, hits)").AutoMigrate(&models.StudentGrade{}, &models.Report{})
+	//if err != nil {
+	//	log.Println(err)
+	//}
 
 	examHandler := ExamHandlers{service.NewExamService(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))}
 	questionHandler := QuestionHandlers{service.NewQuestionService(repositories.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
+	studentGradeHandler := StudentGradeHandlers{service.NewStudentGradeService(repositories.NewStudentGradeRepositoryDb(sqlDb))}
 
 	//exam endpoints
 	router.POST("/api/exam/create-exam", examHandler.Create)
@@ -32,6 +42,9 @@ func Start() {
 	router.POST("/api/exam/add-question/:examId", questionHandler.Add)
 	router.DELETE("/api/exam/delete-question/:examId/:questionId", questionHandler.Delete)
 	router.PUT("/api/exam/update-question/:examId/:questionId", questionHandler.Update)
+
+	//student grade endpoints
+	router.POST("/api/exam/add-student-grade/:examId", studentGradeHandler.Add)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 
