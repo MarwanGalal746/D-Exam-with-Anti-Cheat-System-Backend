@@ -12,6 +12,7 @@ var (
 	ErrCourseDoesNotExist      = errors.New("this course doesn't exist")
 	ErrExamUpdateId            = errors.New("can't update the exam information because you've changed th exam id")
 	ErrRequiredFieldsAreMissed = errors.New("some required fields are missed")
+	ErrDuplicateUserExam       = errors.New("this student took this exam before")
 )
 
 type Response struct {

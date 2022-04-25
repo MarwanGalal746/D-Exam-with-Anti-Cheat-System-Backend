@@ -21,7 +21,7 @@ func (questionHandler QuestionHandlers) Add(c *gin.Context) {
 	err := validate.Struct(newQuestion)
 	if err != nil {
 		log.Println(errs.ErrRequiredFieldsAreMissed.Error())
-		c.Writer.WriteHeader(http.StatusInternalServerError)
+		c.Writer.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrRequiredFieldsAreMissed.Error(), http.StatusBadRequest))
 		return
 	}
