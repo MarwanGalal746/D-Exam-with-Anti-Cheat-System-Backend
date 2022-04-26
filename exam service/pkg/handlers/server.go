@@ -35,10 +35,12 @@ func Start() {
 	router.PUT("/api/exam/update-question/:examId/:questionId", questionHandler.Update)
 
 	//student grade endpoints
-	router.POST("/api/exam/add-student-grade/:userId/:examId/:courseId", studentGradeHandler.Add)
+	router.POST("/api/exam/add-student-grade/:userId/:courseId/:examId", studentGradeHandler.Add)
 	router.GET("/api/exam/get-all-student-grades/:userId", studentGradeHandler.GetAllStudentGrades)
 	router.GET("/api/exam/get-all-course-grades/:courseId", studentGradeHandler.GetAllCourseGrades)
 	router.GET("/api/exam/get-all-exam-grades/:examId", studentGradeHandler.GetAllExamGrades)
+	router.GET("/api/exam/get-user-exam-grade/:userId/:courseId/:examId",
+		studentGradeHandler.GetUserCourseExamGrade)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 

@@ -7,6 +7,7 @@ type StudentGradeService interface {
 	GetAllStudentGrades(string) ([]models.Report, error)
 	GetAllCourseGrades(string) ([]models.Report, error)
 	GetAllExamGrades(string) ([]models.Report, error)
+	GetUserCourseExamGrade(string, string, string) (*models.Report, error)
 }
 
 type DefaultStudentGradeService struct {
@@ -27,6 +28,10 @@ func (s DefaultStudentGradeService) GetAllCourseGrades(courseId string) ([]model
 
 func (s DefaultStudentGradeService) GetAllExamGrades(examId string) ([]models.Report, error) {
 	return s.repo.GetAllExamGrades(examId)
+}
+
+func (s DefaultStudentGradeService) GetUserCourseExamGrade(userId, courseId, examId string) (*models.Report, error) {
+	return s.repo.GetUserCourseExamGrade(userId, courseId, examId)
 }
 
 func NewStudentGradeService(repository models.StudentGradeRepository) DefaultStudentGradeService {

@@ -89,3 +89,19 @@ func (studentGradeHandler StudentGradeHandlers) GetAllExamGrades(c *gin.Context)
 	c.Writer.WriteHeader(http.StatusOK)
 	json.NewEncoder(c.Writer).Encode(reports)
 }
+
+func (studentGradeHandler StudentGradeHandlers) GetUserCourseExamGrade(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	report, err := studentGradeHandler.service.GetUserCourseExamGrade(c.Param("userId"),
+		c.Param("courseId"), c.Param("examId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(report)
+}

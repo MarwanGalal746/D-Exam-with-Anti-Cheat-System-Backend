@@ -95,6 +95,25 @@ func (s StudentGradeRepositoryDb) GetAllExamGrades(examId string) ([]models.Repo
 	return reports, nil
 }
 
+func (s StudentGradeRepositoryDb) GetUserCourseExamGrade(userId, courseId, examId string) (*models.Report, error) {
+	row := s.sqlDb.Raw("Select * from student_grades join reports on student_grades.id = reports.student_grade_id where student_grades.user_id=? AND student_grades.course_id=? AND student_grades.exam_id=?",
+		userId, courseId, examId).Row()
+	if row.Err() != nil {
+		log.Println(row.Err())
+		return nil, errs.ErrDb
+	}
+	var report models.Report
+	err := row.Scan(&report.StudentGradeId, &report.StudentGradeObj.UserId, &report.StudentGradeObj.ExamId,
+		&report.StudentGradeObj.CourseId,
+		&report.StudentGradeObj.Grade, &report.StudentGradeObj.CheatingStatus, &report.Id, &report.Report,
+		&report.StudentGradeId)
+	if err != nil {
+		log.Println(err)
+		return nil, errs.ErrDb
+	}
+	return &report, nil
+}
+
 func NewStudentGradeRepositoryDb(sqlDb *gorm.DB) StudentGradeRepositoryDb {
 	return StudentGradeRepositoryDb{sqlDb: sqlDb}
 }
