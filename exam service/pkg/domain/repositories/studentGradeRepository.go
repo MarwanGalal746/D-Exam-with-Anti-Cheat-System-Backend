@@ -53,6 +53,27 @@ func (s StudentGradeRepositoryDb) GetAllStudentGrades(userId string) ([]models.R
 	return reports, nil
 }
 
+func (s StudentGradeRepositoryDb) GetAllCourseGrades(courseId string) ([]models.Report, error) {
+	rows, err := s.sqlDb.Raw("Select * from student_grades join reports on student_grades.id = reports.student_grade_id where student_grades.course_id=?",
+		courseId).Rows()
+	if err != nil {
+		return nil, errs.ErrDb
+	}
+	var reports []models.Report
+	for rows.Next() {
+		var report models.Report
+		err := rows.Scan(&report.StudentGradeId, &report.StudentGradeObj.UserId, &report.StudentGradeObj.ExamId,
+			&report.StudentGradeObj.CourseId,
+			&report.StudentGradeObj.Grade, &report.StudentGradeObj.CheatingStatus, &report.Id, &report.Report,
+			&report.StudentGradeId)
+		if err != nil {
+			return nil, errs.ErrDb
+		}
+		reports = append(reports, report)
+	}
+	return reports, nil
+}
+
 func NewStudentGradeRepositoryDb(sqlDb *gorm.DB) StudentGradeRepositoryDb {
 	return StudentGradeRepositoryDb{sqlDb: sqlDb}
 }

@@ -5,6 +5,7 @@ import "exam_service/pkg/domain/models"
 type StudentGradeService interface {
 	Add(string, string, string, models.Report) error
 	GetAllStudentGrades(string) ([]models.Report, error)
+	GetAllCourseGrades(string) ([]models.Report, error)
 }
 
 type DefaultStudentGradeService struct {
@@ -17,6 +18,10 @@ func (s DefaultStudentGradeService) Add(userId, examId, courseId string, student
 
 func (s DefaultStudentGradeService) GetAllStudentGrades(userId string) ([]models.Report, error) {
 	return s.repo.GetAllStudentGrades(userId)
+}
+
+func (s DefaultStudentGradeService) GetAllCourseGrades(courseId string) ([]models.Report, error) {
+	return s.repo.GetAllCourseGrades(courseId)
 }
 
 func NewStudentGradeService(repository models.StudentGradeRepository) DefaultStudentGradeService {

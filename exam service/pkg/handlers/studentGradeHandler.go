@@ -45,9 +45,24 @@ func (studentGradeHandler StudentGradeHandlers) Add(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(errs.NewResponse("The student grade has been added successfully", http.StatusOK))
 }
 
-func (studentGradeHandler StudentGradeHandlers) GetAllStudentsGrades(c *gin.Context) {
+func (studentGradeHandler StudentGradeHandlers) GetAllStudentGrades(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	reports, err := studentGradeHandler.service.GetAllStudentGrades("1")
+	reports, err := studentGradeHandler.service.GetAllStudentGrades(c.Param("userId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(reports)
+}
+
+func (studentGradeHandler StudentGradeHandlers) GetAllCourseGrades(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	reports, err := studentGradeHandler.service.GetAllCourseGrades(c.Param("courseId"))
 	if err != nil && err.Error() == errs.ErrDb.Error() {
 		log.Println(errs.ErrDb.Error())
 		c.Writer.WriteHeader(http.StatusInternalServerError)
