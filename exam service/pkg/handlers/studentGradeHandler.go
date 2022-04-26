@@ -16,7 +16,7 @@ type StudentGradeHandlers struct {
 
 func (studentGradeHandler StudentGradeHandlers) Add(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	var studentInfo models.StudentInfo
+	var studentInfo models.Report
 	_ = json.NewDecoder(c.Request.Body).Decode(&studentInfo)
 	err := validate.Struct(studentInfo)
 	if err != nil {
@@ -42,7 +42,20 @@ func (studentGradeHandler StudentGradeHandlers) Add(c *gin.Context) {
 	//sending the response
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.Writer.WriteHeader(http.StatusOK)
-	//sending the response
-	c.Writer.WriteHeader(http.StatusOK)
 	json.NewEncoder(c.Writer).Encode(errs.NewResponse("The student grade has been added successfully", http.StatusOK))
+}
+
+func (studentGradeHandler StudentGradeHandlers) GetAllStudentsGrades(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	reports, err := studentGradeHandler.service.GetAllStudentGrades("1")
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(reports)
 }
