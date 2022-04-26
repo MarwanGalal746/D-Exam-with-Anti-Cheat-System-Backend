@@ -13,4 +13,5 @@ type StudentGradeRepository interface {
 	Add(string, string, string, Report) error
 	GetAllStudentGrades(string) ([]Report, error)
 	GetAllCourseGrades(string) ([]Report, error)
+	GetAllExamGrades(string) ([]Report, error)
 }

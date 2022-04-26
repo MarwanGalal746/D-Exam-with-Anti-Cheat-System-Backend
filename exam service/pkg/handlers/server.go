@@ -38,6 +38,7 @@ func Start() {
 	router.POST("/api/exam/add-student-grade/:userId/:examId/:courseId", studentGradeHandler.Add)
 	router.GET("/api/exam/get-all-student-grades/:userId", studentGradeHandler.GetAllStudentGrades)
 	router.GET("/api/exam/get-all-course-grades/:courseId", studentGradeHandler.GetAllCourseGrades)
+	router.GET("/api/exam/get-all-exam-grades/:examId", studentGradeHandler.GetAllExamGrades)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 
