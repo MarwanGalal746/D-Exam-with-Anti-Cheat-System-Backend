@@ -8,7 +8,3 @@ type StudentGrade struct {
 	Grade          string `json:"grade" gorm:"<-;not null;type:string"`
 	CheatingStatus string `json:"cheatingStatus" gorm:"<-;not null;type:string"`
 }
-
-type StudentGradeRepository interface {
-	Add(string, string, string, map[string]interface{}) error
-}

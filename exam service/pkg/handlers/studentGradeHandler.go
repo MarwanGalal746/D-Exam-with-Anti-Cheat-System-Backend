@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"exam_service/pkg/domain/models"
 	"exam_service/pkg/errs"
 	"exam_service/pkg/service"
 	"github.com/gin-gonic/gin"
@@ -15,10 +16,18 @@ type StudentGradeHandlers struct {
 
 func (studentGradeHandler StudentGradeHandlers) Add(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	data := make(map[string]interface{})
-	_ = json.NewDecoder(c.Request.Body).Decode(&data)
-	err := studentGradeHandler.service.Add(c.Param("userId"),
-		c.Param("examId"), c.Param("courseId"), data)
+	var studentInfo models.StudentInfo
+	_ = json.NewDecoder(c.Request.Body).Decode(&studentInfo)
+	err := validate.Struct(studentInfo)
+	if err != nil {
+		log.Println(errs.ErrRequiredFieldsAreMissed.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrRequiredFieldsAreMissed.Error(), http.StatusBadRequest))
+		return
+	}
+
+	err = studentGradeHandler.service.Add(c.Param("userId"),
+		c.Param("examId"), c.Param("courseId"), studentInfo)
 	if err != nil && err.Error() == errs.ErrDb.Error() {
 		log.Println(errs.ErrDb.Error())
 		c.Writer.WriteHeader(http.StatusInternalServerError)

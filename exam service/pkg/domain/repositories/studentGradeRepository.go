@@ -12,13 +12,13 @@ type StudentGradeRepositoryDb struct {
 	sqlDb *gorm.DB
 }
 
-func (s StudentGradeRepositoryDb) Add(userId, examId, courseId string, data map[string]interface{}) error {
+func (s StudentGradeRepositoryDb) Add(userId, examId, courseId string, studentInfo models.StudentInfo) error {
 	student := &models.StudentGrade{
 		UserId:         userId,
 		CourseId:       courseId,
 		ExamId:         examId,
-		Grade:          data["grade"].(string),
-		CheatingStatus: data["cheatingStatus"].(string),
+		Grade:          studentInfo.Grade,
+		CheatingStatus: studentInfo.CheatingStatus,
 	}
 	row := s.sqlDb.Create(&student)
 	if row.Error != nil {
@@ -29,7 +29,7 @@ func (s StudentGradeRepositoryDb) Add(userId, examId, courseId string, data map[
 		return errs.ErrDb
 	}
 	report := &models.Report{
-		Report:          data["report"].(string),
+		Report:          studentInfo.Report,
 		StudentGradeId:  student.Id,
 		StudentGradeObj: *student,
 	}

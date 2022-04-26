@@ -234,6 +234,43 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "studenf grade endpoints",
+			"item": [
+				{
+					"name": "add student grade",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"grade\" : \"44\",\n    \"cheatingStatus\" : \"ok\",\n    \"report\" : \"tmam\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8888/api/exam/add-student-grade/1/en-mid/en",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"add-student-grade",
+								"1",
+								"en-mid",
+								"en"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
