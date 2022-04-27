@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IN/B80ViEUVKMs1/rwNkxyY5tlWvxQ8ptLO/8ndHUlYmYjB3dTU91mEdRX+DH3w034qBNzzbe72SeQlYo3L13w==",
+  "dgSpecHash": "sjrzLJRNTvt6MXTQuXyMsPWQpT/fbN6Qn3L3/Fry6zUuwi9x+emY5O+tXOEoR92khg1LgLNxPD/Mi5+U1xKhZg==",
   "success": true,
-  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\Course Service\\Service\\Service.csproj",
+  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Service\\Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",

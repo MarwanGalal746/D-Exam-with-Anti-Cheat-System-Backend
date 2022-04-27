@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "M9qALfhIsz1PB/Eddi/+oZcbAO4YtJmwyNO/ARI960cP45zd5F2CSCqsLvUR72vvBZOJkO/Dyf9DdVpvFMKC2w==",
+  "dgSpecHash": "zYYueAP/v6UP+FX+rC7EnZWt9Gq4KPFXYawJGmw+Hd99Oqk4rout269eESnb0XQnqLofnjo+bfVL9KbQKUSCuA==",
   "success": true,
-  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\Course Service\\Persistence\\Persistence.csproj",
+  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Persistence\\Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

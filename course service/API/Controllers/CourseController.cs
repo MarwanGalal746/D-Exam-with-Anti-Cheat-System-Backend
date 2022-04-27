@@ -57,14 +57,7 @@ public class CourseController : ControllerBase
     [HttpGet("/get-teacher-courses")]
     public async Task<IActionResult> GetTeacherCourses(string teacherId)
     {
-        var result = await _courseService.GetTeacherCourses(teacherId);
-        Console.WriteLine("Started");
-        foreach (var course in result)
-        {
-            Console.WriteLine("YES");
-            Console.WriteLine(course);
-        }
-        return Ok();
+        return Ok(await _courseService.GetTeacherCourses(teacherId));
     }
     
     [HttpPatch("/update-course")]

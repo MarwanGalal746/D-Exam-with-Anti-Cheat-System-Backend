@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JDJ/KRF4yYxDmc/Hrs/v9TjBD7yFYuJ3uGkUQ5SHCPV2eMPOjCivAnErjRSkb2jkbMFd4F0R7ikBYyf7jpfjEg==",
+  "dgSpecHash": "E0qgIC7elcmYPdrCreZhjazSLT3ggtZ1Uxt0VH73v/iXlGgb/IKE/M710sg6PXAGxKdR+KSLs2gROmmvZe555w==",
   "success": true,
-  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\Course Service\\API\\API.csproj",
+  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
