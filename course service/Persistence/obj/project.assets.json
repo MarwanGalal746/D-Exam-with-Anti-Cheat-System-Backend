@@ -1098,11 +1098,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Persistence\\Persistence.csproj",
+      "projectUniqueName": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Persistence\\Persistence.csproj",
       "projectName": "Persistence",
-      "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Persistence\\Persistence.csproj",
+      "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Persistence\\Persistence.csproj",
       "packagesPath": "C:\\Users\\eyady\\.nuget\\packages\\",
-      "outputPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Persistence\\obj\\",
+      "outputPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\eyady\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1119,8 +1119,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Core\\Core.csproj": {
-              "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Core\\Core.csproj"
+            "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Core\\Core.csproj": {
+              "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Core\\Core.csproj"
             }
           }
         }

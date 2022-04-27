@@ -860,11 +860,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Core\\Core.csproj",
+      "projectUniqueName": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Core\\Core.csproj",
       "projectName": "Core",
-      "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Core\\Core.csproj",
+      "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Core\\Core.csproj",
       "packagesPath": "C:\\Users\\eyady\\.nuget\\packages\\",
-      "outputPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Core\\obj\\",
+      "outputPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\eyady\\AppData\\Roaming\\NuGet\\NuGet.Config",

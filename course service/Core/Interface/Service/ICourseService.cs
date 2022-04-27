@@ -7,7 +7,7 @@ public interface ICourseService
     Task<Course> Create(Course course);
     Task<Course> GetById(string id);
     Task<IList<Course>> GetByName(string name);
-    Task<IList<Course>> GetTeacherCourses(string teacherId);
+    Task<IList<Course>> GetByTeacher(string id);
     Task<Course> GetByCode(string code);
     Task<Course> Update(string courseId, string newCourseName);
     void Delete(string id);

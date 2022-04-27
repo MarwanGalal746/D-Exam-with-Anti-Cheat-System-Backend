@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SR+lPxPso6M8m/2/zlhU7I9NH6izNyS/VKE85SX7NB5SPFAqDJ1r7OWbOYdogxwSVsN1303M3NSOy+bm7moNoA==",
+  "dgSpecHash": "DoAJyRp8hKRxo3jMALQLiqiQQkmJ2oXprQaqaIeWfVMVBQXYA6LacgI2sRnZyuPCmokwEj+KR5E4NzZvQarvQg==",
   "success": true,
-  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\course service\\Core\\Core.csproj",
+  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Core\\Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\eyady\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",

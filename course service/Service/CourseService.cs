@@ -1,9 +1,11 @@
-﻿using Core.Entity;
+﻿using System.Diagnostics.CodeAnalysis;
+using Core.Entity;
 using Core.Interface.Repository;
 using Core.Interface.Service;
 
 namespace Service;
 
+[SuppressMessage("ReSharper", "SpecifyACultureInStringConversionExplicitly")]
 public class CourseService : ICourseService
 {
     private readonly ICourseRepository _repository;
@@ -28,15 +30,15 @@ public class CourseService : ICourseService
         return await _repository.FindBy(c => c.Name == name);
     }
 
+    public async Task<IList<Course>> GetByTeacher(string id)
+    {
+        return await _repository.FindBy(c => c.TeacherId == id);
+    }
+
     public async Task<Course> GetByCode(string code)
     {
         var queryResult = await _repository.FindBy(c => c.Code == code);
         return queryResult.FirstOrDefault()!;
-    }
-    
-    public async Task<IList<Course>> GetTeacherCourses(string teacherId)
-    {
-        return await _repository.FindBy(c=>c.TeacherId == teacherId);
     }
 
     public async Task<Course> Update(string courseId, string newCourseName)

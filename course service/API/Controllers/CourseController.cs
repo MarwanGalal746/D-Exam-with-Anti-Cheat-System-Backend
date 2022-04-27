@@ -1,4 +1,5 @@
-﻿using API.Model;
+﻿using System.Diagnostics.CodeAnalysis;
+using API.Model;
 using Core.Entity;
 using Core.Interface.Service;
 using Core.Utility;
@@ -8,6 +9,7 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("/api/courses/")]
+[SuppressMessage("ReSharper", "SpecifyACultureInStringConversionExplicitly")]
 public class CourseController : ControllerBase
 {
     private readonly ICourseService _courseService;
@@ -19,7 +21,7 @@ public class CourseController : ControllerBase
         _studCrsService = studCrsService;
     }
 
-    [HttpPost("/create-course")]
+    [HttpPost("/create")]
     public async Task<IActionResult> Create(CreateCourseRequest request)
     {
         Course course = new Course
@@ -36,37 +38,37 @@ public class CourseController : ControllerBase
         return Ok(course);
     }
 
-    [HttpGet("/get-course-by-id")]
+    [HttpGet("/get-by-id")]
     public async Task<IActionResult> GetById(string courseId)
     {
         return Ok(await _courseService.GetById(courseId));
     }
     
-    [HttpGet("/get-course-by-name")]
+    [HttpGet("/get-by-name")]
     public async Task<IActionResult> GetByName(string name)
     {
         return Ok(await _courseService.GetByName(name));
     }
     
-    [HttpGet("/get-course-by-code")]
+    [HttpGet("/get-by-code")]
     public async Task<IActionResult> GetByCode(string code)
     {
         return Ok(await _courseService.GetByCode(code));
     }
     
-    [HttpGet("/get-teacher-courses")]
-    public async Task<IActionResult> GetTeacherCourses(string teacherId)
+    [HttpGet("/get-by-teacher")]
+    public async Task<IActionResult> GetByTeacher(string id)
     {
-        return Ok(await _courseService.GetTeacherCourses(teacherId));
+        return Ok(await _courseService.GetByTeacher(id));
     }
     
-    [HttpPatch("/update-course")]
+    [HttpPatch("/update")]
     public async Task<IActionResult> Update(UpdateCourseRequest request)
     {
         return Ok(await _courseService.Update(request.CourseId, request.NewCourseName));
     }
     
-    [HttpDelete("/delete-course")]
+    [HttpDelete("/delete")]
     public IActionResult Delete(string id)
     {
         _courseService.Delete(id);
