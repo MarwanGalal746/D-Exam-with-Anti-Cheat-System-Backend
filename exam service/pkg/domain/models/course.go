@@ -7,5 +7,5 @@ type CourseInfo struct {
 
 type Course struct {
 	CourseData CourseInfo `json:"courseData" validate:"required"`
-	ExamsData  []ExamInfo `json:"exams" validate:"required"`
+	ExamsData  []Exam     `json:"exams" validate:"required"`
 }

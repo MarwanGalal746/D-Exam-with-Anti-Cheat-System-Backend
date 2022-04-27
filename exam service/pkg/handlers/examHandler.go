@@ -120,7 +120,7 @@ func (examHandler ExamHandlers) DelExam(c *gin.Context) {
 
 func (examHandler ExamHandlers) UpdateExamInfo(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	var newExam models.ExamInfo
+	var newExam models.Exam
 	_ = json.NewDecoder(c.Request.Body).Decode(&newExam)
 	err := validate.Struct(newExam)
 	if err != nil {

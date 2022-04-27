@@ -17,7 +17,7 @@ type QuestionRepositoryDb struct {
 }
 
 func (q QuestionRepositoryDb) Add(examId string, newQuestion models.Question) (*models.Question, error) {
-	var examData models.ExamInfo
+	var examData models.Exam
 	key, err := q.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
