@@ -3,13 +3,17 @@ package repositories
 import (
 	"exam_service/pkg/domain/models"
 	"exam_service/pkg/errs"
+	"github.com/go-redis/redis"
+	"github.com/nitishm/go-rejson"
 	"gorm.io/gorm"
 	"log"
 	"strings"
 )
 
 type StudentGradeRepositoryDb struct {
-	sqlDb *gorm.DB
+	redisDb     *redis.Client
+	redisJsonDb *rejson.Handler
+	sqlDb       *gorm.DB
 }
 
 func (s StudentGradeRepositoryDb) Add(userId, examId, courseId string, studentInfo models.Report) error {
@@ -154,6 +158,6 @@ func (s StudentGradeRepositoryDb) DeleteUserCourseExamGrade(userId, courseId, ex
 	return nil
 }
 
-func NewStudentGradeRepositoryDb(sqlDb *gorm.DB) StudentGradeRepositoryDb {
-	return StudentGradeRepositoryDb{sqlDb: sqlDb}
+func NewStudentGradeRepositoryDb(sqlDb *gorm.DB, redisDb *redis.Client, redisJsonDb *rejson.Handler) StudentGradeRepositoryDb {
+	return StudentGradeRepositoryDb{sqlDb: sqlDb, redisDb: redisDb, redisJsonDb: redisJsonDb}
 }

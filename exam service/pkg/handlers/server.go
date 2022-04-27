@@ -18,9 +18,12 @@ func Start() {
 	router := gin.Default()
 	redisDb, redisJsonDb, sqlDb := driver.GetDbConnection()
 
-	examHandler := ExamHandlers{service.NewExamService(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))}
-	questionHandler := QuestionHandlers{service.NewQuestionService(repositories.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
-	studentGradeHandler := StudentGradeHandlers{service.NewStudentGradeService(repositories.NewStudentGradeRepositoryDb(sqlDb))}
+	examHandler := ExamHandlers{
+		service.NewExamService(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))}
+	questionHandler := QuestionHandlers{
+		service.NewQuestionService(repositories.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
+	studentGradeHandler := StudentGradeHandlers{
+		service.NewStudentGradeService(repositories.NewStudentGradeRepositoryDb(sqlDb, redisDb, redisJsonDb))}
 
 	//exam endpoints
 	router.POST("/api/exam/create-exam", examHandler.Create)
