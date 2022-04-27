@@ -33,10 +33,10 @@ func (studentGradeHandler StudentGradeHandlers) Add(c *gin.Context) {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
 		return
-	} else if err != nil && err.Error() == errs.ErrDuplicateUserExam.Error() {
-		log.Println(errs.ErrDuplicateUserExam.Error())
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
 		c.Writer.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDuplicateUserExam.Error(), http.StatusBadRequest))
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
 		return
 	}
 	//sending the response
@@ -83,6 +83,11 @@ func (studentGradeHandler StudentGradeHandlers) GetAllExamGrades(c *gin.Context)
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
 		return
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
+		return
 	}
 	//sending the response
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
@@ -98,6 +103,11 @@ func (studentGradeHandler StudentGradeHandlers) GetUserCourseExamGrade(c *gin.Co
 		log.Println(errs.ErrDb.Error())
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
 		return
 	}
 	//sending the response

@@ -33,10 +33,10 @@ func (questionHandler QuestionHandlers) Add(c *gin.Context) {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusInternalServerError))
 		return
-	} else if err != nil && err.Error() == errs.ErrDuplicateExam.Error() {
-		log.Println(errs.ErrDuplicateExam.Error())
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
 		c.Writer.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDuplicateExam.Error(), http.StatusBadRequest))
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
 		return
 	}
 

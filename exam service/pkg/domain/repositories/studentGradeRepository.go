@@ -17,6 +17,16 @@ type StudentGradeRepositoryDb struct {
 }
 
 func (s StudentGradeRepositoryDb) Add(userId, examId, courseId string, studentInfo models.Report) error {
+	// validate if exam exists or not
+	_, err := s.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return errs.ErrExamDoesNotExist
+		}
+		return errs.ErrDb
+	}
+
 	studentInfo.StudentGradeObj.UserId = userId
 	studentInfo.StudentGradeObj.CourseId = courseId
 	studentInfo.StudentGradeObj.ExamId = examId
@@ -79,6 +89,17 @@ func (s StudentGradeRepositoryDb) GetAllCourseGrades(courseId string) ([]models.
 }
 
 func (s StudentGradeRepositoryDb) GetAllExamGrades(examId string) ([]models.Report, error) {
+
+	// validate if exam exists or not
+	_, err := s.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return nil, errs.ErrExamDoesNotExist
+		}
+		return nil, errs.ErrDb
+	}
+
 	rows, err := s.sqlDb.Raw("Select * from student_grades join reports on student_grades.id = reports.student_grade_id where student_grades.exam_id=?",
 		examId).Rows()
 	if err != nil {
@@ -100,6 +121,16 @@ func (s StudentGradeRepositoryDb) GetAllExamGrades(examId string) ([]models.Repo
 }
 
 func (s StudentGradeRepositoryDb) GetUserCourseExamGrade(userId, courseId, examId string) (*models.Report, error) {
+	// validate if exam exists or not
+	_, err := s.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return nil, errs.ErrExamDoesNotExist
+		}
+		return nil, errs.ErrDb
+	}
+
 	row := s.sqlDb.Raw("Select * from student_grades join reports on student_grades.id = reports.student_grade_id where student_grades.user_id=? AND student_grades.course_id=? AND student_grades.exam_id=?",
 		userId, courseId, examId).Row()
 	if row.Err() != nil {
@@ -107,7 +138,7 @@ func (s StudentGradeRepositoryDb) GetUserCourseExamGrade(userId, courseId, examI
 		return nil, errs.ErrDb
 	}
 	var report models.Report
-	err := row.Scan(&report.StudentGradeId, &report.StudentGradeObj.UserId, &report.StudentGradeObj.ExamId,
+	err = row.Scan(&report.StudentGradeId, &report.StudentGradeObj.UserId, &report.StudentGradeObj.ExamId,
 		&report.StudentGradeObj.CourseId,
 		&report.StudentGradeObj.Grade, &report.StudentGradeObj.CheatingStatus, &report.Id, &report.Report,
 		&report.StudentGradeId)
