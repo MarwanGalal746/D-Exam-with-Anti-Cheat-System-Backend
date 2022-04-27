@@ -105,3 +105,64 @@ func (studentGradeHandler StudentGradeHandlers) GetUserCourseExamGrade(c *gin.Co
 	c.Writer.WriteHeader(http.StatusOK)
 	json.NewEncoder(c.Writer).Encode(report)
 }
+
+func (studentGradeHandler StudentGradeHandlers) DeleteAllStudentGrades(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	err := studentGradeHandler.service.DeleteAllStudentGrades(c.Param("userId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(errs.NewResponse("The student grades have been deleted successfully", http.StatusOK))
+}
+
+func (studentGradeHandler StudentGradeHandlers) DeleteAllCourseGrades(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	err := studentGradeHandler.service.DeleteAllCourseGrades(c.Param("courseId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(errs.NewResponse("The course grades have been deleted successfully", http.StatusOK))
+}
+
+func (studentGradeHandler StudentGradeHandlers) DeleteAllExamGrades(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	err := studentGradeHandler.service.DeleteAllExamGrades(c.Param("examId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(errs.NewResponse("The exam grades have been deleted successfully", http.StatusOK))
+}
+
+func (studentGradeHandler StudentGradeHandlers) DeleteUserCourseExamGrade(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	err := studentGradeHandler.service.DeleteUserCourseExamGrade(c.Param("userId"),
+		c.Param("courseId"), c.Param("examId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(errs.NewResponse("The student grade has been deleted successfully", http.StatusOK))
+}

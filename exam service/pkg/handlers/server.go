@@ -41,6 +41,14 @@ func Start() {
 	router.GET("/api/exam/get-all-exam-grades/:examId", studentGradeHandler.GetAllExamGrades)
 	router.GET("/api/exam/get-user-exam-grade/:userId/:courseId/:examId",
 		studentGradeHandler.GetUserCourseExamGrade)
+	router.DELETE("/api/exam/delete-all-student-grades/:userId",
+		studentGradeHandler.DeleteAllStudentGrades)
+	router.DELETE("/api/exam/delete-all-course-grades/:courseId",
+		studentGradeHandler.DeleteAllCourseGrades)
+	router.DELETE("/api/exam/delete-all-exam-grades/:examId",
+		studentGradeHandler.DeleteAllExamGrades)
+	router.DELETE("/api/exam/delete-user-exam-grade/:userId/:courseId/:examId",
+		studentGradeHandler.DeleteUserCourseExamGrade)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 

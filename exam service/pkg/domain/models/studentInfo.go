@@ -15,4 +15,8 @@ type StudentGradeRepository interface {
 	GetAllCourseGrades(string) ([]Report, error)
 	GetAllExamGrades(string) ([]Report, error)
 	GetUserCourseExamGrade(string, string, string) (*Report, error)
+	DeleteAllStudentGrades(string) error
+	DeleteAllCourseGrades(string) error
+	DeleteAllExamGrades(string) error
+	DeleteUserCourseExamGrade(string, string, string) error
 }

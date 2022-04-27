@@ -8,6 +8,10 @@ type StudentGradeService interface {
 	GetAllCourseGrades(string) ([]models.Report, error)
 	GetAllExamGrades(string) ([]models.Report, error)
 	GetUserCourseExamGrade(string, string, string) (*models.Report, error)
+	DeleteAllStudentGrades(string) error
+	DeleteAllCourseGrades(string) error
+	DeleteAllExamGrades(string) error
+	DeleteUserCourseExamGrade(string, string, string) error
 }
 
 type DefaultStudentGradeService struct {
@@ -32,6 +36,22 @@ func (s DefaultStudentGradeService) GetAllExamGrades(examId string) ([]models.Re
 
 func (s DefaultStudentGradeService) GetUserCourseExamGrade(userId, courseId, examId string) (*models.Report, error) {
 	return s.repo.GetUserCourseExamGrade(userId, courseId, examId)
+}
+
+func (s DefaultStudentGradeService) DeleteAllStudentGrades(userId string) error {
+	return s.repo.DeleteAllStudentGrades(userId)
+}
+
+func (s DefaultStudentGradeService) DeleteAllCourseGrades(courseId string) error {
+	return s.repo.DeleteAllCourseGrades(courseId)
+}
+
+func (s DefaultStudentGradeService) DeleteAllExamGrades(examId string) error {
+	return s.repo.DeleteAllExamGrades(examId)
+}
+
+func (s DefaultStudentGradeService) DeleteUserCourseExamGrade(userId, courseId, examId string) error {
+	return s.repo.DeleteUserCourseExamGrade(userId, courseId, examId)
 }
 
 func NewStudentGradeService(repository models.StudentGradeRepository) DefaultStudentGradeService {

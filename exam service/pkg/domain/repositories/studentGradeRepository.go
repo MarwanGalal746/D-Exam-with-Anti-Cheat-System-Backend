@@ -114,6 +114,46 @@ func (s StudentGradeRepositoryDb) GetUserCourseExamGrade(userId, courseId, examI
 	return &report, nil
 }
 
+func (s StudentGradeRepositoryDb) DeleteAllStudentGrades(userId string) error {
+	row := s.sqlDb.Raw(`DELETE FROM student_grades where student_grades.user_id=?`,
+		userId).Row()
+	if row.Err() != nil {
+		log.Println(row.Err())
+		return errs.ErrDb
+	}
+	return nil
+}
+
+func (s StudentGradeRepositoryDb) DeleteAllCourseGrades(courseId string) error {
+	row := s.sqlDb.Raw(`DELETE FROM student_grades where student_grades.course_id=?`,
+		courseId).Row()
+	if row.Err() != nil {
+		log.Println(row.Err())
+		return errs.ErrDb
+	}
+	return nil
+}
+
+func (s StudentGradeRepositoryDb) DeleteAllExamGrades(examId string) error {
+	row := s.sqlDb.Raw(`DELETE FROM student_grades where student_grades.exam_id=?`,
+		examId).Row()
+	if row.Err() != nil {
+		log.Println(row.Err())
+		return errs.ErrDb
+	}
+	return nil
+}
+
+func (s StudentGradeRepositoryDb) DeleteUserCourseExamGrade(userId, courseId, examId string) error {
+	row := s.sqlDb.Raw(`DELETE FROM student_grades WHERE student_grades.user_id=? AND student_grades.course_id=? AND student_grades.exam_id=?`,
+		userId, courseId, examId).Row()
+	if row.Err() != nil {
+		log.Println(row.Err())
+		return errs.ErrDb
+	}
+	return nil
+}
+
 func NewStudentGradeRepositoryDb(sqlDb *gorm.DB) StudentGradeRepositoryDb {
 	return StudentGradeRepositoryDb{sqlDb: sqlDb}
 }
