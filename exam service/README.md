@@ -27,6 +27,7 @@ Follow the instructions to complete the installation.
 
 - [Golang](https://golang.org/dl/)
 - [Redis](https://redis.io/download/)
+- [Postgresql](https://www.postgresql.org/download/)
 
 ## Packages
 
@@ -35,6 +36,7 @@ Follow the instructions to complete the installation.
 - [Go-Redis](https://github.com/go-redis/redis)
 - [Go-Rejson](https://github.com/nitishm/go-rejson)
 - [Viper](https://github.com/spf13/viper)
+- [Gorm](https://github.com/go-gorm/gorm)
 
 ## Environment variables file
 
