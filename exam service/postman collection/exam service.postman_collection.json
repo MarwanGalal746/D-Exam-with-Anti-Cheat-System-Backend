@@ -236,7 +236,7 @@
 			]
 		},
 		{
-			"name": "studenf grade endpoints",
+			"name": "studend grade endpoints",
 			"item": [
 				{
 					"name": "add student grade",
@@ -245,7 +245,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"grade\" : \"44\",\n    \"cheatingStatus\" : \"ok\",\n    \"report\" : \"tmam\"\n}",
+							"raw": "{\n    \"studentGrade\" : {\n        \"grade\" : \"5445999\",\n        \"cheatingStatus\" : \"ok\"\n    },\n    \"report\" : \"tmam\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -253,7 +253,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8888/api/exam/add-student-grade/1/en-mid/en",
+							"raw": "localhost:8888/api/exam/add-student-grade/1/en/en-mid",
 							"host": [
 								"localhost"
 							],
@@ -263,8 +263,180 @@
 								"exam",
 								"add-student-grade",
 								"1",
-								"en-mid",
+								"en",
+								"en-mid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all student grades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/get-all-student-grades/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"get-all-student-grades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all course grades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/get-all-course-grades/en",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"get-all-course-grades",
 								"en"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all exam grades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/get-all-exam-grades/en-mid",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"get-all-exam-grades",
+								"en-mid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user exam grade",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/get-user-exam-grade/1/en/en-mid",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"get-user-exam-grade",
+								"1",
+								"en",
+								"en-mid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user exam grade",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/delete-user-exam-grade/1/en/en-mid",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"delete-user-exam-grade",
+								"1",
+								"en",
+								"en-mid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete student grades",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/delete-all-student-grades/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"delete-all-student-grades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete course grades",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/delete-all-course-grades/en",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"delete-all-course-grades",
+								"en"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete exam grades",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/api/exam/delete-all-exam-grades/en-mid",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"delete-all-exam-grades",
+								"en-mid"
 							]
 						}
 					},
