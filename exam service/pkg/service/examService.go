@@ -9,7 +9,7 @@ type ExamService interface {
 	GetCourseExams(string) (*models.Course, error)
 	GetExam(string) (*models.Exam, error)
 	DelExam(string) error
-	UpdateExamInfo(string, models.Exam) error
+	UpdateExamInfo(string, models.ExamInfo) error
 }
 
 type DefaultExamService struct {
@@ -32,7 +32,7 @@ func (e DefaultExamService) DelExam(examId string) error {
 	return e.repo.DelExam(examId)
 }
 
-func (e DefaultExamService) UpdateExamInfo(examId string, newExam models.Exam) error {
+func (e DefaultExamService) UpdateExamInfo(examId string, newExam models.ExamInfo) error {
 	return e.repo.UpdateExamInfo(examId, newExam)
 }
 

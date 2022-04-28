@@ -18,23 +18,23 @@ type ExamRepositoryDb struct {
 
 func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 	// checking if there is an exam with the same name
-	_, err := e.redisJsonDb.JSONGet(newExam.ExamId, ".")
+	_, err := e.redisJsonDb.JSONGet(newExam.ExamData.ExamId, ".")
 	if err == nil {
 		log.Println(err)
 		return errs.ErrDuplicateExam
 	}
 
 	//check if this exam is not the first exam in the course
-	ok, err := e.redisJsonDb.JSONGet(newExam.CourseId, ".")
-	course := &models.CourseInfo{CourseId: newExam.CourseId, ExamsIds: []string{newExam.ExamId}}
+	ok, err := e.redisJsonDb.JSONGet(newExam.ExamData.CourseId, ".")
+	course := &models.CourseInfo{CourseId: newExam.ExamData.CourseId, ExamsIds: []string{newExam.ExamData.ExamId}}
 	if ok == nil {
-		ok, err = e.redisJsonDb.JSONSet(newExam.CourseId, ".", course)
+		ok, err = e.redisJsonDb.JSONSet(newExam.ExamData.CourseId, ".", course)
 		if err != nil {
 			log.Println(err)
 			return errs.ErrDb
 		}
 	} else {
-		_, err := e.redisJsonDb.JSONArrAppend(newExam.CourseId, "examsIds", newExam.ExamId)
+		_, err := e.redisJsonDb.JSONArrAppend(newExam.ExamData.CourseId, "examsIds", newExam.ExamData.ExamId)
 		if err != nil {
 			log.Println(err)
 			return errs.ErrDb
@@ -44,11 +44,16 @@ func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 	//setting questions Ids in examData and storing questions in database
 	i := 0
 	for _, qs := range newExam.Questions {
-		qs.Id = newExam.CourseId + "-" + newExam.ExamId + "-" + strconv.Itoa(i)
-		newExam.Questions = append(newExam.Questions, qs)
+		qs.Id = newExam.ExamData.CourseId + "-" + newExam.ExamData.ExamId + "-" + strconv.Itoa(i)
+		newExam.ExamData.QuestionIds = append(newExam.ExamData.QuestionIds, qs.Id)
+		ok, err = e.redisJsonDb.JSONSet(qs.Id, ".", qs)
+		if err != nil {
+			log.Println(err)
+			return errs.ErrDb
+		}
 		i++
 	}
-	_, err = e.redisJsonDb.JSONSet(newExam.ExamId, ".", newExam)
+	_, err = e.redisJsonDb.JSONSet(newExam.ExamData.ExamId, ".", newExam.ExamData)
 	if err != nil {
 		log.Println(err)
 		return errs.ErrDb
@@ -77,7 +82,7 @@ func (e ExamRepositoryDb) GetCourseExams(courseId string) (*models.Course, error
 			log.Println(err)
 			return nil, errs.ErrDb
 		}
-		var exam models.Exam
+		var exam models.ExamInfo
 		err = json.Unmarshal(key.([]byte), &exam)
 		if err != nil {
 			log.Println(err)
@@ -85,14 +90,14 @@ func (e ExamRepositoryDb) GetCourseExams(courseId string) (*models.Course, error
 		}
 		//this line to make the array of questions id empty
 		//because it's not important and secure to show questions id to the user in this endpoint
-		exam.Questions = []models.Question{}
+		exam.QuestionIds = []string{}
 		course.ExamsData = append(course.ExamsData, exam)
 	}
 	return &course, nil
 }
 
 func (e ExamRepositoryDb) GetExam(examId string) (*models.Exam, error) {
-	var examData models.Exam
+	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -106,12 +111,28 @@ func (e ExamRepositoryDb) GetExam(examId string) (*models.Exam, error) {
 		log.Println(err)
 		return nil, errs.ErrUnmarshallingJson
 	}
-	return &examData, nil
+	var exam models.Exam
+	exam.ExamData = examData
+	for _, qsId := range examData.QuestionIds {
+		key, err := e.redisJsonDb.JSONGet(qsId, ".")
+		if err != nil {
+			log.Println(err)
+			return nil, errs.ErrDb
+		}
+		var qs models.Question
+		err = json.Unmarshal(key.([]byte), &qs)
+		if err != nil {
+			log.Println(err)
+			return nil, errs.ErrUnmarshallingJson
+		}
+		exam.Questions = append(exam.Questions, qs)
+	}
+	return &exam, nil
 }
 
 func (e ExamRepositoryDb) DelExam(examId string) error {
 	//get the exam information
-	var examData models.Exam
+	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -127,33 +148,33 @@ func (e ExamRepositoryDb) DelExam(examId string) error {
 	}
 
 	//removing the questions of the exam first
-	//for _, qsId := range examData.QuestionIds {
-	//	//delete the question itself
-	//	key, err = e.redisJsonDb.JSONDel(qsId, ".")
-	//	if err != nil {
-	//		log.Println(err)
-	//		return errs.ErrDb
-	//	}
+	for _, qsId := range examData.QuestionIds {
+		//delete the question itself
+		key, err = e.redisJsonDb.JSONDel(qsId, ".")
+		if err != nil {
+			log.Println(err)
+			return errs.ErrDb
+		}
 
-	// this block of code will be wanted in the future
-	////get the index of the qs in examInfo
-	//qsInd, err := e.redisJsonDb.JSONArrIndex(examData.ExamId, "questionIds", qsId)
-	//if err != nil {
-	//	log.Println(err)
-	//	return errs.ErrDb
-	//}
-	//if err != nil {
-	//	return err
-	//}
-	////var ind int64
-	////ind = int
-	////removing the qs id from exam info
-	//key, err = e.redisJsonDb.JSONArrPop(examData.ExamId, "questionIds", int(qsInd.(int64)))
-	//if err != nil {
-	//	log.Println(err)
-	//	return errs.ErrDb
-	//}
-	//}
+		// this block of code will be wanted in the future
+		////get the index of the qs in examInfo
+		//qsInd, err := e.redisJsonDb.JSONArrIndex(examData.ExamId, "questionIds", qsId)
+		//if err != nil {
+		//	log.Println(err)
+		//	return errs.ErrDb
+		//}
+		//if err != nil {
+		//	return err
+		//}
+		////var ind int64
+		////ind = int
+		////removing the qs id from exam info
+		//key, err = e.redisJsonDb.JSONArrPop(examData.ExamId, "questionIds", int(qsInd.(int64)))
+		//if err != nil {
+		//	log.Println(err)
+		//	return errs.ErrDb
+		//}
+	}
 
 	//removing the exam from the course information
 	//get the index of the course
@@ -178,8 +199,8 @@ func (e ExamRepositoryDb) DelExam(examId string) error {
 	return nil
 }
 
-func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models.Exam) error {
-	var examData models.Exam
+func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models.ExamInfo) error {
+	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -197,7 +218,7 @@ func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models.Exam) err
 		return errs.ErrExamUpdateId
 	}
 	updatedExam := models.ResetExamInfo(newExam)
-	updatedExam.Questions = examData.Questions
+	updatedExam.QuestionIds = examData.QuestionIds
 	_, err = e.redisJsonDb.JSONSet(updatedExam.ExamId, ".", updatedExam)
 	if err != nil {
 		log.Println(err)
@@ -205,7 +226,7 @@ func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models.Exam) err
 	}
 	//this line to make the array of questions id empty
 	//because it's not important and secure to show questions id to the user in this endpoint
-	updatedExam.Questions = []models.Question{}
+	updatedExam.QuestionIds = []string{}
 
 	return nil
 }

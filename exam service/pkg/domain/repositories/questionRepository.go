@@ -17,7 +17,7 @@ type QuestionRepositoryDb struct {
 }
 
 func (q QuestionRepositoryDb) Add(examId string, newQuestion models.Question) (*models.Question, error) {
-	var examData models.Exam
+	var examData models.ExamInfo
 	key, err := q.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -57,15 +57,15 @@ func (q QuestionRepositoryDb) Delete(examId string, questionId string) error {
 		return errs.ErrDb
 	}
 
-	////check if there is question with that id
-	//_, err = q.redisJsonDb.JSONGet(questionId, ".")
-	//if err != nil {
-	//	log.Println(err)
-	//	if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
-	//		return errs.ErrQuestionDoesNotExist
-	//	}
-	//	return errs.ErrDb
-	//}
+	//check if there is question with that id
+	_, err = q.redisJsonDb.JSONGet(questionId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return errs.ErrQuestionDoesNotExist
+		}
+		return errs.ErrDb
+	}
 
 	// this block of code will be wanted in the future
 	//get the index of the qs in examInfo
@@ -75,7 +75,14 @@ func (q QuestionRepositoryDb) Delete(examId string, questionId string) error {
 		return errs.ErrDb
 	}
 	//removing the qs id from exam info
-	_, err = q.redisJsonDb.JSONArrPop(examId, "questions", int(qsInd.(int64)))
+	_, err = q.redisJsonDb.JSONArrPop(examId, "questionIds", int(qsInd.(int64)))
+	if err != nil {
+		log.Println(err)
+		return errs.ErrDb
+	}
+
+	//removing the question itself
+	_, err = q.redisJsonDb.JSONDel(questionId, ".")
 	if err != nil {
 		log.Println(err)
 		return errs.ErrDb
