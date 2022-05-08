@@ -34,8 +34,7 @@ Follow the instructions to complete the installation.
 
 ## Running
 
-- In your cloned directory.
-- open your preferable ide and hit the run button
+- Execute the docker compose file
 
 The server will start at:
 
