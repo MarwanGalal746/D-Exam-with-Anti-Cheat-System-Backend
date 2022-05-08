@@ -1,0 +1,25 @@
+﻿version: '3.7'
+
+services:
+  Redis:
+    image: redis/redis-stack
+    volumes:
+      - db-data:/data/redis
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    restart: unless-stopped
+    
+  CourseService:
+    image: dexam/course-service
+    volumes:
+      - course-service-data:/data/course_service
+    ports:
+      - "443:443"
+    environment:
+      - REDIS_CONNECTION_STRING=redis://Redis:6379
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  course-service-data:

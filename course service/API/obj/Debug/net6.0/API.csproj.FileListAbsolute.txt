@@ -154,3 +154,6 @@ C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course 
 C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\API\obj\Debug\net6.0\API.pdb
 C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\API\obj\Debug\net6.0\API.genruntimeconfig.cache
 C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\API\obj\Debug\net6.0\ref\API.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\API\bin\Debug\net6.0\RabbitMQ.Client.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\API\bin\Debug\net6.0\Messaging.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\API\bin\Debug\net6.0\Messaging.pdb

@@ -3,6 +3,7 @@ using API.Model;
 using Core.Entity;
 using Core.Interface.Service;
 using Core.Utility;
+using Messaging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -35,6 +36,7 @@ public class CourseController : ControllerBase
             Students = new List<string>()
         };
         await _courseService.Create(course);
+        
         return Ok(course);
     }
 
@@ -72,6 +74,7 @@ public class CourseController : ControllerBase
     public IActionResult Delete(string id)
     {
         _courseService.Delete(id);
+        RabbitMq.Send(id);
         return Ok("Success");
     }
 

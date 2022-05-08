@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "aQMZeI8k91OaoOz1v4hPopYKJd39+Er1uzuTUcvWfT49S2ZsYtNWKkbDTnyTvuIpGOz/xQZCYXUIQZjVNTczwA==",
+  "success": true,
+  "projectFilePath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\course service\\Messaging\\Messaging.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\eyady\\.nuget\\packages\\rabbitmq.client\\6.3.0\\rabbitmq.client.6.3.0.nupkg.sha512",
+    "C:\\Users\\eyady\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\eyady\\.nuget\\packages\\system.threading.channels\\4.7.1\\system.threading.channels.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}

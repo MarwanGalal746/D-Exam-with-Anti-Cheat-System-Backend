@@ -9,6 +9,7 @@
       "API/1.0.0": {
         "dependencies": {
           "Core": "1.0.0",
+          "Messaging": "1.0.0",
           "Persistence": "1.0.0",
           "Redis.OM": "0.1.9",
           "Service": "1.0.0",
@@ -100,6 +101,18 @@
           "lib/net5.0/Pipelines.Sockets.Unofficial.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "2.2.2.34088"
+          }
+        }
+      },
+      "RabbitMQ.Client/6.3.0": {
+        "dependencies": {
+          "System.Memory": "4.5.4",
+          "System.Threading.Channels": "4.7.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.3.0.0"
           }
         }
       },
@@ -228,6 +241,7 @@
         }
       },
       "System.IO.Pipelines/5.0.1": {},
+      "System.Memory/4.5.4": {},
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
       "System.Security.AccessControl/5.0.0": {
         "dependencies": {
@@ -265,6 +279,7 @@
       },
       "System.Security.Principal.Windows/5.0.0": {},
       "System.Text.Json/5.0.2": {},
+      "System.Threading.Channels/4.7.1": {},
       "System.Windows.Extensions/5.0.0": {
         "dependencies": {
           "System.Drawing.Common": "5.0.0"
@@ -298,6 +313,14 @@
         },
         "runtime": {
           "Core.dll": {}
+        }
+      },
+      "Messaging/1.0.0": {
+        "dependencies": {
+          "RabbitMQ.Client": "6.3.0"
+        },
+        "runtime": {
+          "Messaging.dll": {}
         }
       },
       "Persistence/1.0.0": {
@@ -418,6 +441,13 @@
       "path": "pipelines.sockets.unofficial/2.2.2",
       "hashPath": "pipelines.sockets.unofficial.2.2.2.nupkg.sha512"
     },
+    "RabbitMQ.Client/6.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aKDH8lyNIRkouDvJJD3xd6222z6qCK8+Lyb/lRQRO1QxN7hsTgPWtkezMmXmA7t1NsDLUwIWEJj8xYQtMt0tnQ==",
+      "path": "rabbitmq.client/6.3.0",
+      "hashPath": "rabbitmq.client.6.3.0.nupkg.sha512"
+    },
     "Redis.OM/0.1.9": {
       "type": "package",
       "serviceable": true,
@@ -488,6 +518,13 @@
       "path": "system.io.pipelines/5.0.1",
       "hashPath": "system.io.pipelines.5.0.1.nupkg.sha512"
     },
+    "System.Memory/4.5.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw==",
+      "path": "system.memory/4.5.4",
+      "hashPath": "system.memory.4.5.4.nupkg.sha512"
+    },
     "System.Runtime.CompilerServices.Unsafe/6.0.0": {
       "type": "package",
       "serviceable": true,
@@ -530,6 +567,13 @@
       "path": "system.text.json/5.0.2",
       "hashPath": "system.text.json.5.0.2.nupkg.sha512"
     },
+    "System.Threading.Channels/4.7.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6akRtHK/wab3246t4p5v3HQrtQk8LboOt5T4dtpNgsp3zvDeM4/Gx8V12t0h+c/W9/enUrilk8n6EQqdQorZAA==",
+      "path": "system.threading.channels/4.7.1",
+      "hashPath": "system.threading.channels.4.7.1.nupkg.sha512"
+    },
     "System.Windows.Extensions/5.0.0": {
       "type": "package",
       "serviceable": true,
@@ -545,6 +589,11 @@
       "hashPath": "ulid.1.2.6.nupkg.sha512"
     },
     "Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Messaging/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

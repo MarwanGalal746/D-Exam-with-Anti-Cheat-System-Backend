@@ -1,0 +1,27 @@
+﻿using System.Text;
+using RabbitMQ.Client;
+
+namespace Messaging;
+
+public static class RabbitMq
+{
+    public static void Send(string msg)
+    {
+        var factory = new ConnectionFactory() { HostName = "localhost" };
+        
+        using (var connection = factory.CreateConnection())
+            
+        using (var channel = connection.CreateModel())
+        {
+            // 3. connect to the queue
+            channel.QueueDeclare(queue: "course-exam", durable: false,
+                exclusive: false, autoDelete: false, arguments: null);
+
+            var messageBody = Encoding.UTF8.GetBytes(msg);
+            
+            channel.BasicPublish(exchange: "", routingKey: "course-exam",
+                basicProperties: null, body: messageBody);
+        }
+    }
+            
+}

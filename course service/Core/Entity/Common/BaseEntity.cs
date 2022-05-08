@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Redis.OM.Modeling;
 
 namespace Core.Entity.Common;
 

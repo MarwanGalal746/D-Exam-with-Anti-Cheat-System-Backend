@@ -8,5 +8,4 @@ public class CreateCourseRequest
     [Required] public string TeacherId { get; set; }
     [Required] public DateTime StartDate { get; set; }
     [Required] public DateTime EndDate { get; set; }
-    
 }
