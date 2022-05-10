@@ -3,6 +3,7 @@ package com.DExam.User_Service.controller;
 import com.DExam.User_Service.config.JwtManager;
 import com.DExam.User_Service.exception.InvalidEmailPasswordException;
 import com.DExam.User_Service.model.*;
+import com.DExam.User_Service.service.IUserService;
 import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
@@ -14,20 +15,16 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
 @Slf4j
 public class UserController {
 
-    private final UserService userService;
+    private final IUserService userService;
     private final JwtManager jwtManager;
     private final AuthenticationManager authenticationManager;
     private EmailController emailController;
-
 
     @PostMapping("/verify")
     public ResponseEntity<?> verify(@RequestBody User user){
@@ -42,7 +39,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user){
-        long userID = userService.add(user);
+        long userID = userService.save(user);
         log.info("a new user has been added with id " + userID);
         return new ResponseEntity<>(new CustomResponse().setMessage(String.valueOf(userID)).setStatus(HttpStatus.CREATED),HttpStatus.CREATED);
     }
@@ -57,14 +54,14 @@ public class UserController {
             return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.INVALID_TOKEN).setStatus(HttpStatus.NOT_ACCEPTABLE),HttpStatus.NOT_ACCEPTABLE);
         }
         userService.userExistByEmail(request.getNewUser().getEmail());
-        userService.add(request.getNewUser());
+        userService.save(request.getNewUser());
         log.info("the credentials of the user with id " + request.getNewUser().getId() + " have been updated" );
         String newToken = jwtManager.generateToken(request.getNewUser().getEmail());
         return new ResponseEntity<>(new CustomResponse().setMessage(newToken).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public Object login(@RequestBody UserCredentials userCredentials) {
+    public LoginResponse login(@RequestBody UserCredentials userCredentials) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -75,12 +72,8 @@ public class UserController {
         }
 
         String accessToken = jwtManager.generateToken(userCredentials.getEmail());
-
-        Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("user",userService.get(userCredentials.getEmail()));
-        userInfo.put("access_token",accessToken);
         log.info("user with email " + userCredentials.getEmail() + " has signed in successfully" );
-        return userInfo;
+        return new LoginResponse(accessToken, userService.get(userCredentials.getEmail()));
     }
 
     @PutMapping("/reset")
