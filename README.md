@@ -10,7 +10,7 @@
 ---
 ## Summary
 
-This application is designed for our D-Exam Application. It aims to have a reliable examintion system with a reliable anti-cheat system for both students and teachers to use.
+This application is designed for our D-Exam Application. It aims to have an examintion system with a reliable anti-cheat system for both students and teachers to use.
 
 ## Tech Stack
 
