@@ -3,7 +3,7 @@
   <h1>D-Exam Microservices Backend Application</h1>
 </div>
 
-##  Table of contents
+##  Table of Contents
 - [**Summary**](#summary)
 - [**Tech Stack**](#getting-started)
 - [**Services**](#services)
