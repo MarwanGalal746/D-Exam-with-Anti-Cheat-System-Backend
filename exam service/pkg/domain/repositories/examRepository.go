@@ -199,6 +199,37 @@ func (e ExamRepositoryDb) DelExam(examId string) error {
 	return nil
 }
 
+func (e ExamRepositoryDb) DelCourseExams(courseId string) error {
+	var course models.Course
+	key, err := e.redisJsonDb.JSONGet(courseId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return errs.ErrCourseDoesNotExist
+		}
+		return errs.ErrDb
+	}
+	err = json.Unmarshal(key.([]byte), &course.CourseData)
+	if err != nil {
+		log.Println(err)
+		return errs.ErrUnmarshallingJson
+	}
+	for _, examId := range course.CourseData.ExamsIds {
+		err = e.DelExam(examId)
+		if err != nil {
+			return err
+		}
+	}
+	//removing the course itself
+	key, err = e.redisJsonDb.JSONDel(courseId, ".")
+	if err != nil {
+		log.Println(err)
+		return errs.ErrDb
+	}
+
+	return nil
+}
+
 func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models.ExamInfo) error {
 	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")

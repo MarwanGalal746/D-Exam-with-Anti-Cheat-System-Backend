@@ -3,6 +3,7 @@ package handlers
 import (
 	"exam_service/pkg/domain/repositories"
 	"exam_service/pkg/driver"
+	"exam_service/pkg/messaging"
 	"exam_service/pkg/service"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -24,6 +25,8 @@ func Start() {
 		service.NewQuestionService(repositories.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
 	studentGradeHandler := StudentGradeHandlers{
 		service.NewStudentGradeService(repositories.NewStudentGradeRepositoryDb(sqlDb, redisDb, redisJsonDb))}
+
+	go messaging.DeleteCourseExams(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))
 
 	//exam endpoints
 	router.POST("/api/exam/create-exam", examHandler.Create)

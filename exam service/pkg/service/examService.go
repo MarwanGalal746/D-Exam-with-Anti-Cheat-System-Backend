@@ -9,6 +9,7 @@ type ExamService interface {
 	GetCourseExams(string) (*models.Course, error)
 	GetExam(string) (*models.Exam, error)
 	DelExam(string) error
+	DelCourseExams(string) error
 	UpdateExamInfo(string, models.ExamInfo) error
 }
 
@@ -30,6 +31,10 @@ func (e DefaultExamService) GetExam(examId string) (*models.Exam, error) {
 
 func (e DefaultExamService) DelExam(examId string) error {
 	return e.repo.DelExam(examId)
+}
+
+func (e DefaultExamService) DelCourseExams(courseId string) error {
+	return e.repo.DelCourseExams(courseId)
 }
 
 func (e DefaultExamService) UpdateExamInfo(examId string, newExam models.ExamInfo) error {

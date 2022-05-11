@@ -29,5 +29,6 @@ type ExamRepository interface {
 	GetCourseExams(string) (*Course, error)
 	GetExam(string) (*Exam, error)
 	DelExam(string) error
+	DelCourseExams(string) error
 	UpdateExamInfo(string, ExamInfo) error
 }
