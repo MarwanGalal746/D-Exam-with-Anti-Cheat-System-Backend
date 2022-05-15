@@ -79,15 +79,16 @@ public class CourseController : ControllerBase
     }
 
     [HttpPost("/register-student")]
-    public async Task<IActionResult> RegisterStudent(StudentRequest request)
+    public async Task<IActionResult> RegisterStudent(RegisterStudentRequest request)
     {
-        await _studCrsService.AddStudentToCourse(request.StudentId, request.CourseId);
-        await _courseService.RegisterStudent(request.StudentId, request.CourseId);
+        var course = await _courseService.GetByCode(request.CourseCode);
+        await _studCrsService.AddStudentToCourse(request.StudentId, course.CourseId.ToString());
+        await _courseService.RegisterStudent(request.StudentId, course.CourseId.ToString());
         return Ok("Success");
     }
     
     [HttpDelete("/remove-student")]
-    public async Task<IActionResult> RemoveStudent(StudentRequest request)
+    public async Task<IActionResult> RemoveStudent(RemoveStudentRequest request)
     {
         await _studCrsService.RemoveStudentFromCourse(request.StudentId, request.CourseId);
         await _courseService.RemoveStudent(request.StudentId, request.CourseId);

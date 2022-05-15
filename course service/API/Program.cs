@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton(new RedisConnectionProvider(builder.Configuration[Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING")]));
+builder.Services.AddSingleton(new RedisConnectionProvider(builder.Configuration[Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING", EnvironmentVariableTarget.Process)]));
 builder.Services.AddHostedService<IndexCreationService>();
 
 builder.Services.AddSingleton<ICourseRepository, CourseRepository>();

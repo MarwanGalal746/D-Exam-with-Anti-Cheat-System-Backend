@@ -22,22 +22,26 @@ public class CourseService : ICourseService
 
     public async Task<Course> GetById(string id)
     {
-        return (await _repository.Get(id))!;
+        return await _repository.Get(id)
+               ?? throw new Exception("Could not find course");
     }
 
     public async Task<IList<Course>> GetByName(string name)
     {
-        return await _repository.FindBy(c => c.Name == name);
+        return await _repository.FindBy(c => c.Name == name)
+               ?? throw new Exception("Could not find course");
     }
 
     public async Task<IList<Course>> GetByTeacher(string id)
     {
-        return await _repository.FindBy(c => c.TeacherId == id);
+        return await _repository.FindBy(c => c.TeacherId == id)
+               ?? throw new Exception("Could not find course");
     }
 
     public async Task<Course> GetByCode(string code)
     {
-        var queryResult = await _repository.FindBy(c => c.Code == code);
+        var queryResult = await _repository.FindBy(c => c.Code == code)
+                          ?? throw new Exception("Could not find course");
         return queryResult.FirstOrDefault()!;
     }
 

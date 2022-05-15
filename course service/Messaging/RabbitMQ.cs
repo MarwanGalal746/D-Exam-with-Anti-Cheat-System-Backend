@@ -3,7 +3,7 @@ using RabbitMQ.Client;
 
 namespace Messaging;
 
-public static class RabbitMq
+public class RabbitMq
 {
     public static void Send(string msg)
     {
@@ -13,7 +13,6 @@ public static class RabbitMq
             
         using (var channel = connection.CreateModel())
         {
-            // 3. connect to the queue
             channel.QueueDeclare(queue: "course-exam", durable: false,
                 exclusive: false, autoDelete: false, arguments: null);
 
