@@ -3,7 +3,7 @@
 services:
   redis:
     image: redis/redis-stack
-    container_name: redis
+    container_name: course-db
     volumes:
       - db-data:/data/redis
     ports:

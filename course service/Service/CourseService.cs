@@ -23,7 +23,7 @@ public class CourseService : ICourseService
     public async Task<Course> GetById(string id)
     {
         return await _repository.Get(id)
-               ?? throw new Exception("Could not find course");
+               ?? throw new Exception("Could not find course with id: " + id);
     }
 
     public async Task<IList<Course>> GetByName(string name)
