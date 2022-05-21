@@ -3,6 +3,7 @@ version: '3.7'
 services:
   PostgresDB:
     image: postgres
+    container_name: Postgres
     volumes:
       - db-data:/data/postgres
     ports:
@@ -15,6 +16,7 @@ services:
 
   PG_Admin:
     image: dpage/pgadmin4
+    container_name: PG-Admin
     volumes:
       - pgadmin-data:/data/pgadmin
     ports:
@@ -25,7 +27,8 @@ services:
     restart: unless-stopped
 
   UserService:
-    image: user-service
+    image: dexam_user_service
+    container_name: UserService
     volumes:
       - user-service-data:/data/user_service
     ports:
