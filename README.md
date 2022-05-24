@@ -29,3 +29,5 @@ This application is designed for our D-Exam Application. It aims to have an exam
 - [Course](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/Course-Service)
 - [Exam](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/exam-service)
 - [Notifications]()
+- [Face Recognition]()
+- [Anti-Cheat]()
