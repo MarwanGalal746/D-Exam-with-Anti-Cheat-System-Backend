@@ -1,14 +1,15 @@
 package com.DExam.User_Service.controller;
 
 import com.DExam.User_Service.config.JwtManager;
+import com.DExam.User_Service.domain.User;
 import com.DExam.User_Service.exception.InvalidEmailPasswordException;
 import com.DExam.User_Service.model.*;
 import com.DExam.User_Service.service.IUserService;
-import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,23 +27,37 @@ public class UserController {
     private final JwtManager jwtManager;
     private final AuthenticationManager authenticationManager;
     private EmailController emailController;
+    private ModelMapper modelMapper;
 
-    @PostMapping("/verify")
-    public ResponseEntity<?> verify(@RequestBody User user){
-        userService.userExistByEmail(user.getEmail());
-        userService.userExistByNationalID(user.getNationalID());
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody CreateUser newUser){
+        userService.userExistByEmail(newUser.getEmail());
+        userService.userExistByNationalID(newUser.getNationalID());
+        User user = modelMapper.map(newUser, User.class);
+        long userID = userService.save(user);
+        log.info("a new user has been added with id " + userID);
+
         String verificationCode = CodeGenerator.generateCode();
-        MailForm mailForm = new MailForm(user.getEmail(),"EMAIL VERIFICATION",CustomResponse.EMAIL_VERIFICATION + verificationCode);
+        MailForm mailForm = new MailForm(newUser.getEmail(),"EMAIL VERIFICATION",CustomResponse.EMAIL_VERIFICATION + verificationCode);
         emailController.send(mailForm);
-        log.info("a verification email has been sent to this email " + user.getEmail());
+
+        log.info("a verification email has been sent to this email " + newUser.getEmail());
         return new ResponseEntity<>(new CustomResponse().setMessage(verificationCode).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user){
-        long userID = userService.save(user);
-        log.info("a new user has been added with id " + userID);
-        return new ResponseEntity<>(new CustomResponse().setMessage(String.valueOf(userID)).setStatus(HttpStatus.CREATED),HttpStatus.CREATED);
+    @PostMapping("/verify")
+    public ResponseEntity<?> verify(@RequestParam String email) {
+        User user = userService.get(email);
+        if (user.isActive())
+        {
+            return new ResponseEntity<>(new CustomResponse().setMessage("User is already verified").setStatus(HttpStatus.OK), HttpStatus.OK);
+        }
+        else
+        {
+            user.setActive(true);
+            userService.save(user);
+            return new ResponseEntity<>(new CustomResponse().setMessage("User has been verified").setStatus(HttpStatus.OK), HttpStatus.OK);
+        }
     }
 
     @PutMapping("/update")
@@ -69,6 +84,11 @@ public class UserController {
                             userCredentials.getEmail(), userCredentials.getPassword()));
         } catch (Exception exception){
             log.error("email or password or both of the user with email " + userCredentials.getEmail() + " are not valid" );
+            throw new InvalidEmailPasswordException();
+        }
+
+        if(!userService.isUserActive(userCredentials.getEmail())){
+            log.error("the user with email " + userCredentials.getEmail() + " is not verified" );
             throw new InvalidEmailPasswordException();
         }
 

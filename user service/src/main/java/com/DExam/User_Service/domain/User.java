@@ -1,4 +1,4 @@
-package com.DExam.User_Service.model;
+package com.DExam.User_Service.domain;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -22,11 +22,13 @@ public class User {
     @Column(nullable = false)
     private String password;
     private String img;
+    private boolean isActive;
     @Temporal(TemporalType.TIMESTAMP) @Column(nullable = false)
     private @Setter(AccessLevel.PROTECTED) Date createdAt;
 
     @PrePersist
     private void onCreation(){
         createdAt = new Date();
+        isActive = false;
     }
 }

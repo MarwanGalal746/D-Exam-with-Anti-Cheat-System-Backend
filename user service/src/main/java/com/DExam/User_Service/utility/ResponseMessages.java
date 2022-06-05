@@ -8,8 +8,8 @@ public interface ResponseMessages {
     String INVALID_EMAIL_PASSWORD = "Invalid email or password";
     String USER_UPDATED = "User has been updated";
     String INVALID_TOKEN = "Token is invalid or has expired";
-
     String PASS_UPDATED = "Password has been updated";
+    String INVALID_EMAIL = "Email is invalid";
 
 
 }

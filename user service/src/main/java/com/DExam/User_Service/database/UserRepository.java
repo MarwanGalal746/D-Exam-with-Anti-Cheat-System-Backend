@@ -1,6 +1,6 @@
 package com.DExam.User_Service.database;
 
-import com.DExam.User_Service.model.User;
+import com.DExam.User_Service.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

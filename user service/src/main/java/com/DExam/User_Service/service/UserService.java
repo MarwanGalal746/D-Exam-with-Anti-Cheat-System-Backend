@@ -2,9 +2,10 @@ package com.DExam.User_Service.service;
 
 import com.DExam.User_Service.database.UserRepository;
 import com.DExam.User_Service.exception.EmailExistException;
+import com.DExam.User_Service.exception.EmailNotExistException;
 import com.DExam.User_Service.exception.NationalIDException;
 import com.DExam.User_Service.exception.UserNotFoundException;
-import com.DExam.User_Service.model.User;
+import com.DExam.User_Service.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,8 +24,7 @@ public class UserService implements UserDetailsService, IUserService {
 
 
     public User get(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(UserNotFoundException::new);
+        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     public long save(User newUser) {
@@ -34,19 +34,16 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     public void userExistByEmail(String email){
-        if (userRepository.findByEmail(email).orElse(null) != null)
-            throw new EmailExistException();
+        userRepository.findByEmail(email).orElseThrow(EmailExistException::new);
     }
 
     public void userExistByNationalID(String nationalID){
-         if (userRepository.findByNationalID(nationalID).orElse(null) != null)
-            throw new NationalIDException();
+         userRepository.findByNationalID(nationalID).orElseThrow(NationalIDException::new);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),new ArrayList<>());
     }
@@ -54,5 +51,10 @@ public class UserService implements UserDetailsService, IUserService {
     public void resetPassword(String email, String newPassword) {
         newPassword = bCryptPasswordEncoder.encode(newPassword);
         userRepository.updatePassword(email, newPassword);
+    }
+
+    @Override
+    public boolean isUserActive(String email) {
+        return userRepository.findByEmail(email).orElseThrow(EmailNotExistException::new).isActive();
     }
 }

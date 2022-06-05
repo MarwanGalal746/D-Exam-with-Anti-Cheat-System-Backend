@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   UserService:
-    image: dexam_user_service
+    image: eyadzz/dexam_user_service
     container_name: UserService
     volumes:
       - user-service-data:/data/user_service

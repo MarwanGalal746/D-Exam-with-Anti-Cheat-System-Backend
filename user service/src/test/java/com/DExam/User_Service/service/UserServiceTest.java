@@ -1,7 +1,7 @@
 package com.DExam.User_Service.service;
 
 import com.DExam.User_Service.database.UserRepository;
-import com.DExam.User_Service.model.User;
+import com.DExam.User_Service.domain.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

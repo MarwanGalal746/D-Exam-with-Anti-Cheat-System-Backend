@@ -1,6 +1,6 @@
 package com.DExam.User_Service.config;
 
-import com.DExam.User_Service.model.User;
+import com.DExam.User_Service.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

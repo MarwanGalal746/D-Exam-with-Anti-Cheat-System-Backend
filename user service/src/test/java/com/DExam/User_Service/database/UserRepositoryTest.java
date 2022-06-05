@@ -1,6 +1,6 @@
 package com.DExam.User_Service.database;
 
-import com.DExam.User_Service.model.User;
+import com.DExam.User_Service.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
