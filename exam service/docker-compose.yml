@@ -1,0 +1,32 @@
+# Specify the version for docker-compose.yml
+version: "3.3"
+
+services:
+  postgres:
+    container_name: student-grades
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 00112233
+    ports:
+      - "5431:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    container_name: exam-db
+    image: redis/redis-stack
+    ports:
+      - "6378:6378"
+    volumes:
+      - redisdata:/var/lib/redis/data
+
+  exam-service:
+    container_name: exam-service
+    image: my-app:1.0
+    ports:
+      - "8888:8888"
+
+volumes:
+  redisdata:
+  pgdata:
