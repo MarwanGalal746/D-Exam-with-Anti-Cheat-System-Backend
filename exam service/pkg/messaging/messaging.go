@@ -3,25 +3,29 @@ package messaging
 import (
 	"exam_service/pkg/domain/models"
 	"exam_service/pkg/service"
-	"fmt"
+	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
+	"log"
 )
 
 func DeleteCourseExams(repository models.ExamRepository) {
-	fmt.Println("Consumer")
+	log.Println("Consumer")
 
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	rabbitmqUrl := "amqp://guest:guest@" +
+		viper.GetString("RABBITMQ_HOST") + viper.GetString("RABBITMQ_PORT")
+
+	conn, err := amqp.Dial(rabbitmqUrl)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		panic(err)
 	}
 	defer conn.Close()
 
-	fmt.Println("Successfully connected to the RabbitMQ instance")
+	log.Println("Successfully connected to the RabbitMQ instance")
 
 	ch, err := conn.Channel()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		panic(err)
 	}
 	defer ch.Close()
@@ -30,19 +34,19 @@ func DeleteCourseExams(repository models.ExamRepository) {
 		"",
 		true, false, false, false, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		panic(err)
 	}
 	messages := make(chan string)
 	go func() {
 		for d := range msgs {
 			courseId := string(d.Body[:])
-			fmt.Println("Received msg: ", courseId)
+			log.Println("Received msg: ", courseId)
 			examService := service.NewExamService(repository)
 			examService.DelCourseExams(courseId)
 		}
 	}()
-	fmt.Println("Successfully consumed msg to the queue")
+	log.Println("Successfully consumed msg to the queue")
 	<-messages
 
 }
