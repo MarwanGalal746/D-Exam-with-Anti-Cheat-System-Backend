@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment
+  labels:
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: eyadzz/dexam_user_service
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  key: database-host
+                  name: userservice-secret
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DBNAME
+              valueFrom:
+                secretKeyRef:
+                  key: datbase-name
+                  name: userservice-secret
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: postgres-username
+                  name: database-secret
+            - name: POSTGRES_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: postgres-password
+                  name: database-secret
+            - name: VERIFICATION_MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: verification-email
+                  name: userservice-secret
+            - name: VERIFICATION_MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: verification-email-password
+                  name: userservice-secret
+
