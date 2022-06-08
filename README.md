@@ -1,34 +1,40 @@
 <div align="center">
-  <br>
-  <h1>D-Exam Microservices Backend Application</h1>
+  <h1>User Service</h1>
 </div>
 
-##  Table of Contents
+##  Table of contents
 - [**Summary**](#summary)
-- [**Tech Stack**](#getting-started)
-- [**Services**](#services)
+- [**Getting Started**](#getting-started)
+- [**Prerequisites**](#prerequisites)
+- [**Packages**](#packages)
+- [**Running**](#running)
 ---
 ## Summary
 
-This application is designed for our D-Exam Application. It aims to have an examintion system with a reliable anti-cheat system for both students and teachers to use.
+This service allows users to register and login to the system.
 
-## Tech Stack
+## Getting Started
+
+Clone the repository.<br />
+Follow the instructions to complete the installation.
+
+## Prerequisites
 
 - [Spring](https://spring.io/)
-- [ASP.NET](https://dotnet.microsoft.com/en-us/apps/aspnet)
-- [Golang](https://golang.org/dl/)
-- [django](https://www.djangoproject.com/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Redis](https://redis.io/download/)
-- [Docker]()
-- [Kubernetes]()
-- [RabbitMQ]()
-- [NginX Ingress]()
 
-## Services
-- [User](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/User-Service)
-- [Course](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/Course-Service)
-- [Exam](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/exam-service)
-- [Notifications]()
-- [Face Recognition](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/Face-Recognition-Service)
-- [Anti-Cheat]()
+## Dependencies
+
+- JPA
+- Lombok
+- JDBC
+- Postgres Driver
+- JUnit
+
+## Running
+
+- Execute the docker compose file
+
+The server will start at:
+
+- Local: http://localhost:[SERVER_PORT]
