@@ -1,28 +1,13 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+# .github/workflows/example-1.yml
 
-name: UserService CI/CD Flow
-
+name: My First Manual Workflow
 on: [workflow_dispatch]
-
 jobs:
-  build:
+  example:
+    name: Example Job
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn -DskipTests package
-      
-    - name: Build and Push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: eyadzz/dexam_user_service
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Clone Repository
+        uses: actions/checkout@v2
+      - name: ...
+        run: ...
