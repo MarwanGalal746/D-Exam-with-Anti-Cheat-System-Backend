@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         /**
          * here we might need some authentication to use the api instead of making it open for anyone to make request "permitAll option"
          */
+        http.cors();
     }
 
     @Override
