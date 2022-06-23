@@ -34,11 +34,15 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     public void userExistByEmail(String email){
-        userRepository.findByEmail(email).orElseThrow(EmailExistException::new);
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new EmailExistException();
+        }
     }
 
     public void userExistByNationalID(String nationalID){
-         userRepository.findByNationalID(nationalID).orElseThrow(NationalIDException::new);
+         if (userRepository.findByNationalID(nationalID).isPresent()) {
+             throw new NationalIDException();
+         }
     }
 
     @Override

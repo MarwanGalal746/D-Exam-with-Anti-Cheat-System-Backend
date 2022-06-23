@@ -26,4 +26,9 @@ public class ExceptionsHandler {
     public ResponseEntity<?> invalidEmailPassword(InvalidEmailPasswordException exception){
         return exception.getException();
     }
+
+    @ExceptionHandler(EmailNotExistException.class)
+    public ResponseEntity<?> emailNotExist(EmailNotExistException exception){
+        return exception.getException();
+    }
 }

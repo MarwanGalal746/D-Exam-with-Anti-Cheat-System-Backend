@@ -1,18 +1,16 @@
 package com.DExam.User_Service.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.DExam.User_Service.domain.Role;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUser {
+public class UserDTO {
     private String name;
     private String email;
     private String nationalID;
     private String password;
     private String img;
+    private Role role;
 }

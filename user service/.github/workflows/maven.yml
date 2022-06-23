@@ -30,5 +30,6 @@ jobs:
       with:
         image: eyadzz/dexam_user_service
         registry: docker.io
+        dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}

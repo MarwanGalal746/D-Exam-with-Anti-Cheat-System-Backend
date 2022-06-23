@@ -2,7 +2,6 @@ package com.DExam.User_Service.controller;
 
 import com.DExam.User_Service.config.JwtManager;
 import com.DExam.User_Service.domain.User;
-import com.DExam.User_Service.exception.InvalidEmailPasswordException;
 import com.DExam.User_Service.model.*;
 import com.DExam.User_Service.service.IUserService;
 import com.DExam.User_Service.utility.CodeGenerator;
@@ -30,7 +29,7 @@ public class UserController {
     private ModelMapper modelMapper;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody CreateUser newUser){
+    public ResponseEntity<?> register(@RequestBody UserDTO newUser){
         userService.userExistByEmail(newUser.getEmail());
         userService.userExistByNationalID(newUser.getNationalID());
         User user = modelMapper.map(newUser, User.class);
@@ -84,12 +83,10 @@ public class UserController {
                             userCredentials.getEmail(), userCredentials.getPassword()));
         } catch (Exception exception){
             log.error("email or password or both of the user with email " + userCredentials.getEmail() + " are not valid" );
-            throw new InvalidEmailPasswordException();
         }
 
         if(!userService.isUserActive(userCredentials.getEmail())){
             log.error("the user with email " + userCredentials.getEmail() + " is not verified" );
-            throw new InvalidEmailPasswordException();
         }
 
         String accessToken = jwtManager.generateToken(userCredentials.getEmail());
