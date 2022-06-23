@@ -4,7 +4,7 @@ type ExamInfo struct {
 	ExamId      string   `json:"examId" validate:"required"`
 	Name        string   `json:"name" validate:"required"`
 	CourseId    string   `json:"courseId" validate:"required"`
-	Duration    int      `json:"duration" validate:"required"`
+	Duration    int64    `json:"duration" validate:"required"`
 	TotalMark   int      `json:"totalMark" validate:"required"`
 	Date        int64    `json:"date" validate:"required"`
 	QuestionIds []string `json:"questionIds,omitempty"`
@@ -22,7 +22,7 @@ func ResetExamInfo(source ExamInfo) ExamInfo {
 
 type ExamRepository interface {
 	Create(Exam) error
-	GetCourseExams(string) (*Course, error)
+	GetCourseExams([]string) ([]CourseExams, error)
 	GetExam(string) (*Exam, error)
 	DelExam(string) error
 	DelCourseExams(string) error

@@ -9,6 +9,7 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type ExamRepositoryDb struct {
@@ -61,39 +62,50 @@ func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 	return nil
 }
 
-func (e ExamRepositoryDb) GetCourseExams(courseId string) (*models.Course, error) {
-	var course models.Course
-	key, err := e.redisJsonDb.JSONGet(courseId, ".")
-	if err != nil {
-		log.Println(err)
-		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
-			return nil, errs.ErrCourseDoesNotExist
-		}
-		return nil, errs.ErrDb
-	}
-	err = json.Unmarshal(key.([]byte), &course.CourseData)
-	if err != nil {
-		log.Println(err)
-		return nil, errs.ErrUnmarshallingJson
-	}
-	for _, examId := range course.CourseData.ExamsIds {
-		key, err := e.redisJsonDb.JSONGet(examId, ".")
+func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExams, error) {
+	var courseExams []models.CourseExams
+	for _, courseId := range courseIds {
+		var course models.Course
+		key, err := e.redisJsonDb.JSONGet(courseId, ".")
 		if err != nil {
 			log.Println(err)
+			if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+				return nil, errs.ErrCourseDoesNotExist
+			}
 			return nil, errs.ErrDb
 		}
-		var exam models.ExamInfo
-		err = json.Unmarshal(key.([]byte), &exam)
+		err = json.Unmarshal(key.([]byte), &course.CourseData)
 		if err != nil {
 			log.Println(err)
 			return nil, errs.ErrUnmarshallingJson
 		}
-		//this line to make the array of questions id empty
-		//because it's not important and secure to show questions id to the user in this endpoint
-		exam.QuestionIds = []string{}
-		course.ExamsData = append(course.ExamsData, exam)
+		var upcomingExams []models.ExamInfo
+		var previousExams []models.ExamInfo
+		for _, examId := range course.CourseData.ExamsIds {
+			key, err := e.redisJsonDb.JSONGet(examId, ".")
+			if err != nil {
+				log.Println(err)
+				return nil, errs.ErrDb
+			}
+			var exam models.ExamInfo
+			err = json.Unmarshal(key.([]byte), &exam)
+			if err != nil {
+				log.Println(err)
+				return nil, errs.ErrUnmarshallingJson
+			}
+			//this line to make the array of questions id empty
+			//because it's not important and secure to show questions id to the user in this endpoint
+			exam.QuestionIds = []string{}
+			if exam.Date+exam.Duration*60 < time.Now().Unix() {
+				upcomingExams = append(upcomingExams, exam)
+			} else {
+				previousExams = append(previousExams, exam)
+			}
+		}
+		courseExams = append(courseExams,
+			models.CourseExams{PreviousExams: previousExams, UpcomingExams: upcomingExams})
 	}
-	return &course, nil
+	return courseExams, nil
 }
 
 func (e ExamRepositoryDb) GetExam(examId string) (*models.Exam, error) {
