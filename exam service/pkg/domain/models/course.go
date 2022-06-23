@@ -9,3 +9,8 @@ type Course struct {
 	CourseData CourseInfo `json:"courseData" validate:"required"`
 	ExamsData  []ExamInfo `json:"exams" validate:"required"`
 }
+
+type CourseExams struct {
+	PreviousExams []ExamInfo `json:"previousExams"`
+	UpcomingExams []ExamInfo `json:"upcomingExams"`
+}
