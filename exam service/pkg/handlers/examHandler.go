@@ -48,7 +48,18 @@ func (examHandler ExamHandlers) Create(c *gin.Context) {
 
 func (examHandler ExamHandlers) GetCourseExams(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	allExams, err := examHandler.service.GetCourseExams(c.Param("courseId"))
+	type coursesIds struct {
+		coursesIds []string `json:"coursesIds"`
+	}
+	var ids coursesIds
+	err := json.NewDecoder(c.Request.Body).Decode(&ids)
+	if err != nil {
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrCourseDoesNotExist.Error(), http.StatusBadRequest))
+		return
+
+	}
+	allExams, err := examHandler.service.GetCourseExams(ids.coursesIds)
 	if err != nil && err.Error() == errs.ErrDb.Error() {
 		log.Println(errs.ErrDb.Error())
 		c.Writer.WriteHeader(http.StatusInternalServerError)
