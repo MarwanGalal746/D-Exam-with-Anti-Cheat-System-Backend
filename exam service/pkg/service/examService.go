@@ -6,7 +6,7 @@ import (
 
 type ExamService interface {
 	Create(models.Exam) error
-	GetCourseExams(string) (*models.Course, error)
+	GetCourseExams([]string) ([]models.CourseExams, error)
 	GetExam(string) (*models.Exam, error)
 	DelExam(string) error
 	DelCourseExams(string) error
@@ -21,8 +21,8 @@ func (e DefaultExamService) Create(newExam models.Exam) error {
 	return e.repo.Create(newExam)
 }
 
-func (e DefaultExamService) GetCourseExams(courseId string) (*models.Course, error) {
-	return e.repo.GetCourseExams(courseId)
+func (e DefaultExamService) GetCourseExams(courseIds []string) ([]models.CourseExams, error) {
+	return e.repo.GetCourseExams(courseIds)
 }
 
 func (e DefaultExamService) GetExam(examId string) (*models.Exam, error) {
