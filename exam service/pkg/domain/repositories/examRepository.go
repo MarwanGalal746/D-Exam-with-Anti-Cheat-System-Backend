@@ -63,7 +63,7 @@ func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 }
 
 func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExams, error) {
-	var courseExams []models.CourseExams
+	courseExams := make([]models.CourseExams, 0)
 	for _, courseId := range courseIds {
 		var course models.Course
 		key, err := e.redisJsonDb.JSONGet(courseId, ".")
@@ -79,8 +79,8 @@ func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExa
 			log.Println(err)
 			return nil, errs.ErrUnmarshallingJson
 		}
-		var upcomingExams []models.ExamInfo
-		var previousExams []models.ExamInfo
+		upcomingExams := make([]models.ExamInfo, 0)
+		previousExams := make([]models.ExamInfo, 0)
 		for _, examId := range course.CourseData.ExamsIds {
 			key, err := e.redisJsonDb.JSONGet(examId, ".")
 			if err != nil {
@@ -97,9 +97,9 @@ func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExa
 			//because it's not important and secure to show questions id to the user in this endpoint
 			exam.QuestionIds = []string{}
 			if exam.Date+exam.Duration*60 < time.Now().Unix() {
-				upcomingExams = append(upcomingExams, exam)
-			} else {
 				previousExams = append(previousExams, exam)
+			} else {
+				upcomingExams = append(upcomingExams, exam)
 			}
 		}
 		courseExams = append(courseExams,
