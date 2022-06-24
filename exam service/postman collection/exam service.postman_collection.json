@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a0bc14d1-12a3-4080-a878-903dff127ad9",
+		"_postman_id": "c3717cd8-733c-498a-b687-32bdf7b6f472",
 		"name": "exam service",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13988041"
 	},
 	"item": [
 		{
@@ -15,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"examData\" : {\n        \"examId\" : \"en-mid\",\n        \"name\" : \"midterm\",\n        \"courseId\" : \"en\",\n        \"duration\" : 120,\n        \"totalMark\" : 60,\n        \"date\" : \"2012-04-23T18:25:43.511Z\"\n    },\n    \"questions\" : [\n        {\n            \"id\" : 1,\n            \"question\" : \"abcd\",\n            \"rightChoice\" : \"a\",\n            \"choices\" : [\"a\"]\n        }\n    ]\n}",
+							"raw": "{\n    \"examData\" : {\n        \"examId\" : \"en-mid\",\n        \"name\" : \"midterm\",\n        \"courseId\" : \"en\",\n        \"duration\" : 120,\n        \"totalMark\" : 60,\n        \"date\" : 1652000000\n    },\n    \"questions\" : [\n        {\n            \"id\" : 1,\n            \"question\" : \"abcd\",\n            \"rightChoice\" : \"a\",\n            \"choices\" : [\"a\"]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -41,10 +42,19 @@
 				{
 					"name": "get all exams",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"coursesIds\" : [\"en\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8888/api/exam/get-all-exams/en",
+							"raw": "http://localhost:8888/api/exam/get-all-exams",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -53,8 +63,7 @@
 							"path": [
 								"api",
 								"exam",
-								"get-all-exams",
-								"en"
+								"get-all-exams"
 							]
 						}
 					},
