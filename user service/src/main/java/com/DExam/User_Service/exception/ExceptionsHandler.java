@@ -31,4 +31,9 @@ public class ExceptionsHandler {
     public ResponseEntity<?> emailNotExist(EmailNotExistException exception){
         return exception.getException();
     }
+
+    @ExceptionHandler(UserNotActivatedException.class)
+    public ResponseEntity<?> userNotActivated(UserNotActivatedException exception){
+        return exception.getException();
+    }
 }

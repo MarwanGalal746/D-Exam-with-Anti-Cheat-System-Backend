@@ -2,8 +2,11 @@ package com.DExam.User_Service.controller;
 
 import com.DExam.User_Service.config.JwtManager;
 import com.DExam.User_Service.domain.User;
+import com.DExam.User_Service.exception.InvalidEmailPasswordException;
+import com.DExam.User_Service.exception.UserNotActivatedException;
 import com.DExam.User_Service.model.*;
 import com.DExam.User_Service.service.IUserService;
+import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
 import lombok.AllArgsConstructor;
@@ -38,7 +41,12 @@ public class UserController {
 
         String verificationCode = CodeGenerator.generateCode();
         MailForm mailForm = new MailForm(newUser.getEmail(),"EMAIL VERIFICATION",CustomResponse.EMAIL_VERIFICATION + verificationCode);
-        emailController.send(mailForm);
+        try {
+            emailController.send(mailForm);
+        } catch (Exception e) {
+            log.error("email sending failed");
+            return new ResponseEntity<>(CustomResponse.EMAIL_SENDING_FAILED, HttpStatus.BAD_REQUEST);
+        }
 
         log.info("a verification email has been sent to this email " + newUser.getEmail());
         return new ResponseEntity<>(new CustomResponse().setMessage(verificationCode).setStatus(HttpStatus.OK),HttpStatus.OK);
@@ -77,20 +85,23 @@ public class UserController {
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody UserCredentials userCredentials) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            userCredentials.getEmail(), userCredentials.getPassword()));
-        } catch (Exception exception){
-            log.error("email or password or both of the user with email " + userCredentials.getEmail() + " are not valid" );
-        }
 
         if(!userService.isUserActive(userCredentials.getEmail())){
             log.error("the user with email " + userCredentials.getEmail() + " is not verified" );
+            throw new UserNotActivatedException();
+        }
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userCredentials.getEmail(), userCredentials.getPassword()));
+        } catch (Exception exception){
+            log.error("email or password or both of the user with email " + userCredentials.getEmail() + " are not valid" );
+            throw new InvalidEmailPasswordException();
         }
 
         String accessToken = jwtManager.generateToken(userCredentials.getEmail());
         log.info("user with email " + userCredentials.getEmail() + " has signed in successfully" );
+
         return new LoginResponse(accessToken, userService.get(userCredentials.getEmail()));
     }
 

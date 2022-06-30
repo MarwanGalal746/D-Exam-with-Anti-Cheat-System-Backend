@@ -10,6 +10,7 @@ public interface ResponseMessages {
     String INVALID_TOKEN = "Token is invalid or has expired";
     String PASS_UPDATED = "Password has been updated";
     String INVALID_EMAIL = "Email is invalid";
-
+    String USER_NOT_ACTIVATED = "User is not activated";
+    String EMAIL_SENDING_FAILED = "Could not send the mail to the user";
 
 }
