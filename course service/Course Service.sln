@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36804F1B-0B01-4745-8ABE-B9923684205E}"
 	ProjectSection(SolutionItems) = preProject
-		docker-compose.yaml = docker-compose.yaml
+		course-compose.yaml = course-compose.yaml
 		Dockerfile = Dockerfile
 		.dockerignore = .dockerignore
 	EndProjectSection

@@ -3,11 +3,11 @@ using RabbitMQ.Client;
 
 namespace Messaging;
 
-public class RabbitMq
+public static class RabbitMq
 {
     public static void Send(string msg)
     {
-        var factory = new ConnectionFactory() { HostName = "localhost" };
+        var factory = new ConnectionFactory() { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST_NAME", EnvironmentVariableTarget.Process) };
         
         using (var connection = factory.CreateConnection())
             

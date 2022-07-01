@@ -10,8 +10,4 @@
       <PackageReference Include="Redis.OM" Version="0.1.9" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Exception" />
-    </ItemGroup>
-
 </Project>

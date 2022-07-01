@@ -71,10 +71,10 @@ public class CourseController : ControllerBase
     }
     
     [HttpDelete("/delete")]
-    public IActionResult Delete(string id)
+    public IActionResult Delete(string courseId)
     {
-        _courseService.Delete(id);
-        RabbitMq.Send(id);
+        _courseService.Delete(courseId);
+        RabbitMq.Send(courseId);
         return Ok("Success");
     }
 
