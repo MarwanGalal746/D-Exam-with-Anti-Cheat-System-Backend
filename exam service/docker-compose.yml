@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 00112233
     ports:
-      - "5431:5432"
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -21,12 +21,43 @@ services:
     volumes:
       - redisdata:/var/lib/redis/data
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: RabbitMQ
+    volumes:
+      - rabbit-data:/data/rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: unless-stopped
+
+
   exam-service:
     container_name: exam-service
-    image: my-app:1.0
+    image: exam-service
     ports:
       - "8888:8888"
+    environment:
+      - DEVELOPMENT=true
+      - REDIS_DB_HOST=redis
+      - REDIS_DB_PORT=:6378
+      - REDIS_DB_PASSWORD=
+      - REDIS_DB_NAME=0#Default DB
+      - PG_DB_HOST=postgres
+      - PG_DB_PORT=5432
+      - PG_DB_USER=postgres
+      - PG_DB_PASSWORD=00112233
+      - PG_DB_NAME=studentGrade
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=:5672
+
+    depends_on:
+      - "postgres"
+    links:
+        - "postgres"
+
 
 volumes:
   redisdata:
   pgdata:
+  rabbit-data:
