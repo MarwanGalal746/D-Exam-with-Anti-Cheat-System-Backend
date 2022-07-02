@@ -1,8 +1,8 @@
 package main
 
 import (
-	"exam_service/pkg/handlers"
-	"exam_service/pkg/logging"
+	"exam_service/handlers"
+	"exam_service/logging"
 	"github.com/spf13/viper"
 	"log"
 )

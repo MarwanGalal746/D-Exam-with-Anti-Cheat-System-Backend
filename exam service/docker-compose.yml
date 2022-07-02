@@ -7,11 +7,18 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 00112233
+      POSTGRES_PASSWORD: 38043
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 
   redis:
     container_name: exam-db
@@ -47,14 +54,14 @@ services:
       - PG_DB_PORT=5432
       - PG_DB_USER=postgres
       - PG_DB_PASSWORD=00112233
-      - PG_DB_NAME=studentGrade
+      - PG_DB_NAME=postgres
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=:5672
 
     depends_on:
       - "postgres"
     links:
-        - "postgres"
+      - "postgres"
 
 
 volumes:

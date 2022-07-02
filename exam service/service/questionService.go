@@ -1,6 +1,8 @@
 package service
 
-import "exam_service/pkg/domain/models"
+import (
+	"exam_service/domain/models"
+)
 
 type QuestionService interface {
 	Add(string, models.Question) (*models.Question, error)

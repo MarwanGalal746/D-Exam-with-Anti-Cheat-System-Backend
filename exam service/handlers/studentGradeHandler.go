@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
-	"exam_service/pkg/domain/models"
-	"exam_service/pkg/errs"
-	"exam_service/pkg/service"
+	"exam_service/domain/models"
+	"exam_service/errs"
+	"exam_service/service"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"

@@ -1,8 +1,8 @@
 package messaging
 
 import (
-	"exam_service/pkg/domain/models"
-	"exam_service/pkg/service"
+	"exam_service/domain/models"
+	"exam_service/service"
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 	"log"

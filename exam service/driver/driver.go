@@ -1,7 +1,7 @@
 package driver
 
 import (
-	"exam_service/pkg/domain/models"
+	models2 "exam_service/domain/models"
 	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
@@ -45,11 +45,11 @@ func getPGDbConnetion() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	err = gormDb.Migrator().DropTable(&models.StudentGrade{}, &models.Report{})
+	err = gormDb.Migrator().DropTable(&models2.StudentGrade{}, &models2.Report{})
 	if err != nil {
 		panic(err)
 	}
-	err = gormDb.AutoMigrate(&models.StudentGrade{}, &models.Report{})
+	err = gormDb.AutoMigrate(&models2.StudentGrade{}, &models2.Report{})
 	if err != nil {
 		panic(err)
 	}
