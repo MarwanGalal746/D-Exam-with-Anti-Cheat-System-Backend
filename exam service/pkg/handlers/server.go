@@ -7,9 +7,7 @@ import (
 	"exam_service/pkg/service"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	cors "github.com/itsjamie/gin-cors"
 	"github.com/spf13/viper"
-	"time"
 )
 
 var validate *validator.Validate
@@ -31,14 +29,14 @@ func Start() {
 	go messaging.DeleteCourseExams(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))
 
 	//enable CORS
-	router.Use(cors.Middleware(cors.Config{
-		Origins:         "*",
-		RequestHeaders:  "Authorization",
-		Methods:         "GET, POST, PUT",
-		Credentials:     true,
-		ValidateHeaders: false,
-		MaxAge:          1 * time.Minute,
-	}))
+	//router.Use(cors.Middleware(cors.Config{
+	//	Origins:         "*",
+	//	RequestHeaders:  "Authorization",
+	//	Methods:         "GET, POST, PUT, DELETE",
+	//	Credentials:     true,
+	//	ValidateHeaders: false,
+	//	MaxAge:          1 * time.Minute,
+	//}))
 
 	//exam endpoints
 	router.POST("/api/exam/create-exam", examHandler.Create)

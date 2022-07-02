@@ -35,14 +35,12 @@ func getRedisDbConnection() (*redis.Client, *rejson.Handler) {
 }
 
 func getPGDbConnetion() *gorm.DB {
-	psqlInfo := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		viper.GetString("PG_DB_HOST"),
-		viper.GetString("PG_DB_PORT"),
+	psqlInfo := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
 		viper.GetString("PG_DB_USER"),
 		viper.GetString("PG_DB_PASSWORD"),
-		viper.GetString("PG_DB_NAME"),
-	)
+		viper.GetString("PG_DB_HOST"),
+		viper.GetString("PG_DB_PORT"),
+		viper.GetString("PG_DB_NAME"))
 	gormDb, err := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
