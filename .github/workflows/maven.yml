@@ -31,6 +31,7 @@ jobs:
         image: eyadzz/dexam_user_service
         registry: docker.io
         dockerfile: Dockerfile
+        tags: latest
         addLatest: true
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
