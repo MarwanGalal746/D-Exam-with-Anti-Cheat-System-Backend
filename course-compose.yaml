@@ -1,0 +1,56 @@
+﻿version: '3.7'
+
+services:
+  redis:
+    image: redis/redis-stack
+    container_name: RedisDB
+    volumes:
+      - db-data:/data/redis
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    restart: unless-stopped
+    networks:
+      - course-network
+      
+      
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: RabbitMQ
+    volumes:
+      - rabbit-data:/data/rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - course-network
+    restart: unless-stopped
+        
+        
+  course-service:
+    image: eyadzz/dexam_course_service
+    container_name: CourseService
+    volumes:
+      - course-service-data:/data/course_service
+    ports:
+      - "443:443"
+      - "80:80"
+    environment:
+      - REDIS_CONNECTION_STRING=redis://redis:6379
+      - RABBITMQ_HOST_NAME=rabbitmq
+    restart: unless-stopped
+    depends_on:
+      - "redis"
+    links:
+      - "redis"
+    networks:
+      - course-network
+
+volumes:
+  db-data:
+  course-service-data:
+  rabbit-data:
+
+networks:
+  course-network:
+    driver: bridge

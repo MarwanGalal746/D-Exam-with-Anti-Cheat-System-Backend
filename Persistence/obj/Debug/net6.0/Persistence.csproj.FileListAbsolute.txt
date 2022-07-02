@@ -1,0 +1,60 @@
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\bin\Debug\net6.0\Persistence.deps.json
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\bin\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\bin\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\bin\Debug\net6.0\Core.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\bin\Debug\net6.0\Core.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.csproj.AssemblyReference.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfoInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfo.cs
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.csproj.CoreCompileInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.csproj.CopyComplete
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\refint\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Course Service\Persistence\obj\Debug\net6.0\ref\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\bin\Debug\net6.0\Persistence.deps.json
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\bin\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\bin\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\bin\Debug\net6.0\Core.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\bin\Debug\net6.0\Core.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.csproj.AssemblyReference.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfoInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfo.cs
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.csproj.CoreCompileInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.csproj.CopyComplete
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\refint\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\Course Service\Persistence\obj\Debug\net6.0\ref\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\bin\Debug\net6.0\Persistence.deps.json
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\bin\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\bin\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\bin\Debug\net6.0\Core.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\bin\Debug\net6.0\Core.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.csproj.AssemblyReference.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfoInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfo.cs
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.csproj.CoreCompileInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.csproj.CopyComplete
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\refint\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\course service\Persistence\obj\Debug\net6.0\ref\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\bin\Debug\net6.0\Persistence.deps.json
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\bin\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\bin\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\bin\Debug\net6.0\Core.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\bin\Debug\net6.0\Core.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.csproj.AssemblyReference.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfoInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.AssemblyInfo.cs
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.csproj.CoreCompileInputs.cache
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.csproj.CopyComplete
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\refint\Persistence.dll
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\Persistence.pdb
+C:\DDDDDDDDDDDDDDDDDDDDDDDD\FCI\GP\D-Exam-with-Anti-Cheat-System-Backend\Persistence\obj\Debug\net6.0\ref\Persistence.dll
