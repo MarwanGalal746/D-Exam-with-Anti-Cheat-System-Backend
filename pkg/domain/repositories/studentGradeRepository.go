@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"exam_service/domain/models"
-	"exam_service/errs"
+	"exam_service/pkg/domain/models"
+	"exam_service/pkg/errs"
 	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
 	"gorm.io/gorm"

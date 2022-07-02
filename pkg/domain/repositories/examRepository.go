@@ -2,8 +2,8 @@ package repositories
 
 import (
 	"encoding/json"
-	models2 "exam_service/domain/models"
-	"exam_service/errs"
+	"exam_service/pkg/domain/models"
+	"exam_service/pkg/errs"
 	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
 	"log"
@@ -17,7 +17,7 @@ type ExamRepositoryDb struct {
 	redisJsonDb *rejson.Handler
 }
 
-func (e ExamRepositoryDb) Create(newExam models2.Exam) error {
+func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 	// checking if there is an exam with the same name
 	_, err := e.redisJsonDb.JSONGet(newExam.ExamData.ExamId, ".")
 	if err == nil {
@@ -27,7 +27,7 @@ func (e ExamRepositoryDb) Create(newExam models2.Exam) error {
 
 	//check if this exam is not the first exam in the course
 	ok, err := e.redisJsonDb.JSONGet(newExam.ExamData.CourseId, ".")
-	course := &models2.CourseInfo{CourseId: newExam.ExamData.CourseId, ExamsIds: []string{newExam.ExamData.ExamId}}
+	course := &models.CourseInfo{CourseId: newExam.ExamData.CourseId, ExamsIds: []string{newExam.ExamData.ExamId}}
 	if ok == nil {
 		ok, err = e.redisJsonDb.JSONSet(newExam.ExamData.CourseId, ".", course)
 		if err != nil {
@@ -62,10 +62,10 @@ func (e ExamRepositoryDb) Create(newExam models2.Exam) error {
 	return nil
 }
 
-func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models2.CourseExams, error) {
-	courseExams := make([]models2.CourseExams, 0)
+func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExams, error) {
+	courseExams := make([]models.CourseExams, 0)
 	for _, courseId := range courseIds {
-		var course models2.Course
+		var course models.Course
 		key, err := e.redisJsonDb.JSONGet(courseId, ".")
 		if err != nil {
 			log.Println(err)
@@ -79,15 +79,15 @@ func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models2.CourseEx
 			log.Println(err)
 			return nil, errs.ErrUnmarshallingJson
 		}
-		upcomingExams := make([]models2.ExamInfo, 0)
-		previousExams := make([]models2.ExamInfo, 0)
+		upcomingExams := make([]models.ExamInfo, 0)
+		previousExams := make([]models.ExamInfo, 0)
 		for _, examId := range course.CourseData.ExamsIds {
 			key, err := e.redisJsonDb.JSONGet(examId, ".")
 			if err != nil {
 				log.Println(err)
 				return nil, errs.ErrDb
 			}
-			var exam models2.ExamInfo
+			var exam models.ExamInfo
 			err = json.Unmarshal(key.([]byte), &exam)
 			if err != nil {
 				log.Println(err)
@@ -103,13 +103,13 @@ func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models2.CourseEx
 			}
 		}
 		courseExams = append(courseExams,
-			models2.CourseExams{PreviousExams: previousExams, UpcomingExams: upcomingExams})
+			models.CourseExams{PreviousExams: previousExams, UpcomingExams: upcomingExams})
 	}
 	return courseExams, nil
 }
 
-func (e ExamRepositoryDb) GetExam(examId string) (*models2.Exam, error) {
-	var examData models2.ExamInfo
+func (e ExamRepositoryDb) GetExam(examId string) (*models.Exam, error) {
+	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -123,7 +123,7 @@ func (e ExamRepositoryDb) GetExam(examId string) (*models2.Exam, error) {
 		log.Println(err)
 		return nil, errs.ErrUnmarshallingJson
 	}
-	var exam models2.Exam
+	var exam models.Exam
 	exam.ExamData = examData
 	for _, qsId := range examData.QuestionIds {
 		key, err := e.redisJsonDb.JSONGet(qsId, ".")
@@ -131,7 +131,7 @@ func (e ExamRepositoryDb) GetExam(examId string) (*models2.Exam, error) {
 			log.Println(err)
 			return nil, errs.ErrDb
 		}
-		var qs models2.Question
+		var qs models.Question
 		err = json.Unmarshal(key.([]byte), &qs)
 		if err != nil {
 			log.Println(err)
@@ -144,7 +144,7 @@ func (e ExamRepositoryDb) GetExam(examId string) (*models2.Exam, error) {
 
 func (e ExamRepositoryDb) DelExam(examId string) error {
 	//get the exam information
-	var examData models2.ExamInfo
+	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -212,7 +212,7 @@ func (e ExamRepositoryDb) DelExam(examId string) error {
 }
 
 func (e ExamRepositoryDb) DelCourseExams(courseId string) error {
-	var course models2.Course
+	var course models.Course
 	key, err := e.redisJsonDb.JSONGet(courseId, ".")
 	if err != nil {
 		log.Println(err)
@@ -242,8 +242,8 @@ func (e ExamRepositoryDb) DelCourseExams(courseId string) error {
 	return nil
 }
 
-func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models2.ExamInfo) error {
-	var examData models2.ExamInfo
+func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models.ExamInfo) error {
+	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -260,7 +260,7 @@ func (e ExamRepositoryDb) UpdateExamInfo(examId string, newExam models2.ExamInfo
 	if newExam.ExamId != examData.ExamId {
 		return errs.ErrExamUpdateId
 	}
-	updatedExam := models2.ResetExamInfo(newExam)
+	updatedExam := models.ResetExamInfo(newExam)
 	updatedExam.QuestionIds = examData.QuestionIds
 	_, err = e.redisJsonDb.JSONSet(updatedExam.ExamId, ".", updatedExam)
 	if err != nil {

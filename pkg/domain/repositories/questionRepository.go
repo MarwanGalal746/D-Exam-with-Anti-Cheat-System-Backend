@@ -2,8 +2,8 @@ package repositories
 
 import (
 	"encoding/json"
-	models2 "exam_service/domain/models"
-	"exam_service/errs"
+	"exam_service/pkg/domain/models"
+	"exam_service/pkg/errs"
 	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
 	"log"
@@ -16,8 +16,8 @@ type QuestionRepositoryDb struct {
 	redisJsonDb *rejson.Handler
 }
 
-func (q QuestionRepositoryDb) Add(examId string, newQuestion models2.Question) (*models2.Question, error) {
-	var examData models2.ExamInfo
+func (q QuestionRepositoryDb) Add(examId string, newQuestion models.Question) (*models.Question, error) {
+	var examData models.ExamInfo
 	key, err := q.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
 		log.Println(err)
@@ -91,7 +91,7 @@ func (q QuestionRepositoryDb) Delete(examId string, questionId string) error {
 	return nil
 }
 
-func (q QuestionRepositoryDb) Update(examId, questionId string, newQuestion models2.Question) error {
+func (q QuestionRepositoryDb) Update(examId, questionId string, newQuestion models.Question) error {
 	//check if there is exam with that id
 	_, err := q.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {

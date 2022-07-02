@@ -1,7 +1,7 @@
 package service
 
 import (
-	"exam_service/domain/models"
+	"exam_service/pkg/domain/models"
 )
 
 type QuestionService interface {

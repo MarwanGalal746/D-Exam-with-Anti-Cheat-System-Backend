@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	repositories2 "exam_service/domain/repositories"
-	"exam_service/driver"
-	"exam_service/messaging"
-	service2 "exam_service/service"
+	"exam_service/pkg/domain/repositories"
+	"exam_service/pkg/driver"
+	"exam_service/pkg/messaging"
+	"exam_service/pkg/service"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -22,13 +22,13 @@ func Start() {
 	redisDb, redisJsonDb, sqlDb := driver.GetDbConnection()
 
 	examHandler := ExamHandlers{
-		service2.NewExamService(repositories2.NewExamRepositoryDb(redisDb, redisJsonDb))}
+		service.NewExamService(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))}
 	questionHandler := QuestionHandlers{
-		service2.NewQuestionService(repositories2.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
+		service.NewQuestionService(repositories.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
 	studentGradeHandler := StudentGradeHandlers{
-		service2.NewStudentGradeService(repositories2.NewStudentGradeRepositoryDb(sqlDb, redisDb, redisJsonDb))}
+		service.NewStudentGradeService(repositories.NewStudentGradeRepositoryDb(sqlDb, redisDb, redisJsonDb))}
 
-	go messaging.DeleteCourseExams(repositories2.NewExamRepositoryDb(redisDb, redisJsonDb))
+	go messaging.DeleteCourseExams(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))
 
 	//enable CORS
 	router.Use(cors.New(cors.Config{
