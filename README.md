@@ -1,34 +1,60 @@
 <div align="center">
-  <br>
-  <h1>D-Exam Microservices Backend Application</h1>
+  <h1>Exam Service</h1>
 </div>
 
-##  Table of Contents
+##  Table of contents
 - [**Summary**](#summary)
-- [**Tech Stack**](#getting-started)
-- [**Services**](#services)
+- [**Getting Started**](#getting-started)
+- [**Prerequisites**](#prerequisites)
+- [**Packages**](#packages)
+- [**Environment variables file**](environment-variables-file)
+- [**Running**](#running)
+- [**Postman Collection**](#postman-collection)
 ---
 ## Summary
 
-This application is designed for our D-Exam Application. It aims to have an examintion system with a reliable anti-cheat system for both students and teachers to use.
+This service allows teachers to create, get, update and delete exams and questions.
 
-## Tech Stack
+## Getting Started
 
-- [Spring](https://spring.io/)
-- [ASP.NET](https://dotnet.microsoft.com/en-us/apps/aspnet)
+Clone the repository.<br />
+Follow the instructions to complete the installation.
+
+## Prerequisites
+
 - [Golang](https://golang.org/dl/)
-- [django](https://www.djangoproject.com/)
-- [PostgreSQL](https://www.postgresql.org/)
 - [Redis](https://redis.io/download/)
-- [Docker]()
-- [Kubernetes]()
-- [RabbitMQ]()
-- [NginX Ingress]()
+- [Postgresql](https://www.postgresql.org/download/)
 
-## Services
-- [User](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/User-Service)
-- [Course](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/Course-Service)
-- [Exam](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/exam-service)
-- [Notifications]()
-- [Face Recognition](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/Face-Recognition-Service)
-- [Anti-Cheat]()
+## Packages
+
+- [Gin](https://github.com/gin-gonic/gin)
+- [Validator](https://github.com/go-playground/validator)
+- [Go-Redis](https://github.com/go-redis/redis)
+- [Go-Rejson](https://github.com/nitishm/go-rejson)
+- [Viper](https://github.com/spf13/viper)
+- [Gorm](https://github.com/go-gorm/gorm)
+
+## Environment variables file
+
+- Rename app.env.example file to .env
+- Modify app.env file according to your needs.
+
+## Running
+
+- In your cloned directory.
+- open your terminal and run:
+
+```bash
+go run main.go
+```
+
+The server will start at:
+
+- Local: http://localhost:[SERVER_PORT]
+
+## Postman Collection
+
+you will find the postman collection [here](postman collection/exam service.postman_collection.json).
+
+You can get what is the right structure of JSON file to send requests and recieving responses from the postman collection after importing it in the [Postman](https://www.postman.com/).

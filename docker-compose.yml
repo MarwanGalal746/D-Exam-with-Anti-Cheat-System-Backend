@@ -1,0 +1,70 @@
+# Specify the version for docker-compose.yml
+version: "3.3"
+
+services:
+  postgres:
+    container_name: student-grades
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 38043
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  redis:
+    container_name: exam-db
+    image: redis/redis-stack
+    ports:
+      - "6378:6378"
+    volumes:
+      - redisdata:/var/lib/redis/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: RabbitMQ
+    volumes:
+      - rabbit-data:/data/rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: unless-stopped
+
+
+  exam-service:
+    container_name: exam-service
+    image: exam-service
+    ports:
+      - "8888:8888"
+    environment:
+      - DEVELOPMENT=true
+      - REDIS_DB_HOST=redis
+      - REDIS_DB_PORT=:6378
+      - REDIS_DB_PASSWORD=
+      - REDIS_DB_NAME=0#Default DB
+      - PG_DB_HOST=postgres
+      - PG_DB_PORT=5432
+      - PG_DB_USER=postgres
+      - PG_DB_PASSWORD=00112233
+      - PG_DB_NAME=postgres
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=:5672
+
+    depends_on:
+      - "postgres"
+    links:
+      - "postgres"
+
+
+volumes:
+  redisdata:
+  pgdata:
+  rabbit-data:
