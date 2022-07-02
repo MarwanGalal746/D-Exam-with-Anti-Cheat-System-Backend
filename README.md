@@ -1,18 +1,15 @@
-
-
 <div align="center">
-  <br>
   <h1>Exam Service</h1>
 </div>
 
 ##  Table of contents
 - [**Summary**](#summary)
-- [**Getting started**](#getting-started)
+- [**Getting Started**](#getting-started)
 - [**Prerequisites**](#prerequisites)
 - [**Packages**](#packages)
 - [**Environment variables file**](environment-variables-file)
 - [**Running**](#running)
-- [**Postman collection**](#postman-collection)
+- [**Postman Collection**](#postman-collection)
 ---
 ## Summary
 
@@ -56,7 +53,7 @@ The server will start at:
 
 - Local: http://localhost:[SERVER_PORT]
 
-## Postman collection
+## Postman Collection
 
 you will find the postman collection [here](postman collection/exam service.postman_collection.json).
 
