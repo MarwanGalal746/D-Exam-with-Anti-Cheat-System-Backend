@@ -5,9 +5,11 @@ import (
 	"exam_service/pkg/driver"
 	"exam_service/pkg/messaging"
 	"exam_service/pkg/service"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/spf13/viper"
+	"time"
 )
 
 var validate *validator.Validate
@@ -29,14 +31,17 @@ func Start() {
 	go messaging.DeleteCourseExams(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))
 
 	//enable CORS
-	//router.Use(cors.Middleware(cors.Config{
-	//	Origins:         "*",
-	//	RequestHeaders:  "Authorization",
-	//	Methods:         "GET, POST, PUT, DELETE",
-	//	Credentials:     true,
-	//	ValidateHeaders: false,
-	//	MaxAge:          1 * time.Minute,
-	//}))
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"PUT", "PATCH", "POST", "DELETE"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://github.com"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 
 	//exam endpoints
 	router.POST("/api/exam/create-exam", examHandler.Create)
