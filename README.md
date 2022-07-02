@@ -1,11 +1,10 @@
 <div align="center">
-  <br>
   <h1>Course Service</h1>
 </div>
 
 ##  Table of contents
 - [**Summary**](#summary)
-- [**Getting started**](#getting-started)
+- [**Getting Started**](#getting-started)
 - [**Prerequisites**](#prerequisites)
 - [**Packages**](#packages)
 - [**Running**](#running)
