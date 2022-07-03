@@ -22,7 +22,8 @@ public class CourseController : ControllerBase
         _studCrsService = studCrsService;
     }
 
-    [HttpPost("/create")]
+    [HttpPost]
+    [Route("create")]
     public async Task<IActionResult> Create(CreateCourseRequest request)
     {
         Course course = new Course
@@ -40,37 +41,43 @@ public class CourseController : ControllerBase
         return Ok(course);
     }
 
-    [HttpGet("/get-by-id")]
+    [HttpGet]
+    [Route("get-by-id")]
     public async Task<IActionResult> GetById(string courseId)
     {
         return Ok(await _courseService.GetById(courseId));
     }
     
-    [HttpGet("/get-by-name")]
+    [HttpGet]
+    [Route("get-by-name")]
     public async Task<IActionResult> GetByName(string name)
     {
         return Ok(await _courseService.GetByName(name));
     }
     
-    [HttpGet("/get-by-code")]
+    [HttpGet]
+    [Route("get-by-code")]
     public async Task<IActionResult> GetByCode(string code)
     {
         return Ok(await _courseService.GetByCode(code));
     }
     
-    [HttpGet("/get-by-teacher")]
+    [HttpGet]
+    [Route("get-by-teacher")]
     public async Task<IActionResult> GetByTeacher(string id)
     {
         return Ok(await _courseService.GetByTeacher(id));
     }
     
-    [HttpPatch("/update")]
+    [HttpPatch]
+    [Route("update")]
     public async Task<IActionResult> Update(UpdateCourseRequest request)
     {
         return Ok(await _courseService.Update(request.CourseId, request.NewCourseName));
     }
     
-    [HttpDelete("/delete")]
+    [HttpDelete]
+    [Route("delete")]
     public IActionResult Delete(string courseId)
     {
         _courseService.Delete(courseId);
@@ -78,7 +85,8 @@ public class CourseController : ControllerBase
         return Ok("Success");
     }
 
-    [HttpPost("/register-student")]
+    [HttpPost]
+    [Route("register-student")]
     public async Task<IActionResult> RegisterStudent(RegisterStudentRequest request)
     {
         var course = await _courseService.GetByCode(request.CourseCode);
@@ -87,7 +95,8 @@ public class CourseController : ControllerBase
         return Ok("Success");
     }
     
-    [HttpDelete("/remove-student")]
+    [HttpDelete]
+    [Route("remove-student")]
     public async Task<IActionResult> RemoveStudent(RemoveStudentRequest request)
     {
         await _studCrsService.RemoveStudentFromCourse(request.StudentId, request.CourseId);
@@ -95,7 +104,8 @@ public class CourseController : ControllerBase
         return Ok("Success");
     }
     
-    [HttpGet("/get-student-courses")]
+    [HttpGet]
+    [Route("get-student-courses")]
     public async Task<IActionResult> GetStudentCourses(string studentId)
     {
         var sc = await _studCrsService.GetStudentCourses(studentId);
@@ -110,7 +120,8 @@ public class CourseController : ControllerBase
         return Ok(courses);
     }
     
-    [HttpPost("/create-student-courses")]
+    [HttpPost]
+    [Route("create-student-course")]
     public IActionResult CreateStudentCourses(string studentId)
     {
         _studCrsService.CreateStudentCourses(studentId);
