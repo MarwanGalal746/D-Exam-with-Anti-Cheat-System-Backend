@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  PostgresDB:
-    image: postgres
+  postgres:
+    image: postgres:14.4-alpine
     container_name: Postgres
     volumes:
       - db-data:/data/postgres
@@ -14,19 +14,7 @@ services:
       - PGDATA=/data/postgres
     restart: unless-stopped
 
-  PG_Admin:
-    image: dpage/pgadmin4
-    container_name: PG-Admin
-    volumes:
-      - pgadmin-data:/data/pgadmin
-    ports:
-      - "5050:80"
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@postgres.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    restart: unless-stopped
-
-  UserService:
+  user-service:
     image: eyadzz/dexam_user_service
     container_name: UserService
     volumes:
@@ -34,7 +22,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DB_HOSTNAME=PostgresDB
+      - DB_HOSTNAME=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_DBNAME=postgres
       - POSTGRES_USERNAME=admin
@@ -45,5 +33,4 @@ services:
 
 volumes:
   db-data:
-  pgadmin-data:
   user-service-data:
