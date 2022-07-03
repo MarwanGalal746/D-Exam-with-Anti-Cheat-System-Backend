@@ -1,12 +1,12 @@
 <div align="center">
-  <br>
   <h1>API Gateway</h1>
 </div>
 
 ##  Table of Contents
 - [**Summary**](#summary)
-- [**Tech Stack**](#getting-started)
-- [**Services**](#services)
+- [**Prerequisites**](#prerequisites)
+- [**Packages**](#packages)
+- [**Running**](#running)
 ---
 ## Summary
 
