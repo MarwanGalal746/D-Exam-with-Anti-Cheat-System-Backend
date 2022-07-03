@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <h1>D-Exam Microservices Backend Application</h1>
+  <h1>API Gateway</h1>
 </div>
 
 ##  Table of Contents
@@ -10,25 +10,19 @@
 ---
 ## Summary
 
-This application is designed for our D-Exam Application. It aims to have an examintion system with a reliable anti-cheat system for both students and teachers to use.
+An API Gateway for the microservices application to provide routing, authentication and authorization using Ocelot
 
-## Tech Stack
+## Prerequisites
 
-- [Spring](https://spring.io/)
 - [ASP.NET](https://dotnet.microsoft.com/en-us/apps/aspnet)
-- [Golang](https://golang.org/dl/)
-- [django](https://www.djangoproject.com/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Redis](https://redis.io/download/)
-- [Docker]()
-- [Kubernetes]()
-- [RabbitMQ]()
-- [NginX Ingress]()
 
-## Services
-- [User](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/User-Service)
-- [Course](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/Course-Service)
-- [Exam](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/exam-service)
-- [Notifications]()
-- [Face Recognition](https://github.com/MarwanGalal746/D-Exam-with-Anti-Cheat-System-Backend/tree/Face-Recognition-Service)
-- [Anti-Cheat]()
+## Packages
+
+- [Ocelot](https://ocelot.readthedocs.io/en/latest/index.html)
+- [JWTBearer]()
+
+## Running
+
+The server will start at:
+
+- Local: http://localhost:[SERVER_PORT]
