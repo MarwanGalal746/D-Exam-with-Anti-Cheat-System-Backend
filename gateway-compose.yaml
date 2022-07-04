@@ -1,0 +1,11 @@
+﻿version: '3.7'
+
+services:
+  api-gateway:
+    image: eyadzz/dexam_api_gateway
+    container_name: APIGateway
+    ports:
+      - "5500:80"
+    environment:
+      - GATEWAY_JSON_FILE=Ocelot.json
+    restart: unless-stopped
