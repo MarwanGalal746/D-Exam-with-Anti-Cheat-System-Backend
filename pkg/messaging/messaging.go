@@ -30,7 +30,7 @@ func DeleteCourseExams(repository models.ExamRepository) {
 	}
 	defer ch.Close()
 
-	msgs, err := ch.Consume("RabbitMQ practice",
+	msgs, err := ch.Consume("course-exam",
 		"",
 		true, false, false, false, nil)
 	if err != nil {
