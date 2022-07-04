@@ -39,3 +39,4 @@ build/
 /logs/api.log.2022-06-29.0.gz
 *.xml
 *.xml
+/user service/logs/api.log

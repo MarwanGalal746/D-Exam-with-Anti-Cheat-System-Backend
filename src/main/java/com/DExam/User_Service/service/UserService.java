@@ -61,4 +61,12 @@ public class UserService implements UserDetailsService, IUserService {
     public boolean isUserActive(String email) {
         return userRepository.findByEmail(email).orElseThrow(EmailNotExistException::new).isActive();
     }
+
+    public boolean activateUser(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(EmailNotExistException::new);
+        user.setActive(true);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        userRepository.save(user);
+        return true;
+    }
 }

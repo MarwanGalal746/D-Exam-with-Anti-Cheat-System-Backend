@@ -8,6 +8,6 @@ public interface IUserService {
     void userExistByEmail(String email);
     void userExistByNationalID(String nationalID);
     void resetPassword(String email, String password);
-
+    boolean activateUser(String email, String password);
     boolean isUserActive(String email);
 }

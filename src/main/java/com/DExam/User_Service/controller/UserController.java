@@ -45,7 +45,7 @@ public class UserController {
             emailController.send(mailForm);
         } catch (Exception e) {
             log.error("email sending failed");
-            return new ResponseEntity<>(CustomResponse.EMAIL_SENDING_FAILED, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.EMAIL_SENDING_FAILED).setStatus(HttpStatus.BAD_GATEWAY), HttpStatus.BAD_GATEWAY);
         }
 
         log.info("a verification email has been sent to this email " + newUser.getEmail());
@@ -53,16 +53,15 @@ public class UserController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<?> verify(@RequestParam String email) {
-        User user = userService.get(email);
+    public ResponseEntity<?> verify(@RequestBody UserCredentials credentials) {
+        User user = userService.get(credentials.getEmail());
         if (user.isActive())
         {
             return new ResponseEntity<>(new CustomResponse().setMessage("User is already verified").setStatus(HttpStatus.OK), HttpStatus.OK);
         }
         else
         {
-            user.setActive(true);
-            userService.save(user);
+            userService.activateUser(credentials.getEmail(),credentials.getPassword());
             return new ResponseEntity<>(new CustomResponse().setMessage("User has been verified").setStatus(HttpStatus.OK), HttpStatus.OK);
         }
     }

@@ -36,4 +36,9 @@ public class ExceptionsHandler {
     public ResponseEntity<?> userNotActivated(UserNotActivatedException exception){
         return exception.getException();
     }
+
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<?> userNotActivated(IncorrectPasswordException exception){
+        return exception.getException();
+    }
 }

@@ -12,5 +12,5 @@ public interface ResponseMessages {
     String INVALID_EMAIL = "Email is invalid";
     String USER_NOT_ACTIVATED = "User is not activated";
     String EMAIL_SENDING_FAILED = "Could not send the mail to the user";
-
+    String INCONSISTENT_PASSWORD = "Passwords are not consistent";
 }
