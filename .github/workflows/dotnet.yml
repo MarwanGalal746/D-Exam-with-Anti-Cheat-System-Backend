@@ -1,0 +1,36 @@
+name: API Gateway CI
+
+on:
+  push:
+    branches: [ "API-Gateway" ]
+  pull_request:
+    branches: [ "API-Gateway" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Build and Push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: eyadzz/dexam_api_gateway
+        registry: docker.io
+        dockerfile: Dockerfile
+        tags: latest
+        addLatest: true
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
