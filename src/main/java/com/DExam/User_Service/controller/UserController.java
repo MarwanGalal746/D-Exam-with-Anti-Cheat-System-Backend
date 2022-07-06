@@ -67,18 +67,11 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody UpdateUserRequest request, @RequestHeader (name="Authorization") String token){
-        token = token.split(" ")[1];
-        boolean isValid  = jwtManager.validateToken(token, request.getOldUser());
-
-        if(!isValid){
-            log.error("the token is not valid for the user with email " + request.getOldUser().getId());
-            return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.INVALID_TOKEN).setStatus(HttpStatus.NOT_ACCEPTABLE),HttpStatus.NOT_ACCEPTABLE);
-        }
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest request){
         userService.userExistByEmail(request.getNewUser().getEmail());
         userService.save(request.getNewUser());
         log.info("the credentials of the user with id " + request.getNewUser().getId() + " have been updated" );
-        String newToken = jwtManager.generateToken(request.getNewUser().getEmail());
+        String newToken = jwtManager.generateToken(request.getNewUser().getEmail(), userService.get(request.getNewUser().getEmail()).getRole().toString());
         return new ResponseEntity<>(new CustomResponse().setMessage(newToken).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 
@@ -98,7 +91,7 @@ public class UserController {
             throw new InvalidEmailPasswordException();
         }
 
-        String accessToken = jwtManager.generateToken(userCredentials.getEmail());
+        String accessToken = jwtManager.generateToken(userCredentials.getEmail(), userService.get(userCredentials.getEmail()).getRole().toString());
         log.info("user with email " + userCredentials.getEmail() + " has signed in successfully" );
 
         return new LoginResponse(accessToken, userService.get(userCredentials.getEmail()));
@@ -109,6 +102,5 @@ public class UserController {
         userService.resetPassword(userCredentials.getEmail(), userCredentials.getPassword());
         log.info("password of the user with email " + userCredentials.getEmail() + " has been updated successfully");
         return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.PASS_UPDATED).setStatus(HttpStatus.OK),HttpStatus.OK);
-
     }
 }
