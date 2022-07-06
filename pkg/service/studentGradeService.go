@@ -5,7 +5,6 @@ import (
 )
 
 type StudentGradeService interface {
-	Add(string, string, string, models.Report) error
 	GetAllStudentGrades(string) ([]models.Report, error)
 	GetAllCourseGrades(string) ([]models.Report, error)
 	GetAllExamGrades(string) ([]models.Report, error)
@@ -18,10 +17,6 @@ type StudentGradeService interface {
 
 type DefaultStudentGradeService struct {
 	repo models.StudentGradeRepository
-}
-
-func (s DefaultStudentGradeService) Add(userId, examId, courseId string, studentInfo models.Report) error {
-	return s.repo.Add(userId, examId, courseId, studentInfo)
 }
 
 func (s DefaultStudentGradeService) GetAllStudentGrades(userId string) ([]models.Report, error) {

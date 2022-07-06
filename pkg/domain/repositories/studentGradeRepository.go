@@ -16,36 +16,6 @@ type StudentGradeRepositoryDb struct {
 	sqlDb       *gorm.DB
 }
 
-func (s StudentGradeRepositoryDb) Add(userId, examId, courseId string, studentInfo models.Report) error {
-	// validate if exam exists or not
-	_, err := s.redisJsonDb.JSONGet(examId, ".")
-	if err != nil {
-		log.Println(err)
-		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
-			return errs.ErrExamDoesNotExist
-		}
-		return errs.ErrDb
-	}
-
-	studentInfo.StudentGradeObj.UserId = userId
-	studentInfo.StudentGradeObj.CourseId = courseId
-	studentInfo.StudentGradeObj.ExamId = examId
-	row := s.sqlDb.Create(&studentInfo.StudentGradeObj)
-	if row.Error != nil {
-		log.Println(row.Error)
-		if strings.Contains(row.Error.Error(), "duplicate key value") {
-			return errs.ErrDuplicateUserExam
-		}
-		return errs.ErrDb
-	}
-	row = s.sqlDb.Create(&studentInfo)
-	if row.Error != nil {
-		log.Println(row.Error)
-		return errs.ErrDb
-	}
-	return nil
-}
-
 func (s StudentGradeRepositoryDb) GetAllStudentGrades(userId string) ([]models.Report, error) {
 	rows, err := s.sqlDb.Raw("Select * from student_grades join reports on student_grades.id = reports.student_grade_id where student_grades.user_id=?",
 		userId).Rows()
