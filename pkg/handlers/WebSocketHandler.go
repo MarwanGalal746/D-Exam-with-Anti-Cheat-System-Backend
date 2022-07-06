@@ -47,6 +47,25 @@ func checkIfStudentCheat(conn *websocket.Conn, studentId string, result chan boo
 	}
 }
 
+func checkIfStudentClosedTool(conn *websocket.Conn, studentId string, result chan bool) {
+	for {
+		cond, _ := contains(studentId, dataContainers.ActiveStudents)
+		if !cond {
+			err := conn.WriteMessage(1, []byte("student has closed the desktop tool"))
+			if err != nil {
+				log.Println(err)
+			}
+			err = conn.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
+			if err != nil {
+				fmt.Println(err)
+			}
+			result <- true
+			return
+		}
+		time.Sleep(2 * time.Second)
+	}
+}
+
 func reader(conn *websocket.Conn) {
 	studentId := "no-id"
 	for {
@@ -76,11 +95,21 @@ func reader(conn *websocket.Conn) {
 		}
 		result := make(chan bool, 1)
 		go checkIfStudentCheat(conn, studentId, result)
+
+		closeDesktopChannel := make(chan bool, 1)
+		go checkIfStudentClosedTool(conn, studentId, closeDesktopChannel)
+
 		value := <-result
 		close(result)
 		if value {
 			return
 		}
+		isStudClosedTool := <-closeDesktopChannel
+		close(closeDesktopChannel)
+		if isStudClosedTool {
+			return
+		}
+
 	}
 }
 
