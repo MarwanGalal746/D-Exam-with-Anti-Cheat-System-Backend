@@ -10,6 +10,8 @@ builder.Configuration.AddJsonFile(Environment.GetEnvironmentVariable("GATEWAY_JS
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddCors();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -20,7 +22,7 @@ builder.Services.AddAuthentication(options =>
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("AUTH_SECRET_KEY", EnvironmentVariableTarget.Process)!)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("AUTH_SECRET_KEY", EnvironmentVariableTarget.Process)!)),
         ValidateIssuerSigningKey = true,
         ValidateIssuer = false,
         ValidateAudience = false,
@@ -34,7 +36,7 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseOcelot().Wait();
- 
+app.UseCors(c=>c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseAuthorization();
 
 app.Run();

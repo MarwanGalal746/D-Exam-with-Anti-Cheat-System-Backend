@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\APIGateway\\APIGateway.csproj": {}
+    "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\APIGateway.csproj": {}
   },
   "projects": {
-    "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\APIGateway\\APIGateway.csproj": {
+    "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\APIGateway.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\APIGateway\\APIGateway.csproj",
+        "projectUniqueName": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\APIGateway.csproj",
         "projectName": "APIGateway",
-        "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\APIGateway\\APIGateway.csproj",
+        "projectPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\APIGateway.csproj",
         "packagesPath": "C:\\Users\\eyady\\.nuget\\packages\\",
-        "outputPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\APIGateway\\obj\\",
+        "outputPath": "C:\\DDDDDDDDDDDDDDDDDDDDDDDD\\FCI\\GP\\D-Exam-with-Anti-Cheat-System-Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\eyady\\AppData\\Roaming\\NuGet\\NuGet.Config",
