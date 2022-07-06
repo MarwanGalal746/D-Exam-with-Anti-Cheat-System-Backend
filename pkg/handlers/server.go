@@ -27,6 +27,8 @@ func Start() {
 		service.NewQuestionService(repositories.NewQuestionRepositoryDb(redisDb, redisJsonDb))}
 	studentGradeHandler := StudentGradeHandlers{
 		service.NewStudentGradeService(repositories.NewStudentGradeRepositoryDb(sqlDb, redisDb, redisJsonDb))}
+	examSubmissionHandler := ExamSubmissionHandlers{
+		service.NewExamSubmissionService(repositories.NewExamSubmissionRepositoryDb(redisDb, redisJsonDb, sqlDb))}
 
 	go messaging.DeleteCourseExams(repositories.NewExamRepositoryDb(redisDb, redisJsonDb))
 
@@ -55,8 +57,10 @@ func Start() {
 	router.DELETE("/api/exam/delete-question/:examId/:questionId", questionHandler.Delete)
 	router.PUT("/api/exam/update-question/:examId/:questionId", questionHandler.Update)
 
+	//submit exam endpoint
+	router.POST("/api/exam/submit", examSubmissionHandler.SubmitExam)
+
 	//student grade endpoints
-	router.POST("/api/exam/add-student-grade/:userId/:courseId/:examId", studentGradeHandler.Add)
 	router.GET("/api/exam/get-all-student-grades/:userId", studentGradeHandler.GetAllStudentGrades)
 	router.GET("/api/exam/get-all-course-grades/:courseId", studentGradeHandler.GetAllCourseGrades)
 	router.GET("/api/exam/get-all-exam-grades/:examId", studentGradeHandler.GetAllExamGrades)
