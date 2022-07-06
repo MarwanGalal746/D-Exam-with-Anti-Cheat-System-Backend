@@ -14,18 +14,23 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-func contains(a string, list []string) bool {
-	for _, b := range list {
-		if b == a {
-			return true
+func contains(a string, list []string) (bool, int) {
+	for i := 0; i < len(list); i++ {
+		if list[i] == a {
+			return true, i
 		}
 	}
-	return false
+	return false, -1
+}
+
+func remove(slice []string, s int) []string {
+	return append(slice[:s], slice[s+1:]...)
 }
 
 func checkIfStudentCheat(conn *websocket.Conn, studentId string, result chan bool) {
 	for {
-		if contains(studentId, dataContainers.CheatStudents) {
+		cond, ind := contains(studentId, dataContainers.CheatStudents)
+		if cond {
 			err := conn.WriteMessage(1, []byte("student has cheated"))
 			if err != nil {
 				log.Println(err)
@@ -34,6 +39,7 @@ func checkIfStudentCheat(conn *websocket.Conn, studentId string, result chan boo
 			if err != nil {
 				fmt.Println(err)
 			}
+			dataContainers.CheatStudents = remove(dataContainers.CheatStudents, ind)
 			result <- true
 			return
 		}
@@ -60,8 +66,8 @@ func reader(conn *websocket.Conn) {
 		if err := conn.WriteMessage(messageType, p); err != nil {
 			log.Println(err)
 		}
-
-		if !contains(string(p), dataContainers.ActiveStudents) {
+		cond, _ := contains(string(p), dataContainers.ActiveStudents)
+		if !cond {
 			err = conn.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
 			if err != nil {
 				fmt.Println(err)
@@ -96,11 +102,4 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	// listen indefinitely for new messages coming
 	// through on our WebSocket connection
 	go reader(ws)
-
-	//if !reader(ws) {
-	//	err = ws.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
-	//	if err != nil {
-	//		fmt.Println(err)
-	//	}
-	//}
 }
