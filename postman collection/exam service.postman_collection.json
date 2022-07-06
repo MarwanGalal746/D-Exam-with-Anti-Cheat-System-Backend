@@ -82,7 +82,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8888/api/exam/get-exam/en-fin",
+							"raw": "http://localhost:8888/api/exam/get-exam/en-mid",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -92,7 +92,7 @@
 								"api",
 								"exam",
 								"get-exam",
-								"en-fin"
+								"en-mid"
 							]
 						}
 					},
@@ -446,6 +446,41 @@
 								"exam",
 								"delete-all-exam-grades",
 								"en-mid"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "submit exam endpoint",
+			"item": [
+				{
+					"name": "submit exam",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"examId\": \"en-mid\",\n    \"courseId\": \"en\",\n    \"userId\" : \"1\",\n    \"cheatingStatus\": \"Pass\",\n    \"report\" : \"pass\",\n    \"answers\" : [\n        {\n            \"questionId\": \"en-en-mid-0\",\n            \"answer\" : \"a\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/exam/submit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"submit"
 							]
 						}
 					},
