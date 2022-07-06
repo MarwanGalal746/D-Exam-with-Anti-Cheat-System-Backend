@@ -1,0 +1,26 @@
+# Specify the version for docker-compose.yml
+version: "3.3"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: RabbitMQ
+    volumes:
+      - rabbit-data:/data/rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: unless-stopped
+
+
+  anti-cheat_service:
+    container_name: anti-cheat_service
+    image: anti-cheat_service
+    ports:
+      - "9999:9999"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=:5672
+
+volumes:
+  rabbit-data:
