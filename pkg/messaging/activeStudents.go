@@ -1,7 +1,7 @@
 package messaging
 
 import (
-	"D-Exam-with-Anti-Cheat-System-Backend/pkg"
+	"D-Exam-with-Anti-Cheat-System-Backend/pkg/dataContainers"
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 	"log"
@@ -12,7 +12,6 @@ func AddActiveStudent() {
 
 	rabbitmqUrl := "amqp://guest:guest@" +
 		viper.GetString("RABBITMQ_HOST") + viper.GetString("RABBITMQ_PORT")
-
 	conn, err := amqp.Dial(rabbitmqUrl)
 	if err != nil {
 		log.Println(err)
@@ -41,10 +40,10 @@ func AddActiveStudent() {
 		for d := range msgs {
 			studentId := string(d.Body[:])
 			log.Println("Received msg: ", studentId)
-			pkg.ActiveStudents = append(pkg.ActiveStudents, studentId)
+			dataContainers.ActiveStudents = append(dataContainers.ActiveStudents, studentId)
 		}
 	}()
-	log.Println("Successfully consumed msg to the queue")
+	log.Println("Successfully consumed msg from desktop-student queue")
 	<-messages
 
 }

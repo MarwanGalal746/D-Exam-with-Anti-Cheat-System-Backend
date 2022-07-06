@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"D-Exam-with-Anti-Cheat-System-Backend/pkg"
+	"D-Exam-with-Anti-Cheat-System-Backend/pkg/dataContainers"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
@@ -23,26 +23,58 @@ func contains(a string, list []string) bool {
 	return false
 }
 
-func reader(conn *websocket.Conn) bool {
+func checkIfStudentCheat(conn *websocket.Conn, studentId string, result chan bool) {
+	for {
+		if contains(studentId, dataContainers.CheatStudents) {
+			err := conn.WriteMessage(1, []byte("student has cheated"))
+			if err != nil {
+				log.Println(err)
+			}
+			err = conn.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
+			if err != nil {
+				fmt.Println(err)
+			}
+			result <- true
+			return
+		}
+		time.Sleep(2 * time.Second)
+	}
+}
+
+func reader(conn *websocket.Conn) {
+	studentId := "no-id"
 	for {
 		// read in a message
 		messageType, p, err := conn.ReadMessage()
 		if err != nil {
 			log.Println(err)
-			return false
+		}
+		if studentId == "no-id" {
+			studentId = string(p)
+		} else {
+			continue
 		}
 		// print out that message for clarity
-		fmt.Println(string(p))
+		fmt.Println("socket: " + string(p))
 
 		if err := conn.WriteMessage(messageType, p); err != nil {
 			log.Println(err)
-			return false
 		}
 
-		if contains(string(p), pkg.ActiveStudents) {
-			return true
+		if !contains(string(p), dataContainers.ActiveStudents) {
+			err = conn.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
+			if err != nil {
+				fmt.Println(err)
+			}
+			return
 		}
-		return false
+		result := make(chan bool, 1)
+		go checkIfStudentCheat(conn, studentId, result)
+		value := <-result
+		close(result)
+		if value {
+			return
+		}
 	}
 }
 
@@ -63,10 +95,12 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 
 	// listen indefinitely for new messages coming
 	// through on our WebSocket connection
-	if !reader(ws) {
-		err = ws.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
+	go reader(ws)
+
+	//if !reader(ws) {
+	//	err = ws.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
+	//	if err != nil {
+	//		fmt.Println(err)
+	//	}
+	//}
 }

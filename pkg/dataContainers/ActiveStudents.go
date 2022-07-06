@@ -1,4 +1,4 @@
-package pkg
+package dataContainers
 
 var ActiveStudents []string
 
