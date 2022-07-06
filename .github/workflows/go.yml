@@ -24,7 +24,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: eyadzz/overseer_service
+          image: eyadzz/dexam_overseer_service
           registry: docker.io
           dockerfile: Dockerfile
           tags: latest
