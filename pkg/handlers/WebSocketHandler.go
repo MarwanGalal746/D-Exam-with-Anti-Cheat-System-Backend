@@ -122,7 +122,7 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	log.Println("Client Connected")
+	log.Println("Student Connected")
 	err = ws.WriteMessage(1, []byte("Hi Student!"))
 	if err != nil {
 		log.Println(err)

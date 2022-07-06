@@ -21,9 +21,29 @@ func AddActiveStudent() {
 	}
 	defer conn.Close()
 
+	ch, err := conn.Channel()
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	defer ch.Close()
+
+	q, err := ch.QueueDeclare(
+		"desktop-student",
+		false,
+		false,
+		false,
+		false,
+		nil)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println(q)
+
 	log.Println("Successfully connected to the RabbitMQ instance")
 
-	ch, err := conn.Channel()
+	ch, err = conn.Channel()
 	if err != nil {
 		log.Println(err)
 		panic(err)
