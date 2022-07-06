@@ -35,8 +35,8 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseCors(c=>c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().WithExposedHeaders("Content-Disposition"));
 app.UseOcelot().Wait();
-app.UseCors(c=>c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseAuthorization();
 
 app.Run();
