@@ -14,7 +14,6 @@ func StartServer() {
 	dataContainers.InitCheatStudents()
 
 	go messaging.AddActiveStudent()
-	go messaging.AddCheatStudent()
 
 	http.HandleFunc("/ws", WsEndpoint)
 	log.Fatal(http.ListenAndServe(viper.GetString("SERVER_PORT"), nil))
