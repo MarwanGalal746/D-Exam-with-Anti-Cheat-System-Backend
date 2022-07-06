@@ -121,7 +121,7 @@ public class CourseController : ControllerBase
     }
     
     [HttpPost]
-    [Route("create-student-course")]
+    [Route("create-student-courses")]
     public IActionResult CreateStudentCourses(string studentId)
     {
         _studCrsService.CreateStudentCourses(studentId);

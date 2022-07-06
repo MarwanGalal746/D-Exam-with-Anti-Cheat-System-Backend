@@ -4,3 +4,7 @@
 *.xml
 *.dll
 *.pdb
+*.props
+*.cache
+*.info
+*.props
