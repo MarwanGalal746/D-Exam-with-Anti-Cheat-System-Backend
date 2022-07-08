@@ -48,7 +48,7 @@ func Start() {
 	//exam endpoints
 	router.POST("/api/exam/create-exam", examHandler.Create)
 	router.POST("/api/exam/get-all-exams", examHandler.GetCourseExams)
-	router.GET("/api/exam/get-exam/:examId", examHandler.GetExam)
+	router.GET("/api/exam/get-exam/:examId/:userId", examHandler.GetExam)
 	router.DELETE("/api/exam/delete-exam/:examId", examHandler.DelExam)
 	router.PUT("/api/exam/update-exam-info/:examId", examHandler.UpdateExamInfo)
 

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"exam_service/pkg/domain/models"
 	"exam_service/pkg/errs"
+	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
 	"log"
@@ -43,9 +44,9 @@ func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 	}
 
 	//setting questions Ids in examData and storing questions in database
-	i := 0
+	i := 1
 	for _, qs := range newExam.Questions {
-		qs.Id = newExam.ExamData.CourseId + "-" + newExam.ExamData.ExamId + "-" + strconv.Itoa(i)
+		qs.Id = strconv.Itoa(i)
 		newExam.ExamData.QuestionIds = append(newExam.ExamData.QuestionIds, qs.Id)
 		ok, err = e.redisJsonDb.JSONSet(qs.Id, ".", qs)
 		if err != nil {
@@ -54,6 +55,7 @@ func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 		}
 		i++
 	}
+	newExam.ExamData.BlockedStudents = make([]string, 0)
 	_, err = e.redisJsonDb.JSONSet(newExam.ExamData.ExamId, ".", newExam.ExamData)
 	if err != nil {
 		log.Println(err)
@@ -112,7 +114,7 @@ func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExa
 	return courseExams, nil
 }
 
-func (e ExamRepositoryDb) GetExam(examId string) (*models.Exam, error) {
+func (e ExamRepositoryDb) GetExam(examId string, userId string) (*models.Exam, error) {
 	var examData models.ExamInfo
 	key, err := e.redisJsonDb.JSONGet(examId, ".")
 	if err != nil {
@@ -120,6 +122,18 @@ func (e ExamRepositoryDb) GetExam(examId string) (*models.Exam, error) {
 		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
 			return nil, errs.ErrExamDoesNotExist
 		}
+		return nil, errs.ErrDb
+	}
+	for i := 0; i < len(examData.BlockedStudents); i++ {
+		if userId == examData.BlockedStudents[i] {
+			return nil, errs.ErrDuplicateUserExam
+		}
+	}
+	examData.BlockedStudents = append(examData.BlockedStudents, userId)
+	fmt.Println(examData.BlockedStudents)
+	_, err = e.redisJsonDb.JSONSet(examData.ExamId, ".", examData)
+	if err != nil {
+		log.Println(err)
 		return nil, errs.ErrDb
 	}
 	err = json.Unmarshal(key.([]byte), &examData)

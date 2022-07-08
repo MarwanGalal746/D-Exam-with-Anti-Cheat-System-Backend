@@ -82,7 +82,7 @@ func (examHandler ExamHandlers) GetCourseExams(c *gin.Context) {
 
 func (examHandler ExamHandlers) GetExam(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
-	allExams, err := examHandler.service.GetExam(c.Param("examId"))
+	allExams, err := examHandler.service.GetExam(c.Param("examId"), c.Param("userId"))
 	if err != nil && err.Error() == errs.ErrDb.Error() {
 		log.Println(errs.ErrDb.Error())
 		c.Writer.WriteHeader(http.StatusInternalServerError)
@@ -97,6 +97,11 @@ func (examHandler ExamHandlers) GetExam(c *gin.Context) {
 		log.Println(errs.ErrExamDoesNotExist.Error())
 		c.Writer.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
+		return
+	} else if err != nil && err.Error() == errs.ErrDuplicateUserExam.Error() {
+		log.Println(errs.ErrDuplicateUserExam.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDuplicateUserExam.Error(), http.StatusBadRequest))
 		return
 	}
 	//sending the response
