@@ -21,6 +21,11 @@ services:
     environment:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=:5672
+    depends_on:
+      - "rabbitmq"
+    links:
+      - "rabbitmq"
+    restart: unless-stopped
 
 volumes:
   rabbit-data:
