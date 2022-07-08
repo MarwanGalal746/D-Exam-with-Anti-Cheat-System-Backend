@@ -67,17 +67,21 @@ func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExa
 	for _, courseId := range courseIds {
 		var course models.Course
 		key, err := e.redisJsonDb.JSONGet(courseId, ".")
+		nullIndicator := false
 		if err != nil {
 			log.Println(err)
-			if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
-				return nil, errs.ErrCourseDoesNotExist
+			if !strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+				return nil, errs.ErrDb
+			} else {
+				nullIndicator = true
 			}
-			return nil, errs.ErrDb
 		}
-		err = json.Unmarshal(key.([]byte), &course.CourseData)
-		if err != nil {
-			log.Println(err)
-			return nil, errs.ErrUnmarshallingJson
+		if !nullIndicator {
+			err = json.Unmarshal(key.([]byte), &course.CourseData)
+			if err != nil {
+				log.Println(err)
+				return nil, errs.ErrUnmarshallingJson
+			}
 		}
 		upcomingExams := make([]models.ExamInfo, 0)
 		previousExams := make([]models.ExamInfo, 0)
