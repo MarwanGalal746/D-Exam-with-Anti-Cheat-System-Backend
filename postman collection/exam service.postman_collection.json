@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"coursesIds\" : [\"en\"]\n}",
+							"raw": "{\n    \"coursesIds\" : [\"en\", \"ar\", \"fr\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -348,7 +348,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8888/api/exam/get-user-exam-grade/1/en/en-mid",
+							"raw": "localhost:8888/api/exam/get-user-exam-grade/2/en/en-mid",
 							"host": [
 								"localhost"
 							],
@@ -357,7 +357,7 @@
 								"api",
 								"exam",
 								"get-user-exam-grade",
-								"1",
+								"2",
 								"en",
 								"en-mid"
 							]
