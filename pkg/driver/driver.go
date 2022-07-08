@@ -45,7 +45,7 @@ func getPGDbConnetion() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	err = gormDb.Migrator().DropTable(&models.StudentGrade{}, &models.Report{})
+	err = gormDb.Migrator().AutoMigrate(&models.StudentGrade{}, &models.Report{})
 	if err != nil {
 		panic(err)
 	}

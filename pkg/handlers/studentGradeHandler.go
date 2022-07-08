@@ -77,6 +77,16 @@ func (studentGradeHandler StudentGradeHandlers) GetUserCourseExamGrade(c *gin.Co
 		c.Writer.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
 		return
+	} else if err != nil && err.Error() == errs.ErrCourseDoesNotExist.Error() {
+		log.Println(errs.ErrCourseDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrCourseDoesNotExist.Error(), http.StatusBadRequest))
+		return
+	} else if err != nil && err.Error() == errs.ErrStudentDoesNotTakeTheExam.Error() {
+		log.Println(errs.ErrStudentDoesNotTakeTheExam.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrStudentDoesNotTakeTheExam.Error(), http.StatusBadRequest))
+		return
 	}
 	//sending the response
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")

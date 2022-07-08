@@ -101,20 +101,39 @@ func (s StudentGradeRepositoryDb) GetUserCourseExamGrade(userId, courseId, examI
 		return nil, errs.ErrDb
 	}
 
+	// validate if course exists or not
+	_, err = s.redisJsonDb.JSONGet(courseId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return nil, errs.ErrCourseDoesNotExist
+		}
+		return nil, errs.ErrDb
+	}
+
 	row := s.sqlDb.Raw("Select * from student_grades join reports on student_grades.id = reports.student_grade_id where student_grades.user_id=? AND student_grades.course_id=? AND student_grades.exam_id=?",
 		userId, courseId, examId).Row()
 	if row.Err() != nil {
-		log.Println(row.Err())
-		return nil, errs.ErrDb
+		log.Println(row.Err().Error())
+		if strings.Contains(row.Err().Error(), "no rows in result set") {
+			return nil, errs.ErrStudentDoesNotTakeTheExam
+		} else {
+			return nil, errs.ErrDb
+		}
 	}
 	var report models.Report
+
 	err = row.Scan(&report.StudentGradeId, &report.StudentGradeObj.UserId, &report.StudentGradeObj.ExamId,
 		&report.StudentGradeObj.CourseId,
 		&report.StudentGradeObj.Grade, &report.StudentGradeObj.CheatingStatus, &report.Id, &report.Report,
 		&report.StudentGradeId)
 	if err != nil {
-		log.Println(err)
-		return nil, errs.ErrDb
+		if strings.Contains(err.Error(), "no rows in result set") {
+			return nil, errs.ErrStudentDoesNotTakeTheExam
+		} else {
+			log.Println(err)
+			return nil, errs.ErrDb
+		}
 	}
 	return &report, nil
 }
