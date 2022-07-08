@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"examData\" : {\n        \"examId\" : \"en-mid\",\n        \"name\" : \"midterm\",\n        \"courseId\" : \"en\",\n        \"teacherName\" : \"Hamada\",\n        \"duration\" : 120,\n        \"totalMark\" : 60,\n        \"date\" : 1652000000\n    },\n    \"questions\" : [\n        {\n            \"id\" : 1,\n            \"question\" : \"abcd\",\n            \"rightChoice\" : \"a\",\n            \"choices\" : [\"a\"]\n        }, {\n            \"id\" : 2,\n            \"question\" : \"abcd\",\n            \"rightChoice\" : \"a\",\n            \"choices\" : [\"a\"]\n        }\n    ],\n    \"blockedStudents\" : []\n}",
+							"raw": "{\n    \"examData\" : {\n        \"examId\" : \"en-mid\",\n        \"name\" : \"midterm\",\n        \"courseId\" : \"en\",\n        \"teacherName\" : \"Hamada\",\n        \"duration\" : 120,\n        \"totalMark\" : 60,\n        \"date\" : 1652000000\n    },\n    \"questions\" : [\n        {\n            \"id\" : 1,\n            \"question\" : \"abcd\",\n            \"rightChoice\" : \"a\",\n            \"choices\" : [\"a\"]\n        }, {\n            \"id\" : 2,\n            \"question\" : \"abcd\",\n            \"rightChoice\" : \"a\",\n            \"choices\" : [\"a\"]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -82,7 +82,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8888/api/exam/get-exam/en-mid/1",
+							"raw": "http://localhost:8888/api/exam/get-exam/en-mid/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -93,7 +93,7 @@
 								"exam",
 								"get-exam",
 								"en-mid",
-								"1"
+								"2"
 							]
 						}
 					},
