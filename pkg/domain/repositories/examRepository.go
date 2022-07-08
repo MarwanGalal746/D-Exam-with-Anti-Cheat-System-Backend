@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"exam_service/pkg/domain/models"
 	"exam_service/pkg/errs"
-	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/nitishm/go-rejson"
 	"log"
@@ -55,7 +54,6 @@ func (e ExamRepositoryDb) Create(newExam models.Exam) error {
 		}
 		i++
 	}
-	newExam.ExamData.BlockedStudents = make([]string, 0)
 	_, err = e.redisJsonDb.JSONSet(newExam.ExamData.ExamId, ".", newExam.ExamData)
 	if err != nil {
 		log.Println(err)
@@ -124,23 +122,23 @@ func (e ExamRepositoryDb) GetExam(examId string, userId string) (*models.Exam, e
 		}
 		return nil, errs.ErrDb
 	}
+	err = json.Unmarshal(key.([]byte), &examData)
+	if err != nil {
+		log.Println(err)
+		return nil, errs.ErrUnmarshallingJson
+	}
 	for i := 0; i < len(examData.BlockedStudents); i++ {
 		if userId == examData.BlockedStudents[i] {
 			return nil, errs.ErrDuplicateUserExam
 		}
 	}
 	examData.BlockedStudents = append(examData.BlockedStudents, userId)
-	fmt.Println(examData.BlockedStudents)
 	_, err = e.redisJsonDb.JSONSet(examData.ExamId, ".", examData)
 	if err != nil {
 		log.Println(err)
 		return nil, errs.ErrDb
 	}
-	err = json.Unmarshal(key.([]byte), &examData)
-	if err != nil {
-		log.Println(err)
-		return nil, errs.ErrUnmarshallingJson
-	}
+	examData.BlockedStudents = nil
 	var exam models.Exam
 	exam.ExamData = examData
 	for _, qsId := range examData.QuestionIds {

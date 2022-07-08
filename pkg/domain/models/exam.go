@@ -9,7 +9,7 @@ type ExamInfo struct {
 	TotalMark       int      `json:"totalMark" validate:"required"`
 	Date            int64    `json:"date" validate:"required"`
 	QuestionIds     []string `json:"questionIds,omitempty"`
-	BlockedStudents []string `json:"blockedStudents"`
+	BlockedStudents []string `json:"blockedStudents,omitempty"`
 }
 
 type Exam struct {
