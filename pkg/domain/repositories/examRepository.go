@@ -158,6 +158,33 @@ func (e ExamRepositoryDb) GetExam(examId string, userId string) (*models.Exam, e
 	return &exam, nil
 }
 
+func (e ExamRepositoryDb) IsStudentTakeExamBefore(examId string, userId string) (map[string]bool, error) {
+	var examData models.ExamInfo
+	key, err := e.redisJsonDb.JSONGet(examId, ".")
+	if err != nil {
+		log.Println(err)
+		if strings.Contains(err.Error(), errs.ErrRedisNil.Error()) {
+			return nil, errs.ErrExamDoesNotExist
+		}
+		return nil, errs.ErrDb
+	}
+	err = json.Unmarshal(key.([]byte), &examData)
+	if err != nil {
+		log.Println(err)
+		return nil, errs.ErrUnmarshallingJson
+	}
+	m := make(map[string]bool)
+	for i := 0; i < len(examData.BlockedStudents); i++ {
+		if userId == examData.BlockedStudents[i] {
+			m["isStudentTakeExamBefore"] = true
+			return m, nil
+		}
+	}
+	m["isStudentTakeExamBefore"] = false
+	return m, nil
+
+}
+
 func (e ExamRepositoryDb) DelExam(examId string) error {
 	//get the exam information
 	var examData models.ExamInfo

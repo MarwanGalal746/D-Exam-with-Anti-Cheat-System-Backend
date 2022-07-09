@@ -11,6 +11,7 @@ type ExamService interface {
 	DelExam(string) error
 	DelCourseExams(string) error
 	UpdateExamInfo(string, models.ExamInfo) error
+	IsStudentTakeExamBefore(string, string) (map[string]bool, error)
 }
 
 type DefaultExamService struct {
@@ -27,6 +28,10 @@ func (e DefaultExamService) GetCourseExams(courseIds []string) ([]models.CourseE
 
 func (e DefaultExamService) GetExam(examId string, userId string) (*models.Exam, error) {
 	return e.repo.GetExam(examId, userId)
+}
+
+func (e DefaultExamService) IsStudentTakeExamBefore(examId string, userId string) (map[string]bool, error) {
+	return e.repo.IsStudentTakeExamBefore(examId, userId)
 }
 
 func (e DefaultExamService) DelExam(examId string) error {

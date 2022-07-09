@@ -29,4 +29,5 @@ type ExamRepository interface {
 	DelExam(string) error
 	DelCourseExams(string) error
 	UpdateExamInfo(string, ExamInfo) error
+	IsStudentTakeExamBefore(string, string) (map[string]bool, error)
 }

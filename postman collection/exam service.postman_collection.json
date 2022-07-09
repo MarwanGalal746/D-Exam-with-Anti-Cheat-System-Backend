@@ -151,6 +151,29 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "IsStudentTakeExamBefore",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/exam/is-student-take-exam-before/en-mid/55",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"exam",
+								"is-student-take-exam-before",
+								"en-mid",
+								"55"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

@@ -109,6 +109,35 @@ func (examHandler ExamHandlers) GetExam(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(allExams)
 }
 
+func (examHandler ExamHandlers) IsStudentTakeExamBefore(c *gin.Context) {
+	c.Writer.Header().Add("Content-Type", "application/json")
+	isStudentTakeExamBefore, err := examHandler.service.IsStudentTakeExamBefore(c.Param("examId"), c.Param("userId"))
+	if err != nil && err.Error() == errs.ErrDb.Error() {
+		log.Println(errs.ErrDb.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDb.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrUnmarshallingJson.Error() {
+		log.Println(errs.ErrUnmarshallingJson.Error())
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrUnmarshallingJson.Error(), http.StatusInternalServerError))
+		return
+	} else if err != nil && err.Error() == errs.ErrExamDoesNotExist.Error() {
+		log.Println(errs.ErrExamDoesNotExist.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrExamDoesNotExist.Error(), http.StatusBadRequest))
+		return
+	} else if err != nil && err.Error() == errs.ErrDuplicateUserExam.Error() {
+		log.Println(errs.ErrDuplicateUserExam.Error())
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(c.Writer).Encode(errs.NewResponse(errs.ErrDuplicateUserExam.Error(), http.StatusBadRequest))
+		return
+	}
+	//sending the response
+	c.Writer.WriteHeader(http.StatusOK)
+	json.NewEncoder(c.Writer).Encode(isStudentTakeExamBefore)
+}
+
 func (examHandler ExamHandlers) DelExam(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/json")
 	err := examHandler.service.DelExam(c.Param("examId"))
