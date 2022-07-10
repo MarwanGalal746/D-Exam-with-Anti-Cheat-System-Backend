@@ -1,0 +1,23 @@
+.combo-box{
+    -fx-background-color:  #232323;
+    -fx-text-fill: #ffffff;
+    -fx-accent: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 6;
+    -fx-highlight-text-fill: #ffffff;
+    -fx-highlight-fill: #ffffff;
+    -fx-focus-color: #ffffff;
+    -fx-focus-inner-color: #ffffff;
+    -fx-focus-ring-color: #ffffff;
+    -fx-focus-ring-width: 2;
+    -fx-font-size: 14;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-prompt-fill: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-control-inner-background: #232323;
+    -fx-control-inner-background-alt: #232323;
+    -fx-control-inner-background-over: #232323;
+    -fx-control-inner-background-focused: #232323;
+    -fx-control-inner-background-focused-alt: #232323;
+    -fx-control-inner-background-focused-over: #232323;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane prefHeight="565.0" prefWidth="397.0" scaleShape="false" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dexam.desktopapplication.controllers.LoginController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="91.0" prefHeight="49.0" prefWidth="397.0" text="D-EXAM" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="33.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="147.0" prefHeight="38.0" prefWidth="397.0" text="Login" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailField" focusTraversable="false" layoutX="24.0" layoutY="234.0" prefHeight="40.0" prefWidth="348.0" promptText="Enter your e-mail address" stylesheets="@textfield.css">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
+      <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="377.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="342.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="loginButton" alignment="CENTER" layoutX="134.0" layoutY="409.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="38.0" prefWidth="131.0" style="-fx-background-color: #E93955;" text="Login" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="87.0" fitWidth="85.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../assets/dots2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="85.0" layoutX="314.0" layoutY="483.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../assets/dots2.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="errorText" alignment="CENTER" layoutY="462.0" prefHeight="25.0" prefWidth="399.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" layoutX="25.0" layoutY="314.0" prefHeight="40.0" prefWidth="348.0" promptText="Enter your password" stylesheets="@textfield.css">
+         <font>
+            <Font size="13.0" />
+         </font></PasswordField>
+   </children>
+</AnchorPane>
