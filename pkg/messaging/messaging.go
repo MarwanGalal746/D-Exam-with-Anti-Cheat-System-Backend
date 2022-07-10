@@ -60,7 +60,7 @@ func AddActiveStudent() {
 	messages := make(chan string)
 	go func() {
 		for d := range msgs {
-			message := strings.Split(string(d.Body[:]), " ")
+			message := strings.Split(string(d.Body[:]), "-")
 			studentId := message[1]
 			fmt.Println(studentId)
 			if message[0] == "open" {

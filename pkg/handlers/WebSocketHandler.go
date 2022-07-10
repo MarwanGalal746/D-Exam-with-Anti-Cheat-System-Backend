@@ -31,7 +31,7 @@ func checkIfStudentCheat(conn *websocket.Conn, studentId string, result chan boo
 	for {
 		cond, ind := contains(studentId, dataContainers.CheatStudents)
 		if cond {
-			err := conn.WriteMessage(1, []byte("student has cheated"))
+			err := conn.WriteMessage(1, []byte("cheated"))
 			if err != nil {
 				log.Println(err)
 			}
@@ -43,7 +43,7 @@ func checkIfStudentCheat(conn *websocket.Conn, studentId string, result chan boo
 			result <- true
 			return
 		}
-		time.Sleep(2 * time.Second)
+		time.Sleep(1 * time.Second)
 	}
 }
 
@@ -51,7 +51,7 @@ func checkIfStudentClosedTool(conn *websocket.Conn, studentId string, result cha
 	for {
 		cond, _ := contains(studentId, dataContainers.ActiveStudents)
 		if !cond {
-			err := conn.WriteMessage(1, []byte("student has closed the desktop tool"))
+			err := conn.WriteMessage(1, []byte("closed"))
 			if err != nil {
 				log.Println(err)
 			}
@@ -68,9 +68,10 @@ func checkIfStudentClosedTool(conn *websocket.Conn, studentId string, result cha
 
 func reader(conn *websocket.Conn) {
 	studentId := "no-id"
+	first := true
 	for {
 		// read in a message
-		messageType, p, err := conn.ReadMessage()
+		_, p, err := conn.ReadMessage()
 		if err != nil {
 			log.Println(err)
 		}
@@ -82,16 +83,23 @@ func reader(conn *websocket.Conn) {
 		// print out that message for clarity
 		fmt.Println("socket: " + string(p))
 
-		if err := conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
-		}
 		cond, _ := contains(string(p), dataContainers.ActiveStudents)
 		if !cond {
+			err = conn.WriteMessage(1, []byte("failed"))
+			if err != nil {
+				log.Println(err)
+			}
 			err = conn.WriteControl(websocket.CloseMessage, websocket.FormatCloseMessage(1000, "Connection closed because desktop app is not opened"), time.Now().Add(1*time.Second))
 			if err != nil {
 				fmt.Println(err)
 			}
 			return
+		}
+		if first {
+			err = conn.WriteMessage(1, []byte("success"))
+			if err != nil {
+				log.Println(err)
+			}
 		}
 		result := make(chan bool, 1)
 		go checkIfStudentCheat(conn, studentId, result)
@@ -123,11 +131,6 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 	log.Println("Student Connected")
-	err = ws.WriteMessage(1, []byte("Hi Student!"))
-	if err != nil {
-		log.Println(err)
-	}
-
 	// listen indefinitely for new messages coming
 	// through on our WebSocket connection
 	go reader(ws)
