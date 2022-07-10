@@ -5,7 +5,7 @@ type StudentGrade struct {
 	UserId         string  `json:"userId,omitempty" gorm:"index:idx_submission,unique;not null;type:string"`
 	ExamId         string  `json:"examId,omitempty" gorm:"index:idx_submission,unique;not null;type:string"`
 	CourseId       string  `json:"courseId,omitempty" gorm:"<-;not null;type:string"`
-	Grade          float64 `json:"grade" gorm:"<-;not null;type:numeric"`
+	Grade          float64 `json:"grade" gorm:"<-;not null;type:float"`
 	CheatingStatus string  `json:"cheatingStatus" gorm:"<-;not null;type:string"`
 }
 
