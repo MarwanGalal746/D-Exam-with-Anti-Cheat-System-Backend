@@ -8,7 +8,6 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/itsjamie/gin-cors v0.0.0-20220228161158-ef28d3d2a0a8
 	github.com/nitishm/go-rejson v2.0.0+incompatible
-	github.com/spf13/viper v1.11.0
 	github.com/streadway/amqp v1.0.0
 	gorm.io/driver/postgres v1.3.5
 	gorm.io/gorm v1.23.4

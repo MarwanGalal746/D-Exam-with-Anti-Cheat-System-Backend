@@ -8,7 +8,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/spf13/viper"
+	"os"
 	"time"
 )
 
@@ -76,6 +76,6 @@ func Start() {
 	router.DELETE("/api/exam/delete-user-exam-grade/:userId/:courseId/:examId",
 		studentGradeHandler.DeleteUserCourseExamGrade)
 
-	router.Run(viper.GetString("EXAM_SERVER_PORT"))
+	router.Run(os.Getenv("EXAM_SERVER_PORT"))
 
 }

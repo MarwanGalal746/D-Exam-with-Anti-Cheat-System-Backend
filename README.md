@@ -32,7 +32,6 @@ Follow the instructions to complete the installation.
 - [Validator](https://github.com/go-playground/validator)
 - [Go-Redis](https://github.com/go-redis/redis)
 - [Go-Rejson](https://github.com/nitishm/go-rejson)
-- [Viper](https://github.com/spf13/viper)
 - [Gorm](https://github.com/go-gorm/gorm)
 
 ## Environment variables file

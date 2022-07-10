@@ -3,16 +3,16 @@ package messaging
 import (
 	"exam_service/pkg/domain/models"
 	"exam_service/pkg/service"
-	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 	"log"
+	"os"
 )
 
 func DeleteCourseExams(repository models.ExamRepository) {
 	log.Println("Consumer")
 
 	rabbitmqUrl := "amqp://guest:guest@" +
-		viper.GetString("RABBITMQ_HOST") + viper.GetString("RABBITMQ_PORT")
+		os.Getenv("RABBITMQ_HOST") + os.Getenv("RABBITMQ_PORT")
 
 	conn, err := amqp.Dial(rabbitmqUrl)
 	if err != nil {
