@@ -78,9 +78,10 @@ public class CourseController : ControllerBase
     
     [HttpDelete]
     [Route("delete")]
-    public IActionResult Delete(string courseId)
+    public async Task<IActionResult> Delete(string courseId)
     {
         _courseService.Delete(courseId);
+        await _studCrsService.RemoveStudentsFromSpecificCourse(courseId);
         RabbitMq.Send(courseId);
         return Ok("Success");
     }

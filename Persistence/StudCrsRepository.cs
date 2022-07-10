@@ -1,4 +1,5 @@
-﻿using Core.Entity;
+﻿using System.Linq.Expressions;
+using Core.Entity;
 using Core.Interface.Repository;
 using Redis.OM;
 using Redis.OM.Searching;
@@ -31,5 +32,10 @@ public class StudCrsRepository : IStudCrsRepository
     {
         await _studentCourses.InsertAsync(studentCourses);
         return studentCourses;
+    }
+    
+    public async Task<IList<StudentCourses>> FindBy(Expression<Func<StudentCourses, bool>> expression)
+    {
+        return await _studentCourses.Where(expression).ToListAsync();
     }
 }

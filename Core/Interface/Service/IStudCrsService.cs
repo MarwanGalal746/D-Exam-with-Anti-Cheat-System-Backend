@@ -8,4 +8,5 @@ public interface IStudCrsService
     public Task AddStudentToCourse(string studentId, string courseId);
     Task<List<string>> GetStudentCourses(string id);
     Task RemoveStudentFromCourse(string studentId, string courseId);
+    Task RemoveStudentsFromSpecificCourse(string courseId);
 }

@@ -57,4 +57,13 @@ public class StudCrsService : IStudCrsService
         var sc = await _repository.GetStudentCourses(id);
         return sc!.Courses;
     }
+    public async Task RemoveStudentsFromSpecificCourse(string courseId)
+    {
+        var registeredStudents = await _repository.FindBy(studentCourses => studentCourses.Courses.Contains(courseId));
+        foreach (var student in registeredStudents)
+        {
+            student.Courses.Remove(courseId);
+            await _repository.Update(student);
+        }
+    }
 }
