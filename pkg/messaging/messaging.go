@@ -3,9 +3,9 @@ package messaging
 import (
 	"D-Exam-with-Anti-Cheat-System-Backend/pkg/dataContainers"
 	"fmt"
-	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -13,7 +13,7 @@ func AddActiveStudent() {
 	log.Println("Consumer")
 
 	rabbitmqUrl := "amqp://guest:guest@" +
-		viper.GetString("RABBITMQ_HOST") + viper.GetString("RABBITMQ_PORT")
+		os.Getenv("RABBITMQ_HOST") + os.Getenv("RABBITMQ_PORT")
 	conn, err := amqp.Dial(rabbitmqUrl)
 	if err != nil {
 		log.Println(err)
