@@ -10,7 +10,7 @@ public interface IUserService {
     long save(User user);
     void userExistByEmail(String email);
     void userExistByNationalID(String nationalID);
-    void resetPassword(String email, String password);
+    void updatePassword(String email, String password);
     long activateUser(String email, String password);
     boolean isUserActive(String email);
 

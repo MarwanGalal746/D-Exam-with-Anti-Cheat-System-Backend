@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService, IUserService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),new ArrayList<>());
     }
 
-    public void resetPassword(String email, String newPassword) {
+    public void updatePassword(String email, String newPassword) {
         newPassword = bCryptPasswordEncoder.encode(newPassword);
         userRepository.updatePassword(email, newPassword);
     }

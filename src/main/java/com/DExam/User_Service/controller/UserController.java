@@ -6,7 +6,6 @@ import com.DExam.User_Service.exception.InvalidEmailPasswordException;
 import com.DExam.User_Service.exception.UserNotActivatedException;
 import com.DExam.User_Service.model.*;
 import com.DExam.User_Service.service.IUserService;
-import com.DExam.User_Service.service.UserService;
 import com.DExam.User_Service.utility.CodeGenerator;
 import com.DExam.User_Service.utility.CustomResponse;
 import lombok.AllArgsConstructor;
@@ -68,15 +67,6 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody UpdateUserRequest request){
-        userService.userExistByEmail(request.getNewUser().getEmail());
-        userService.save(request.getNewUser());
-        log.info("the credentials of the user with id " + request.getNewUser().getId() + " have been updated" );
-        String newToken = jwtManager.generateToken(request.getNewUser().getEmail(), userService.get(request.getNewUser().getEmail()).getRole().toString());
-        return new ResponseEntity<>(new CustomResponse().setMessage(newToken).setStatus(HttpStatus.OK),HttpStatus.OK);
-    }
-
     @PostMapping("/login")
     public LoginResponse login(@RequestBody UserCredentials userCredentials) {
 
@@ -99,9 +89,9 @@ public class UserController {
         return new LoginResponse(accessToken, userService.get(userCredentials.getEmail()));
     }
 
-    @PutMapping("/reset")
-    public ResponseEntity<?> reset(@RequestBody UserCredentials userCredentials){
-        userService.resetPassword(userCredentials.getEmail(), userCredentials.getPassword());
+    @PutMapping("/update-password")
+    public ResponseEntity<?> updatePassword(@RequestBody UserCredentials userCredentials){
+        userService.updatePassword(userCredentials.getEmail(), userCredentials.getPassword());
         log.info("password of the user with email " + userCredentials.getEmail() + " has been updated successfully");
         return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.PASS_UPDATED).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
