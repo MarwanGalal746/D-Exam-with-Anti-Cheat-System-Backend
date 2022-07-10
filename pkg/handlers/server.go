@@ -76,6 +76,6 @@ func Start() {
 	router.DELETE("/api/exam/delete-user-exam-grade/:userId/:courseId/:examId",
 		studentGradeHandler.DeleteUserCourseExamGrade)
 
-	router.Run(viper.GetString("SERVER_PORT"))
+	router.Run(viper.GetString("EXAM_SERVER_PORT"))
 
 }

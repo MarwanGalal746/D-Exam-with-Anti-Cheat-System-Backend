@@ -51,7 +51,7 @@ go run main.go
 
 The server will start at:
 
-- Local: http://localhost:[SERVER_PORT]
+- Local: http://localhost:[EXAM_SERVER_PORT]
 
 ## Postman Collection
 
