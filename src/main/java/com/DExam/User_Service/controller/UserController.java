@@ -18,6 +18,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api/users")
@@ -61,8 +63,8 @@ public class UserController {
         }
         else
         {
-            userService.activateUser(credentials.getEmail(),credentials.getPassword());
-            return new ResponseEntity<>(new CustomResponse().setMessage("User has been verified").setStatus(HttpStatus.OK), HttpStatus.OK);
+            long userId = userService.activateUser(credentials.getEmail(),credentials.getPassword());
+            return new ResponseEntity<>(new CustomResponse().setMessage(String.valueOf(userId)).setStatus(HttpStatus.OK), HttpStatus.OK);
         }
     }
 
@@ -102,5 +104,12 @@ public class UserController {
         userService.resetPassword(userCredentials.getEmail(), userCredentials.getPassword());
         log.info("password of the user with email " + userCredentials.getEmail() + " has been updated successfully");
         return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.PASS_UPDATED).setStatus(HttpStatus.OK),HttpStatus.OK);
+    }
+
+    @PostMapping("/get-users")
+    public ResponseEntity<?> getUsers(@RequestBody ArrayList<Long> userIDs){
+        ArrayList<CourseStudentsInfo> users = userService.getUsers(userIDs);
+        log.info("users with ids " + userIDs + " have been retrieved successfully");
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
 }

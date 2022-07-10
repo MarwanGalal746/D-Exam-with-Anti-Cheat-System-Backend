@@ -6,6 +6,7 @@ import com.DExam.User_Service.exception.EmailNotExistException;
 import com.DExam.User_Service.exception.NationalIDException;
 import com.DExam.User_Service.exception.UserNotFoundException;
 import com.DExam.User_Service.domain.User;
+import com.DExam.User_Service.model.CourseStudentsInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -62,11 +63,21 @@ public class UserService implements UserDetailsService, IUserService {
         return userRepository.findByEmail(email).orElseThrow(EmailNotExistException::new).isActive();
     }
 
-    public boolean activateUser(String email, String password) {
+    @Override
+    public ArrayList<CourseStudentsInfo> getUsers(ArrayList<Long> userIDs) {
+        ArrayList<CourseStudentsInfo> courseStudentsInfos = new ArrayList<>();
+        for (Long userID : userIDs) {
+            User user = userRepository.findById(userID).orElseThrow(UserNotFoundException::new);
+            courseStudentsInfos.add(new CourseStudentsInfo(user.getId(), user.getName(), user.getImg()));
+        }
+        return courseStudentsInfos;
+    }
+
+    public long activateUser(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(EmailNotExistException::new);
         user.setActive(true);
         user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
-        return true;
+        return user.getId();
     }
 }

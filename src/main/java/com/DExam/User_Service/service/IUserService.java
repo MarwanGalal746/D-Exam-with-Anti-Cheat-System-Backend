@@ -1,6 +1,9 @@
 package com.DExam.User_Service.service;
 
 import com.DExam.User_Service.domain.User;
+import com.DExam.User_Service.model.CourseStudentsInfo;
+
+import java.util.ArrayList;
 
 public interface IUserService {
     User get(String email);
@@ -8,6 +11,8 @@ public interface IUserService {
     void userExistByEmail(String email);
     void userExistByNationalID(String nationalID);
     void resetPassword(String email, String password);
-    boolean activateUser(String email, String password);
+    long activateUser(String email, String password);
     boolean isUserActive(String email);
+
+    ArrayList<CourseStudentsInfo> getUsers(ArrayList<Long> userIDs);
 }
