@@ -4,13 +4,10 @@ metadata:
   name: userservice-secret
 type: Opaque
 data:
-  redis-database-host: cmVkaXM=
   redis-database-password:
   redis-database-name: MA==
-  postgres-database-host: cG9zdGdyZXM=
   postgres-database-password: MzgwNDM=
   postgres-database-name: MA==
-  rabbitmq-queue-host: cmFiYml0bXE=
 
 ---
 
@@ -34,15 +31,12 @@ spec:
         - name: exam-service
           image: eyadzz/dexam_exam_service
           ports:
-            - containerPort: 8080
+            - containerPort: 8888
           env:
             - name: DEVELOPMENT
               value: "true"
             - name: REDIS_DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  key: redis-database-host
-                  name: examservice-secret
+              value: "redis"
             - name: REDIS_DB_PORT
               value: ":6379"
             - name: REDIS_DB_PASSWORD
@@ -56,10 +50,7 @@ spec:
                   key: redis-database-name
                   name: examservice-secret
             - name: PG_DB_HOST
-                valueFrom:
-                  secretKeyRef:
-                    key: postgres-database-host
-                    name: examservice-secret
+                value: "postgres"
             - name: PG_DB_PORT
               value: "5432"
             - name: PG_DB_USER
@@ -74,13 +65,10 @@ spec:
                 secretKeyRef:
                   key: postgres-database-name
                   name: examservice-secret
-            - name: PG_DB_HOST
-                valueFrom:
-                  secretKeyRef:
-                    key: postgres-database-host
-                    name: examservice-secret
-                  - name: PG_DB_PORT
-                    value: "5432"
+            - name: RABBITMQ_HOST
+                value: "rabbitmq"
+            - name: RABBITMQ_HOST
+              value: ":5672"
 
 ---
 
