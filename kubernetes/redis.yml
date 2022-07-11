@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-secret
+type: Opaque
+data:
+  redis-password:
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-set
+  labels:
+    app: redis-db
+spec:
+  replicas: 3
+  serviceName: "redis-service"
+  selector:
+    matchLabels:
+      app: redis-db
+  template:
+    metadata:
+      labels:
+        app: redis-db
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: redis-db
+          image: redis
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-store
+              mountPath: /var/lib/redis/data
+          env:
+            - name: redis_USER
+            - name: redis_PASSWORD
+              value:
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-store
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 5Gi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  selector:
+    app: redis-db
+  ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+
