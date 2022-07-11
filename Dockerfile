@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM golang:1.18
+FROM golang:1.18-alpine
 # Specify that we now need to execute any commands in this directory.
 WORKDIR /app
 COPY go.mod ./
