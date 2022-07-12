@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overseerservice-deployment
+  labels:
+    app: overseer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: overseer-service
+  template:
+    metadata:
+      labels:
+        app: overseer-service
+    spec:
+      containers:
+        - name: overseer-service
+          image: eyadzz/doverseer_overseer_service
+          ports:
+            - containerPort: 9999
+          env:
+            - name: RABBITMQ_HOST
+                value: "rabbitmq"
+            - name: RABBITMQ_HOST
+              value: ":5672"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: overseerservice-service
+spec:
+  selector:
+    app: overseer-service
+  type: LoadBalancer
+  ports:
+    - port: 9999
+      protocol: TCP
+      targetPort: 9999
+      nodePort: 30003
