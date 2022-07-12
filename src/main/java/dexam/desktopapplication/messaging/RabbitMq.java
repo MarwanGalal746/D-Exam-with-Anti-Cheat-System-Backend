@@ -6,7 +6,6 @@ public class RabbitMq {
     private static final String HOST = "localhost";
     public static boolean send(String message){
         try {
-            message = "\"" + message + "\"";
             String[] cmd = {".\\RabbitMqPublisher.exe", "-host="+HOST, "-port="+PORT, "-queueName="+QUEUE_NAME, "-msg="+message};
             ProcessBuilder builder = new ProcessBuilder(cmd);
             builder.start();

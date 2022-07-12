@@ -1,8 +1,6 @@
 package dexam.desktopapplication;
 
-import dexam.desktopapplication.api.ApiManager;
 import dexam.desktopapplication.messaging.RabbitMq;
-import dexam.desktopapplication.utility.Camera;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         currentStage = stage;
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("stopApp.fxml")));
         Scene scene = new Scene(root);
         stage.setTitle("Anti-Cheat");
         stage.setScene(scene);
@@ -36,7 +34,7 @@ public class Main extends Application {
     @Override
     public void stop() throws IOException {
         System.out.println("Stage is closing");
-        RabbitMq.send("close " + userId);
+        RabbitMq.send("close-" + userId);
         String[] cmd = {"cmd.exe", "/c", "start explorer.exe"};
         Runtime.getRuntime().exec(cmd);
     }

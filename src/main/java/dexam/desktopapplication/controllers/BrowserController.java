@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class BrowserController implements Initializable {
     @FXML
@@ -33,19 +34,19 @@ public class BrowserController implements Initializable {
             errorText.setText("Please select a browser");
             return;
         } else {
-            errorText.setText("");
+            errorText.setText("Please wait till we get everything ready");
             String selectedBrowser = comboBox.getValue().toString();
             Main.usedBrowser = browsers.get(selectedBrowser);
             System.out.println(Main.usedBrowser);
         }
 
-        boolean messageSent = RabbitMq.send("open " + Main.userId);
+        boolean messageSent = RabbitMq.send("open-" + Main.userId);
 
         if(!messageSent) {
             errorText.setText("Error happened. Please try again");
             return;
         }
-        errorText.setText("Please wait till we get everything ready");
+        TimeUnit.SECONDS.sleep(2);
         AntiCheat.initiate(Main.usedBrowser);
         Main.changeScene("stopApp.fxml");
     }

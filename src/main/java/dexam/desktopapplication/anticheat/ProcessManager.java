@@ -86,7 +86,7 @@ public class ProcessManager {
         ignoreList.remove(new String(programName));
     }
 
-    public void monitorActivity() throws IOException, InterruptedException {
+    public boolean monitorActivity() throws IOException, InterruptedException {
         TimeUnit.SECONDS.sleep(1);
         while (true) {
             ArrayList<String> result = new ArrayList<>();
@@ -97,12 +97,12 @@ public class ProcessManager {
                 String[] arr = processLineInfo.split(",");
                 String programName = arr[0].replaceAll("\"", "");
                 System.out.println(arr[0]);
-                if (programName.equals("Taskmgr.exe")) {
+                if (programName.equals("Taskmgr.exe") || programName.equals("explorer.exe")) {
                     TimeUnit.SECONDS.sleep(1);
                     String[] cmd = {"cmd.exe", "/c", "start explorer.exe"};
                     Runtime rt = Runtime.getRuntime();
                     rt.exec(cmd);
-                    return;
+                    return true;
                 }
                 processLineInfo = processList.readLine();
                 if (processLineInfo == null)

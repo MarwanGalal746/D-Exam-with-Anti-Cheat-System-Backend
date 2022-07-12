@@ -13,10 +13,4 @@ public class Camera {
             throw new WebcamException(e);
         }
     }
-
-    public static void capture() throws IOException {
-            String[] cmd = {".\\CameraHelper.exe"};
-            ProcessBuilder builder = new ProcessBuilder(cmd);
-            builder.start();
-    }
 }
