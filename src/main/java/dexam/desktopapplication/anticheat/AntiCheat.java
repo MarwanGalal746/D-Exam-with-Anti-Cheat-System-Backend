@@ -15,6 +15,7 @@ public class AntiCheat {
         p.add("java.exe");
         p.add("javaw.exe");
         p.add(browser);
+        p.add("discord.exe");
 
         processManager.addToIgnoreList(p);
         processManager.killProcesses();

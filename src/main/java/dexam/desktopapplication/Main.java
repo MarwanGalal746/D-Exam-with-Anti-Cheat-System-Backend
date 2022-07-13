@@ -23,7 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         currentStage = stage;
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("stopApp.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         Scene scene = new Scene(root);
         stage.setTitle("Anti-Cheat");
         stage.setScene(scene);
