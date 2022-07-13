@@ -47,6 +47,10 @@
             "Ocelot": {
               "target": "Package",
               "version": "[18.0.0, )"
+            },
+            "Ocelot.Provider.Kubernetes": {
+              "target": "Package",
+              "version": "[18.0.0, )"
             }
           },
           "imports": [

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using  Ocelot.DependencyInjection;
 using Ocelot.Middleware;
- 
+using Ocelot.Provider.Kubernetes;
+
 var builder = WebApplication.CreateBuilder(args);
  
 builder.Configuration.AddJsonFile(Environment.GetEnvironmentVariable("GATEWAY_JSON_FILE", EnvironmentVariableTarget.Process));
@@ -29,7 +30,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddOcelot();
+builder.Services.AddOcelot().AddKubernetes();
 
 var app = builder.Build();
 
