@@ -5,6 +5,18 @@ namespace Messaging;
 
 public static class RabbitMq
 {
+    public static void Init()
+    {
+        var factory = new ConnectionFactory() { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST_NAME", EnvironmentVariableTarget.Process) };
+        
+        using (var connection = factory.CreateConnection())
+            
+        using (var channel = connection.CreateModel())
+        {
+            channel.QueueDeclare(queue: "course-exam", durable: false,
+                exclusive: false, autoDelete: false, arguments: null);
+        }
+    }
     public static void Send(string msg)
     {
         var factory = new ConnectionFactory() { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST_NAME", EnvironmentVariableTarget.Process) };

@@ -1,5 +1,6 @@
 using Core.Interface.Repository;
 using Core.Interface.Service;
+using Messaging;
 using Persistence;
 using Persistence.Config;
 using Redis.OM;
@@ -42,5 +43,7 @@ app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseAuthorization();
 
 app.MapControllers();
+
+RabbitMq.Init();
 
 app.Run();
