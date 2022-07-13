@@ -7,7 +7,7 @@ using Ocelot.Provider.Kubernetes;
 
 var builder = WebApplication.CreateBuilder(args);
  
-builder.Configuration.AddJsonFile(Environment.GetEnvironmentVariable("GATEWAY_JSON_FILE", EnvironmentVariableTarget.Process));
+builder.Configuration.AddJsonFile(Environment.GetEnvironmentVariable("GATEWAY_JSON_FILE"));
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -23,7 +23,7 @@ builder.Services.AddAuthentication(options =>
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("AUTH_SECRET_KEY", EnvironmentVariableTarget.Process)!)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("AUTH_SECRET_KEY")!)),
         ValidateIssuerSigningKey = true,
         ValidateIssuer = false,
         ValidateAudience = false,

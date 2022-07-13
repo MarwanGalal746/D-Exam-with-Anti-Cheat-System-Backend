@@ -3,22 +3,22 @@
     {
       "DownstreamPathTemplate": "/api/courses/{everything}",
       "DownstreamScheme": "http",
-      "ServiceName": "course-service",
       "UpstreamPathTemplate": "/api/courses/{everything}",
+      "ServiceName": "course-service",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
     },
     {
       "DownstreamPathTemplate": "/api/users/{everything}",
       "DownstreamScheme": "http",
-      "ServiceName": "user-service",
       "UpstreamPathTemplate": "/api/users/{everything}",
+      "ServiceName": "user-service",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
     },
     {
       "DownstreamPathTemplate": "/api/exam/{everything}",
       "DownstreamScheme": "http",
-      "ServiceName": "exam-service",
       "UpstreamPathTemplate": "/api/exam/{everything}",
+      "ServiceName": "exam-service",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
     }
   ],
