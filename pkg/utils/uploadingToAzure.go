@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"github.com/Azure/azure-storage-blob-go/azblob"
 	"net/url"
+	"os"
 )
 
 func GetAccountInfo() (string, string, string, string) {
-	azrKey := "udFvBYTwhL1l27aUGOMtb8ojS+7k9IsIXZsjM4YMXCX9Z1dZ2dhUxh+vnn7f03ZTxjwyefEvCWlT+ASt8MPTYw=="
-	azrBlobAccountName := "dexamstorage1"
-	//azrPrimaryBlobServiceEndpoint := fmt.Sprintf("https://%s.blob.core.windows.net/", azrBlobAccountName)
-	azrPrimaryBlobServiceEndpoint := "https://dexamstorage1.blob.core.windows.net/"
-	azrBlobContainer := "dexamstorage1"
+	azrKey := os.Getenv("AZR_KEY")
+	azrBlobAccountName := os.Getenv("AZR_BLOB_ACCOUNT_NAME")
+	azrPrimaryBlobServiceEndpoint := os.Getenv("AZR_BLOB_SERVICE_ENDPOINT")
+	azrBlobContainer := os.Getenv("AZR_BLOB_CONTAINER")
 
 	return azrKey, azrBlobAccountName, azrPrimaryBlobServiceEndpoint, azrBlobContainer
 }
