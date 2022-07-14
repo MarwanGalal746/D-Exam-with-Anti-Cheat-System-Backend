@@ -64,6 +64,7 @@ public class ProcessManager {
             Runtime rt = Runtime.getRuntime();
             if (!checkIgnoreList(process)) {
                 rt.exec("taskkill /f /im " + process);
+                //System.out.println("KIlled " + process);
             } else {
                 break;
             }
@@ -87,9 +88,8 @@ public class ProcessManager {
     }
 
     public boolean monitorActivity() throws IOException, InterruptedException {
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(60);
         while (true) {
-            boolean cond = false;
             ArrayList<String> result = new ArrayList<>();
             processList = getProcessList();
             processLineInfo = processList.readLine();
@@ -98,15 +98,15 @@ public class ProcessManager {
                 String[] arr = processLineInfo.split(",");
                 String programName = arr[0].replaceAll("\"", "");
                 System.out.println(arr[0]);
-                if (programName.equals("kill.exe")) {
-                    cond = true;
+                if (programName.equals("Taskmgr.exe") || programName.equals("explorer.exe")) {
+                    String[] cmd = {"cmd.exe", "/c", "start explorer.exe"};
+                    Runtime rt = Runtime.getRuntime();
+                    rt.exec(cmd);
+                    return false;
                 }
                 processLineInfo = processList.readLine();
                 if (processLineInfo == null)
                     break;
-            }
-            if (!cond) {
-                return false;
             }
         }
     }
