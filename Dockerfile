@@ -1,5 +1,5 @@
 # base image
-FROM python:3.9-alpine
+FROM python:3.9
 # setup environment variable
 #ENV DockerHOME=/home/app/webapp
 
