@@ -138,6 +138,13 @@ services:
       - "rabbitmq"
     restart: unless-stopped
 
+  fr-service:
+    container_name: FaceRecognitionService
+    image: eyadzz/dexam_fr_service:latest
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+
 
 volumes:
   redisdata:
