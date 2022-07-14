@@ -6,4 +6,5 @@ kubectl apply -f user.yaml &
 kubectl apply -f course.yaml &
 kubectl apply -f exam.yaml &
 kubectl apply -f overseer.yaml &
+kubectl apply -f fr.yaml &
 kubectl apply -f api_gateway.yaml

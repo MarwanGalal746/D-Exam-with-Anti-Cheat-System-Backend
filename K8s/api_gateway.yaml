@@ -17,6 +17,7 @@ spec:
       containers:
         - name: apigateway
           image: eyadzz/dexam_api_gateway:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5500
           env:
@@ -26,7 +27,7 @@ spec:
                   key: auth_secret_key
                   name: dexam-secret
             - name: GATEWAY_JSON_FILE
-              value: Ocelot.json
+              value: Ocelot.k8s.json
 
 ---
 apiVersion: v1
