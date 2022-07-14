@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uploader-deployment
+  labels:
+    app: dexam-uploader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dexam-uploader
+  template:
+    metadata:
+      labels:
+        app: dexam-uploader
+    spec:
+      containers:
+        - name: dexam-uploader
+          image: eyadzz/dexam_image_uploader_service:latest
+          ports:
+            - containerPort: 7777
+          env:
+            - name: UPLOAD_IMG_SERVER_PORT
+              value: :7777
+            - name: AZR_KEY
+              value: udFvBYTwhL1l27aUGOMtb8ojS+7k9IsIXZsjM4YMXCX9Z1dZ2dhUxh+vnn7f03ZTxjwyefEvCWlT+ASt8MPTYw==
+            - name: AZR_BLOB_ACCOUNT_NAME
+              value: dexamstorage1
+            - name: AZR_BLOB_SERVICE_ENDPOINT
+              value: https://dexamstorage1.blob.core.windows.net/
+            - name: AZR_BLOB_CONTAINER
+              value: dexamstorage1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uploader-service
+spec:
+  selector:
+    app: dexam-uploader
+  ports:
+    - port: 7777
+      protocol: TCP
+      targetPort: 7777

@@ -46,3 +46,11 @@ spec:
             name: overseer-service
             port:
               number: 9999
+      
+      - path: /api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: uploader-service
+            port:
+              number: 7777
