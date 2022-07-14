@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  fr-service:
+      container_name: FaceRecognitionService
+      image: eyadzz/dexam_fr_service:latest
+      ports:
+        - "8001:8000"
+      restart: unless-stopped
