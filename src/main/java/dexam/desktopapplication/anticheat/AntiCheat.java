@@ -32,7 +32,7 @@ public class AntiCheat {
             try {
                 boolean result = processManager.monitorActivity();
                 if(!result) {
-                    RabbitMq.send("close-"+Main.userId);
+                    RabbitMq.send("cheat-"+Main.userId);
                     String[] cmd = {"cmd.exe", "/c", "start explorer.exe"};
                     Runtime.getRuntime().exec(cmd);
                     System.exit(1);
