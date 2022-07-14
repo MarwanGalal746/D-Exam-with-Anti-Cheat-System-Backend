@@ -47,6 +47,9 @@ public class BrowserController implements Initializable {
             return;
         }
         TimeUnit.SECONDS.sleep(2);
+        String[] cmd = {"cmd.exe", "/c", "kill.exe"};
+        Runtime rt = Runtime.getRuntime();
+        rt.exec(cmd);
         AntiCheat.initiate(Main.usedBrowser);
         Main.changeScene("stopApp.fxml");
     }

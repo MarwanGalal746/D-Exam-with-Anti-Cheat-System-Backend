@@ -10,7 +10,7 @@ import java.io.File;
 
 public class ApiManager {
     public static boolean Login(User user) {
-        HttpResponse<JsonNode> response = Unirest.post("http://localhost:8080/api/users/login")
+        HttpResponse<JsonNode> response = Unirest.post("http://20.125.84.58:8080/api/users/login")
                 .header("Content-Type", "application/json")
                 .body(user)
                 .asJson();
