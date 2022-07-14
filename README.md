@@ -13,18 +13,18 @@ This Repository is dedicated for the backend part of the application. This appli
 
 ## Tech Stack
 
-- [Java]()
+- [Java](https://www.java.com/en/)
 - [Spring](https://spring.io/)
 - [ASP.NET](https://dotnet.microsoft.com/en-us/apps/aspnet)
 - [Golang](https://golang.org/dl/)
 - [django](https://www.djangoproject.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Redis](https://redis.io/download/)
-- [Docker]()
-- [Kubernetes]()
-- [RabbitMQ]()
-- [NginX Ingress]()
-- [GitHub Actions]()
+- [Docker](https://www.docker.com/)
+- [Kubernetes](https://kubernetes.io/)
+- [RabbitMQ](https://www.rabbitmq.com/)
+- [Kong](https://konghq.com/)
+- [GitHub Actions](https://github.com/features/actions)
 
 ## Services
 - [API Gateway]()
