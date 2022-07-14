@@ -100,7 +100,7 @@ func (e ExamRepositoryDb) GetCourseExams(courseIds []string) ([]models.CourseExa
 			//this line to make the array of questions id empty
 			//because it's not important and secure to show questions id to the user in this endpoint
 			exam.QuestionIds = []string{}
-			if exam.Date+exam.Duration*60 < time.Now().UnixMilli() {
+			if exam.Date+exam.Duration*60*1000 < time.Now().UnixMilli() {
 				previousExams = append(previousExams, exam)
 			} else {
 				upcomingExams = append(upcomingExams, exam)
