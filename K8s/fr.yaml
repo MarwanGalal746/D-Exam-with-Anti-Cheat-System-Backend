@@ -27,9 +27,7 @@ metadata:
 spec:
   selector:
     app: dexam-fr
-  type: LoadBalancer
   ports:
     - port: 8001
       protocol: TCP
       targetPort: 8001
-      nodePort: 30017

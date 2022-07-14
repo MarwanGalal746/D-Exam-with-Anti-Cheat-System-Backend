@@ -1,22 +1,48 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dashboard-ingress
-  namespace: ingress-nginx
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      more_set_headers "Request-Id: $req_id";
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    kubernetes.io/ingress.class: public
+  name: kong-gateway
 spec:
+  ingressClassName: kong
   rules:
-     - http:
-        paths:
-          - path: /dashboard(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: dexam-dashboard
-                port:
-                  number: 443
+  - http:
+      paths:
+      - path: /api/users
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user-service
+            port:
+              number: 8080
+
+      - path: /api/courses
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: course-service
+            port:
+              number: 80
+
+      - path: /api/exam
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: exam-service
+            port:
+              number: 8888
+      
+      - path: /verify/
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: fr-service
+            port:
+              number: 8001
+
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: overseer-service
+            port:
+              number: 9999

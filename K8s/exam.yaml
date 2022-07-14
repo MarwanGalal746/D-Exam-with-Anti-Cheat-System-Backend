@@ -58,9 +58,7 @@ metadata:
 spec:
   selector:
     app: dexam-exam
-  type: LoadBalancer
   ports:
     - port: 8888
       protocol: TCP
       targetPort: 8888
-      nodePort: 30012
