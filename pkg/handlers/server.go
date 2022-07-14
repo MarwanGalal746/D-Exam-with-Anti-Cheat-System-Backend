@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"os"
 )
 
 func Start() {
@@ -20,6 +21,6 @@ func Start() {
 	//sandwiches endpoints
 	router.HandleFunc("/api/upload-img", uploadImgHandler.Upload).Methods(http.MethodPost)
 
-	log.Fatal(http.ListenAndServe(":7777", handlers.CORS(headers, methods, origins)(router)))
+	log.Fatal(http.ListenAndServe(os.Getenv("UPLOAD_IMG_SERVER_PORT"), handlers.CORS(headers, methods, origins)(router)))
 
 }
