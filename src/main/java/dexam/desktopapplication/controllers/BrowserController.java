@@ -46,11 +46,9 @@ public class BrowserController implements Initializable {
             errorText.setText("Error happened. Please try again");
             return;
         }
-        TimeUnit.SECONDS.sleep(2);
-        String[] cmd = {"cmd.exe", "/c", "kill.exe"};
-        Runtime rt = Runtime.getRuntime();
-        rt.exec(cmd);
+        errorText.setText("Please wait till we get everything ready");
         AntiCheat.initiate(Main.usedBrowser);
+        TimeUnit.SECONDS.sleep(10);
         Main.changeScene("stopApp.fxml");
     }
     @Override

@@ -88,7 +88,7 @@ public class ProcessManager {
     }
 
     public boolean monitorActivity() throws IOException, InterruptedException {
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(7);
         while (true) {
             ArrayList<String> result = new ArrayList<>();
             processList = getProcessList();
