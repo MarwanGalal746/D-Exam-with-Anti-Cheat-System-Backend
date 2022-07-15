@@ -19,7 +19,7 @@ type DefaultImageService struct {
 func (s DefaultImageService) Upload(image domain.Image) (*domain.ImageUrl, error) {
 	res1 := strings.Split(image.Img, ",")
 	res2 := strings.Split(res1[0], "/")
-	res3 := strings.Split(res2[0], ";")
+	res3 := strings.Split(res2[1], ";")
 	imgType := "." + res3[0]
 	err := errors.New("")
 	imageDecoded, err := base64.StdEncoding.DecodeString(res1[1])
