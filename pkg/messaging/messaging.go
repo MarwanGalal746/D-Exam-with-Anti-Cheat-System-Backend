@@ -67,6 +67,16 @@ func AddActiveStudent() {
 				dataContainers.ActiveStudents = append(dataContainers.ActiveStudents, studentId)
 			} else if message[0] == "cheat" {
 				dataContainers.CheatStudents = append(dataContainers.CheatStudents, studentId)
+				ind := -1
+				for i := 0; i < len(dataContainers.ActiveStudents); i++ {
+					if dataContainers.ActiveStudents[i] == studentId {
+						ind = i
+						break
+					}
+				}
+				if ind != -1 {
+					dataContainers.ActiveStudents = append(dataContainers.ActiveStudents[:ind], dataContainers.ActiveStudents[ind+1:]...)
+				}
 			} else if message[0] == "close" {
 				ind := -1
 				for i := 0; i < len(dataContainers.ActiveStudents); i++ {
