@@ -5,6 +5,8 @@ metadata:
 config: 
   secret_is_base64: false
   run_on_preflight: true
+  origins:
+  - '*'
 plugin: jwt
 
 ---
