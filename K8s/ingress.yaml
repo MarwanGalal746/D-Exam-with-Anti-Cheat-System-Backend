@@ -2,6 +2,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kong-gateway
+  annotations:
+    kubernetes.io/ingress.class: kong
+    plugins.konghq.com: kong-cors
 spec:
   ingressClassName: kong
   rules:
@@ -39,7 +42,7 @@ spec:
             port:
               number: 8001
 
-      - path: /
+      - path: /ws
         pathType: ImplementationSpecific
         backend:
           service:

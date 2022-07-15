@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: kong-cors
+config: 
+  origins: "*"
+  headers: "*"
+  methods: "*"
+  preflight_continue: false
+plugin: cors
