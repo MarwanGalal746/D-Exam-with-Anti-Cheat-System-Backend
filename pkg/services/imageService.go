@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -28,7 +29,7 @@ func (s DefaultImageService) Upload(image domain.Image) (*domain.ImageUrl, error
 		fmt.Println(err.Error())
 		return nil, err
 	}
-	url, err := utils.UploadBytesToBlob(imageDecoded, string(time.Now().Unix())+imgType)
+	url, err := utils.UploadBytesToBlob(imageDecoded, strconv.FormatInt(time.Now().Unix(), 10)+imgType)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil, err
