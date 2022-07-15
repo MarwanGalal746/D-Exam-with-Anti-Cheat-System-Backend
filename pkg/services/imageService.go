@@ -22,7 +22,7 @@ func (s DefaultImageService) Upload(image domain.Image) (*domain.ImageUrl, error
 	res3 := strings.Split(res2[0], ";")
 	imgType := "." + res3[0]
 	err := errors.New("")
-	imageDecoded, err := base64.StdEncoding.DecodeString(image.Img)
+	imageDecoded, err := base64.StdEncoding.DecodeString(res1[1])
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil, err
