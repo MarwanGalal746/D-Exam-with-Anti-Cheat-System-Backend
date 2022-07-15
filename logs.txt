@@ -1,0 +1,39 @@
+2022/07/15 03:56:29.375047 main.go:15: Server is starting
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+2022/07/15 03:56:29.376105 driver.go:29: Redis Db is connected Errors: <nil>
+2022/07/15 03:56:29.380338 driver.go:48: PG Db is connected Errors: <nil>
+[GIN-debug] POST   /api/exam/create-exam     --> exam_service/pkg/handlers.ExamHandlers.Create-fm (4 handlers)
+[GIN-debug] POST   /api/exam/get-all-exams   --> exam_service/pkg/handlers.ExamHandlers.GetCourseExams-fm (4 handlers)
+[GIN-debug] GET    /api/exam/get-exam/:examId/:userId --> exam_service/pkg/handlers.ExamHandlers.GetExam-fm (4 handlers)
+[GIN-debug] GET    /api/exam/is-student-take-exam-before/:examId/:userId --> exam_service/pkg/handlers.ExamHandlers.IsStudentTakeExamBefore-fm (4 handlers)
+[GIN-debug] DELETE /api/exam/delete-exam/:examId --> exam_service/pkg/handlers.ExamHandlers.DelExam-fm (4 handlers)
+[GIN-debug] PUT    /api/exam/update-exam-info/:examId --> exam_service/pkg/handlers.ExamHandlers.UpdateExamInfo-fm (4 handlers)
+[GIN-debug] POST   /api/exam/add-question/:examId --> exam_service/pkg/handlers.QuestionHandlers.Add-fm (4 handlers)
+[GIN-debug] DELETE /api/exam/delete-question/:examId/:questionId --> exam_service/pkg/handlers.QuestionHandlers.Delete-fm (4 handlers)
+[GIN-debug] PUT    /api/exam/update-question/:examId/:questionId --> exam_service/pkg/handlers.QuestionHandlers.Update-fm (4 handlers)
+2022/07/15 03:56:29.476017 messaging.go:12: Consumer
+[GIN-debug] POST   /api/exam/submit          --> exam_service/pkg/handlers.ExamSubmissionHandlers.SubmitExam-fm (4 handlers)
+[GIN-debug] GET    /api/exam/get-all-student-grades/:userId --> exam_service/pkg/handlers.StudentGradeHandlers.GetAllStudentGrades-fm (4 handlers)
+[GIN-debug] GET    /api/exam/get-all-course-grades/:courseId --> exam_service/pkg/handlers.StudentGradeHandlers.GetAllCourseGrades-fm (4 handlers)
+[GIN-debug] GET    /api/exam/get-all-exam-grades/:examId --> exam_service/pkg/handlers.StudentGradeHandlers.GetAllExamGrades-fm (4 handlers)
+[GIN-debug] GET    /api/exam/get-user-exam-grade/:userId/:courseId/:examId --> exam_service/pkg/handlers.StudentGradeHandlers.GetUserCourseExamGrade-fm (4 handlers)
+[GIN-debug] DELETE /api/exam/delete-all-student-grades/:userId --> exam_service/pkg/handlers.StudentGradeHandlers.DeleteAllStudentGrades-fm (4 handlers)
+[GIN-debug] DELETE /api/exam/delete-all-course-grades/:courseId --> exam_service/pkg/handlers.StudentGradeHandlers.DeleteAllCourseGrades-fm (4 handlers)
+[GIN-debug] DELETE /api/exam/delete-all-exam-grades/:examId --> exam_service/pkg/handlers.StudentGradeHandlers.DeleteAllExamGrades-fm (4 handlers)
+[GIN-debug] DELETE /api/exam/delete-user-exam-grade/:userId/:courseId/:examId --> exam_service/pkg/handlers.StudentGradeHandlers.DeleteUserCourseExamGrade-fm (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+2022/07/15 03:56:29.481097 messaging.go:24: Successfully connected to the RabbitMQ instance
+2022/07/15 03:56:29.482704 messaging.go:49: Successfully consumed msg to the queue
+2022/07/15 03:56:31.664607 examRepository.go:72: redis: nil
+2022/07/15 03:56:31.664944 examRepository.go:72: redis: nil
+[GIN] 2022/07/15 - 03:56:31 | 200 |    8.297225ms |             ::1 | POST     "/api/exam/get-all-exams"
+2022/07/15 03:56:35.819686 examRepository.go:72: redis: nil
+2022/07/15 03:56:35.820259 examRepository.go:72: redis: nil
+[GIN] 2022/07/15 - 03:56:35 | 200 |    2.062989ms |             ::1 | POST     "/api/exam/get-all-exams"

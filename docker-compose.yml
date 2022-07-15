@@ -7,7 +7,7 @@ services:
     ports:
       - "7777:7777"
     environment:
-      - EXAM_SERVER_PORT=:7777
+      - UPLOAD_IMG_SERVER_PORT=:7777
       - AZR_KEY=udFvBYTwhL1l27aUGOMtb8ojS+7k9IsIXZsjM4YMXCX9Z1dZ2dhUxh+vnn7f03ZTxjwyefEvCWlT+ASt8MPTYw==
       - AZR_BLOB_ACCOUNT_NAME=dexamstorage1
       - AZR_BLOB_SERVICE_ENDPOINT=https://dexamstorage1.blob.core.windows.net/
