@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 )
 
 type ImageService interface {
@@ -27,7 +28,7 @@ func (s DefaultImageService) Upload(image domain.Image) (*domain.ImageUrl, error
 		fmt.Println(err.Error())
 		return nil, err
 	}
-	url, err := utils.UploadBytesToBlob(imageDecoded, image.UserId+imgType)
+	url, err := utils.UploadBytesToBlob(imageDecoded, string(time.Now().Unix())+imgType)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil, err
