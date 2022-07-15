@@ -10,7 +10,7 @@ import java.io.File;
 
 public class ApiManager {
     public static boolean Login(User user) {
-        HttpResponse<JsonNode> response = Unirest.post("http://20.125.84.58:8080/api/users/login")
+        HttpResponse<JsonNode> response = Unirest.post("http://20.125.108.167:80/api/users/login")
                 .header("Content-Type", "application/json")
                 .body(user)
                 .asJson();
@@ -23,13 +23,5 @@ public class ApiManager {
         } else {
             return false;
         }
-    }
-
-    public static boolean VerifyIdentity() {
-        HttpResponse<JsonNode> response = Unirest.post("http://localhost:8000/verify/")
-                .field("profilePicture", new File("./salah1.jpg"))
-                .field("toComparePicture", new File("./profilePicture.png"))
-                .asJson();
-        return response.getStatus() == 200;
     }
 }

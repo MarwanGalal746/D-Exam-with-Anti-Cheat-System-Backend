@@ -12,6 +12,7 @@ public class AntiCheat {
 
         ProcessManager processManager = new ProcessManager();
         ArrayList<String> p = new ArrayList<>();
+        p.add(browser);
         p.add("Discord.exe");
         //p.add("explorer.exe");
         p.add("idea64.exe");
@@ -21,12 +22,26 @@ public class AntiCheat {
         p.add("javaw.exe");
         p.add("ApplicationFrameHost.exe");
         p.add("dwm.exe");
+        p.add("com.docker.backend.exe");
+        p.add("com.docker.extensions.exe");
+        p.add("com.docker.dev-envs.exe");
+        p.add("com.docker.vpnkit.exe");
+        p.add("com.docker.cli.exe");
+        p.add("com.docker.proxy.exe");
+        p.add("docker.exe");
+        p.add("com.docker.service");
+        p.add("Docker Desktop.exe");
+//        p2.add("chrome.exe");
+        p.add("DesktopApplication.exe");
+        p.add("wsl.exe");
+        p.add("wslhost.exe");
+        p.add("vmmem");
+        p.add("vpnkit-bridge.exe");
+        p.add("vmwp.exe");
+        p.add("vmcompute.exe");
+
         processManager.addToIgnoreList(p);
-        ArrayList<String> p2 = new ArrayList<>();
-        p2.add("chrome.exe");
-        p2.add("yarab.exe");
-        p2.add("RabbitMqPublisher.exe");
-        processManager.addToIgnoreList(p2);
+
         processManager.killProcesses();
         Thread newThread = new Thread(() -> {
             try {
