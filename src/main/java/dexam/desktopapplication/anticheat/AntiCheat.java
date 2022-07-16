@@ -14,10 +14,9 @@ public class AntiCheat {
         ArrayList<String> p = new ArrayList<>();
         p.add(browser);
         p.add("Discord.exe");
-        //p.add("explorer.exe");
+        p.add("cmd.exe");
         p.add("idea64.exe");
         p.add("sihost.exe");
-        p.add("cmd.exe");
         p.add("java.exe");
         p.add("javaw.exe");
         p.add("ApplicationFrameHost.exe");
@@ -39,6 +38,8 @@ public class AntiCheat {
         p.add("vpnkit-bridge.exe");
         p.add("vmwp.exe");
         p.add("vmcompute.exe");
+        p.add("node.exe");
+
 
         processManager.addToIgnoreList(p);
 
