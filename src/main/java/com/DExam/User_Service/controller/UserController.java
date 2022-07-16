@@ -90,9 +90,9 @@ public class UserController {
     }
 
     @PutMapping("/update-password")
-    public ResponseEntity<?> updatePassword(@RequestBody UserCredentials userCredentials){
-        userService.updatePassword(userCredentials.getEmail(), userCredentials.getPassword());
-        log.info("password of the user with email " + userCredentials.getEmail() + " has been updated successfully");
+    public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordRequest request){
+        userService.updatePassword(request.getEmail(), request.getOldPassword(), request.getNewPassword());
+        log.info("password of the user with email " + request.getEmail() + " has been updated successfully");
         return new ResponseEntity<>(new CustomResponse().setMessage(CustomResponse.PASS_UPDATED).setStatus(HttpStatus.OK),HttpStatus.OK);
     }
 

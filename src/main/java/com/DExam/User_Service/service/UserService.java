@@ -1,10 +1,7 @@
 package com.DExam.User_Service.service;
 
 import com.DExam.User_Service.database.UserRepository;
-import com.DExam.User_Service.exception.EmailExistException;
-import com.DExam.User_Service.exception.EmailNotExistException;
-import com.DExam.User_Service.exception.NationalIDException;
-import com.DExam.User_Service.exception.UserNotFoundException;
+import com.DExam.User_Service.exception.*;
 import com.DExam.User_Service.domain.User;
 import com.DExam.User_Service.model.CourseStudentsInfo;
 import lombok.RequiredArgsConstructor;
@@ -53,9 +50,14 @@ public class UserService implements UserDetailsService, IUserService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),new ArrayList<>());
     }
 
-    public void updatePassword(String email, String newPassword) {
-        newPassword = bCryptPasswordEncoder.encode(newPassword);
-        userRepository.updatePassword(email, newPassword);
+    public void updatePassword(String email, String oldPassword, String newPassword) {
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        if (bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            userRepository.save(user);
+        } else {
+            throw new IncorrectPasswordException();
+        }
     }
 
     @Override

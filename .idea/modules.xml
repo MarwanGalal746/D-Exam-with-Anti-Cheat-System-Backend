@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/D-Exam-with-Anti-Cheat-System-Backend.iml" filepath="$PROJECT_DIR$/.idea/D-Exam-with-Anti-Cheat-System-Backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/user service/User_Service.iml" filepath="$PROJECT_DIR$/user service/User_Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DesktopApplication.iml" filepath="$PROJECT_DIR$/DesktopApplication.iml" />
     </modules>
   </component>
 </project>
