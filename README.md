@@ -11,6 +11,11 @@
 
 This Repository is dedicated for the backend part of the application. This application is designed for our D-Exam Application. It aims to have an examintion system with a reliable anti-cheat system for both students and teachers to use.
 
+## System Architecture
+
+![sysArch15-2](https://user-images.githubusercontent.com/66397595/179327553-70bfdfaf-54cc-4247-b5cb-4f1a7dbe41c0.png)
+
+
 ## Tech Stack
 
 - [Java](https://www.java.com/en/)
