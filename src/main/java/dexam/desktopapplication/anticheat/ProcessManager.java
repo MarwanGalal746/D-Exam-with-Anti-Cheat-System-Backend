@@ -97,7 +97,7 @@ public class ProcessManager {
                 processLineInfo = getExectuableProcess(processList);
                 String[] arr = processLineInfo.split(",");
                 String programName = arr[0].replaceAll("\"", "");
-                System.out.println(arr[0]);
+                //System.out.println(arr[0]);
                 if (programName.equals("Taskmgr.exe") || programName.equals("explorer.exe")) {
                     String[] cmd = {"cmd.exe", "/c", "start explorer.exe"};
                     Runtime rt = Runtime.getRuntime();

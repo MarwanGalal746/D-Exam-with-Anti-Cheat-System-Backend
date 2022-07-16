@@ -2,6 +2,7 @@ package dexam.desktopapplication.controllers;
 
 import dexam.desktopapplication.Main;
 import dexam.desktopapplication.api.ApiManager;
+import dexam.desktopapplication.messaging.RabbitMq;
 import dexam.desktopapplication.models.User;
 import dexam.desktopapplication.utility.Camera;
 import javafx.fxml.FXML;
@@ -43,19 +44,6 @@ public class LoginController {
         if(!isValidUser) {
             errorText.setText("Wrong Credentials");
         } else {
-            try{
-                Camera.detect();
-            }catch (Exception e){
-                errorText.setText("Could not detect a camera");
-                return;
-            }
-           /*try{
-               URL url = new URL(Main.userImageURL);
-               FileDownloader.downloadFile(url, "profilePicture.png");
-           }catch (Exception e){
-               errorText.setText("An Error occurred while gathering your data");
-               return;
-              }*/
             Main.changeScene("browser.fxml");
         }
     }

@@ -40,10 +40,12 @@ public class BrowserController implements Initializable {
             System.out.println(Main.usedBrowser);
         }
 
-        boolean messageSent = RabbitMq.send("open-" + Main.userId);
-
-        if(!messageSent) {
-            errorText.setText("Error happened. Please try again");
+        try {
+            RabbitMq.send("open-" + Main.userId);
+            TimeUnit.SECONDS.sleep(2);
+            System.out.println("Success sending message for user with id " + Main.userId);
+        }catch (Exception e){
+            errorText.setText("Could not connect to the server. Please try again");
             return;
         }
         errorText.setText("Please wait till we get everything ready");
