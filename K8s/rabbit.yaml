@@ -6,12 +6,10 @@ spec:
   selector:
     matchLabels:
       app: rabbitmq
-  
   template:
     metadata:
       labels:
         app: rabbitmq
-    
     spec:
       containers:
       - name: rabbitmq
@@ -30,4 +28,5 @@ spec:
   ports:
     - port: 5672
       protocol: TCP
-      targetPort: 5672
+  externalIPs:
+  - 20.150.249.217

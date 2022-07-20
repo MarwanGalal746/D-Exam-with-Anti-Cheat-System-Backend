@@ -7,4 +7,7 @@ kubectl apply -f course.yaml &
 kubectl apply -f exam.yaml &
 kubectl apply -f overseer.yaml &
 kubectl apply -f fr.yaml &
-kubectl apply -f api_gateway.yaml
+kubectl apply -f imguploader.yaml &
+kubectl apply -f ingress.yaml &
+kubectl apply -f cors.yaml &
+kubectl apply -f jwt-auth.yaml &

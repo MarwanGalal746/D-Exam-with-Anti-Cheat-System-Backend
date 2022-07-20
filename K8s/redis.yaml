@@ -1,39 +1,33 @@
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis-set
   labels:
-    app: redis-db
+    app: redis
 spec:
-  replicas: 2
+  replicas: 1
   serviceName: "redis-service"
   selector:
     matchLabels:
-      app: redis-db
+      app: redis
   template:
     metadata:
       labels:
-        app: redis-db
+        app: redis
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: redis-db
+        - name: redis
           image: redis/redis-stack
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: redis-store
+            - name: database-volume
               mountPath: /data/redis
-  volumeClaimTemplates:
-    - metadata:
-        name: redis-store
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 5Gi
-
+      volumes:
+        - name: database-volume
+          persistentVolumeClaim:
+            claimName: azure-files
 ---
 apiVersion: v1
 kind: Service
@@ -41,7 +35,7 @@ metadata:
   name: redis-service
 spec:
   selector:
-    app: redis-db
+    app: redis
   ports:
     - port: 6379
       protocol: TCP

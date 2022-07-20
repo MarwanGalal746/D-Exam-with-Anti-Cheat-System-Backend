@@ -5,12 +5,9 @@ metadata:
 config: 
   secret_is_base64: false
   run_on_preflight: true
-  origins:
-  - '*'
 plugin: jwt
 
 ---
-
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
@@ -20,8 +17,8 @@ metadata:
 username: admin
 credentials:
   - app-admin-jwt
----
 
+---
 apiVersion: v1
 kind: Secret
 metadata:

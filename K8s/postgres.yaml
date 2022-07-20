@@ -3,26 +3,26 @@ kind: StatefulSet
 metadata:
   name: postgres-set
   labels:
-    app: postgres-db
+    app: postgres
 spec:
   replicas: 2
   serviceName: "postgres-service"
   selector:
     matchLabels:
-      app: postgres-db
+      app: postgres
   template:
     metadata:
       labels:
-        app: postgres-db
+        app: postgres
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: postgres-db
+        - name: postgres
           image: postgres
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: postgre-store
+            - name: database-volume
               mountPath: /data/postgres
           env:
             - name: POSTGRES_USER
@@ -35,14 +35,10 @@ spec:
                 secretKeyRef:
                   key: postgres-password
                   name: dexam-secret
-  volumeClaimTemplates:
-    - metadata:
-        name: postgre-store
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 5Gi
+      volumes:
+        - name: database-volume
+          persistentVolumeClaim:
+            claimName: azure-files
             
 ---
 apiVersion: v1
@@ -51,8 +47,6 @@ metadata:
   name: postgres-service
 spec:
   selector:
-    app: postgres-db
-  ports:
-    - port: 5432
-      protocol: TCP
-      targetPort: 5432
+    app: postgres
+  port: 5432
+  clusterIP: None
